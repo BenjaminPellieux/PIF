@@ -8,37 +8,15 @@ void calc_moyenne(){
 
     std::cout<<"Calcule de la moyenne\n";
 
-
 }
 
 void etalonage(cv::Mat img){
-
-    /*
-	
-    uint16_t compt = 0;
-    Vec3b* tab_pixel = (Vec3b*) malloc(Vec3b * total_px);
-    for(uint16_t i; i != img.row; i++){
-        for(uint16_t j; j != img.cols; j++){
-            
-            tab_pixel[compt] = foo.at<Vec3b>(i, j);
-            
-            compt += 1;
-        }
-    }
-    */
-
-    uint16_t total_px = img.rows * img.cols;
-    cv::Mat hsv_img, dst;
-    
+    cv::Mat hsv_img, dst;    
     cv::cvtColor(img, hsv_img, cv::COLOR_BGR2HSV);
-	std::cout<<"Total px: "<< total_px << "\n";
-	std::cout<<"Etalonage img"<<"\n";
-
     //cv::imshow("HSV img", hsv_img);
     cv::threshold(img, dst, 0, 255, cv::THRESH_BINARY_INV); 
     cv::imshow("Threshold img", dst);
 
-    cv::waitKey(0);
     //cv::imwrite("opencv-thresh-binary-inv.jpg", dst); 
     /*
     
@@ -52,16 +30,52 @@ void etalonage(cv::Mat img){
 }
 
 
+void quick_short(uint8_t* tab_value){
+
+    std::cout<<"[TODO] : Trie rapide\n";
+
+}
+
+float median_cal(cv::Mat img){
+    
+    int total_px = img.rows * img.cols;
+    uint8_t* tab_value = (uint8_t*) malloc(sizeof(uint8_t) * total_px);
+    
+    for(uint16_t i = 0; i != img.rows; i++){
+        for(uint16_t j = 0; j != img.cols; j++){
+            tab_value[i*j+j] = (uint8_t) img.at<cv::Vec3b>(i,j)[0];
+        }
+    }
+    // std::cout<<"Sum: "<< sum <<" Totale px: "<< total_px <<" Mean value "<<sum / total_px<<"\n";
+    quick_short(tab_value);
+    return tab_value[total_px / 2];
+    
+}
+
+float mean_cal(cv::Mat img){
+    int sum = 0;
+    int total_px = img.rows * img.cols;
+
+    for(uint16_t i = 0; i != img.rows; i++){
+        for(uint16_t j = 0; j != img.cols; j++){
+            // std::cout<<"Pixel n °"<<i * j + j<<" Value: "<<(int) img.at<cv::Vec3b>(i,j)[0] <<"\n";
+            sum += (uint8_t) img.at<cv::Vec3b>(i,j)[0];
+        }
+    
+    }
+    std::cout<<"Sum: "<< sum <<" Totale px: "<< total_px <<" Mean value "<<sum / total_px<<"\n";
+    return sum / (float)total_px;
+}
+
 void grey_img(cv::Mat img){
 
     cv::Mat dst, graymat;
     cv::cvtColor(img, graymat, cv::COLOR_BGR2GRAY);
-    
-
+    int mean_grey =  (int) mean_cal(graymat);
+    int meadian_grey = 0;
     cv::imshow("Grey Img", graymat);
-    cv::threshold(graymat, dst, 220, 255, cv::THRESH_BINARY); 
+    cv::threshold(graymat, dst, 215 , 255, cv::THRESH_BINARY); 
     cv::imshow("Threshold img", dst);
-
 
     cv::waitKey(0);
     // cv::imwrite("../Imres/test_threshold    ")
@@ -77,7 +91,7 @@ int main(int argc, char** argv) {
     // Vérifier si l'image a été chargée avec succès
     if (!image.data){
         std::cout << "Erreur lors du chargement de l'image." << std::endl;
-        return -1;
+        return -1; 
     }
 
     // Afficher l'image dans une fenêtre
@@ -85,7 +99,7 @@ int main(int argc, char** argv) {
 
     // Apply the Gaussian Blur filter. 
     // The Size object determines the size of the filter (the "range" of the blur)
-    cv::GaussianBlur( image, img, cv::Size( 9, 9 ), 1.5);
+    cv::GaussianBlur( image, img, cv::Size( 9, 9 ), 2);
 
     etalonage(img);
 
