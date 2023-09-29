@@ -1,0 +1,3 @@
+/home/pacem/Documents/INGE/PROJET/PIF/VISION/NLinuxEdEnviTI/src/CMakeFiles/DisplayImage.dir
+/home/pacem/Documents/INGE/PROJET/PIF/VISION/NLinuxEdEnviTI/src/CMakeFiles/edit_cache.dir
+/home/pacem/Documents/INGE/PROJET/PIF/VISION/NLinuxEdEnviTI/src/CMakeFiles/rebuild_cache.dir
