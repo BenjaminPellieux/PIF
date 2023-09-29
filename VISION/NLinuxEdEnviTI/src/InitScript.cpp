@@ -62,7 +62,9 @@ void grey_img(cv::Mat img){
     cv::threshold(graymat, dst, 220, 255, cv::THRESH_BINARY); 
     cv::imshow("Threshold img", dst);
 
+
     cv::waitKey(0);
+    // cv::imwrite("../Imres/test_threshold    ")
 }
 
 int main(int argc, char** argv) {
