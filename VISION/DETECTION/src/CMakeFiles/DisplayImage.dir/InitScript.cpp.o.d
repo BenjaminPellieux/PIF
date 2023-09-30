@@ -1,5 +1,5 @@
 CMakeFiles/DisplayImage.dir/InitScript.cpp.o: \
- /home/pacem/Documents/INGE/PROJET/PIF/VISION/NLinuxEdEnviTI/src/InitScript.cpp \
+ /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/InitScript.cpp \
  /usr/include/stdc-predef.h /usr/include/opencv4/opencv2/opencv.hpp \
  /usr/include/opencv4/opencv2/opencv_modules.hpp \
  /usr/include/opencv4/opencv2/core.hpp \
