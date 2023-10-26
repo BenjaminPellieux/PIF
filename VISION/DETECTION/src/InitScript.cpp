@@ -104,22 +104,22 @@ void hsv_img(cv::Mat img){
     cv::Mat hsv_img, dst_mean, dst_median;    
     cv::cvtColor(img, hsv_img, cv::COLOR_BGR2HSV);
     cv::Vec3b tmp_pixel;
-    for(int i = 0;  i!= hsv_img.rows; i++){
-        for(int j = 0; j != hsv_img.cols; j++){
-            tmp_pixel = hsv_img.at<cv::Vec3b>(i,j);
-            //std::cout<<"id: "<< i*j+j << " H: "<< (int)tmp_pixel[0] << " S: " << (int)tmp_pixel[1] << " V: "<< (int)tmp_pixel[2] << "\n";
-        } 
+    // for(int i = 0;  i!= hsv_img.rows; i++){
+    //     for(int j = 0; j != hsv_img.cols; j++){
+    //         tmp_pixel = hsv_img.at<cv::Vec3b>(i,j);
+    //         //std::cout<<"id: "<< i*j+j << " H: "<< (int)tmp_pixel[0] << " S: " << (int)tmp_pixel[1] << " V: "<< (int)tmp_pixel[2] << "\n";
+    //     } 
 
-    }
+    // }
 
     uint8_t mean = mean_cal(hsv_img);
     //cv::imshow("HSV img", hsv_img);
     cv::threshold(img, dst_mean, 255 - mean, 255, cv::THRESH_BINARY); 
     cv::imshow("Threshold img mean H", dst_mean);
     
-    uint8_t median = median_cal(hsv_img);
-    cv::threshold(img, dst_median, 255 - median, 255, cv::THRESH_BINARY); 
-    cv::imshow("Threshold img median H", dst_median);
+    // uint8_t median = median_cal(hsv_img);
+    // cv::threshold(img, dst_median, 255 - median, 255, cv::THRESH_BINARY); 
+    // cv::imshow("Threshold img median H", dst_median);
     cv::waitKey(0);
 
     //cv::imwrite("opencv-thresh-binary-inv.jpg", dst); 
@@ -143,15 +143,17 @@ void grey_img(cv::Mat img){
 
     // moyenne filtrage 
     int mean_grey =  (int) mean_cal(graymat);
+    std::cout<<"[DEBUG] Mean Grey "<< mean_grey<< "\n";
     cv::threshold(graymat, dst_mean, mean_grey , 255, cv::THRESH_BINARY); 
     cv::imshow("Threshold img mean", dst_mean);
     std::cout<<"[DEBUG] Threshold img mean\n";
 
     // // median filtrage 
-    // int meadian_grey = (int) median_cal(graymat);
-    // cv::threshold(graymat, dst_median, meadian_grey , 255, cv::THRESH_BINARY); 
-    // cv::imshow("Threshold img median", dst_median);
-    // std::cout<<"[DEBUG] Threshold img median\n";
+    int median_grey = (int) median_cal(graymat);
+    std::cout<<"[DEBUG] Median Grey "<< median_grey<< "\n";
+    cv::threshold(graymat, dst_median, median_grey , 255, cv::THRESH_BINARY); 
+    cv::imshow("Threshold img median", dst_median);
+    std::cout<<"[DEBUG] Threshold img median\n";
 
     // main filtrage
     cv::threshold(graymat, dst_main, 215 , 255, cv::THRESH_BINARY); 
@@ -186,7 +188,7 @@ int main(int argc, char** argv) {
     // Attendre une touche pour fermer la fenêtre
     // cv::waitKey(0);
 
-    //grey_img(img);
+    grey_img(img);
     hsv_img(img);
     //etalonage(img);
 
