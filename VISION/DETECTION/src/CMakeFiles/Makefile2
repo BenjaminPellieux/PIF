@@ -63,7 +63,7 @@ CMAKE_BINARY_DIR = /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/DisplayImage.dir/all
+all: CMakeFiles/test_bouchon.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +71,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/DisplayImage.dir/clean
+clean: CMakeFiles/test_bouchon.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/DisplayImage.dir
+# Target rules for target CMakeFiles/test_bouchon.dir
 
 # All Build rule for target.
-CMakeFiles/DisplayImage.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DisplayImage.dir/build.make CMakeFiles/DisplayImage.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DisplayImage.dir/build.make CMakeFiles/DisplayImage.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/CMakeFiles --progress-num=1,2 "Built target DisplayImage"
-.PHONY : CMakeFiles/DisplayImage.dir/all
+CMakeFiles/test_bouchon.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/CMakeFiles --progress-num=1,2 "Built target test_bouchon"
+.PHONY : CMakeFiles/test_bouchon.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/DisplayImage.dir/rule: cmake_check_build_system
+CMakeFiles/test_bouchon.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/DisplayImage.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_bouchon.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/CMakeFiles 0
-.PHONY : CMakeFiles/DisplayImage.dir/rule
+.PHONY : CMakeFiles/test_bouchon.dir/rule
 
 # Convenience name for target.
-DisplayImage: CMakeFiles/DisplayImage.dir/rule
-.PHONY : DisplayImage
+test_bouchon: CMakeFiles/test_bouchon.dir/rule
+.PHONY : test_bouchon
 
 # clean rule for target.
-CMakeFiles/DisplayImage.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DisplayImage.dir/build.make CMakeFiles/DisplayImage.dir/clean
-.PHONY : CMakeFiles/DisplayImage.dir/clean
+CMakeFiles/test_bouchon.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/clean
+.PHONY : CMakeFiles/test_bouchon.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

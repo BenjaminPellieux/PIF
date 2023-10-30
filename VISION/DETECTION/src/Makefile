@@ -117,41 +117,41 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named DisplayImage
+# Target rules for targets named test_bouchon
 
 # Build rule for target.
-DisplayImage: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 DisplayImage
-.PHONY : DisplayImage
+test_bouchon: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_bouchon
+.PHONY : test_bouchon
 
 # fast build rule for target.
-DisplayImage/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DisplayImage.dir/build.make CMakeFiles/DisplayImage.dir/build
-.PHONY : DisplayImage/fast
+test_bouchon/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/build
+.PHONY : test_bouchon/fast
 
-InitScript.o: InitScript.cpp.o
-.PHONY : InitScript.o
+test_split.o: test_split.cpp.o
+.PHONY : test_split.o
 
 # target to build an object file
-InitScript.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DisplayImage.dir/build.make CMakeFiles/DisplayImage.dir/InitScript.cpp.o
-.PHONY : InitScript.cpp.o
+test_split.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/test_split.cpp.o
+.PHONY : test_split.cpp.o
 
-InitScript.i: InitScript.cpp.i
-.PHONY : InitScript.i
+test_split.i: test_split.cpp.i
+.PHONY : test_split.i
 
 # target to preprocess a source file
-InitScript.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DisplayImage.dir/build.make CMakeFiles/DisplayImage.dir/InitScript.cpp.i
-.PHONY : InitScript.cpp.i
+test_split.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/test_split.cpp.i
+.PHONY : test_split.cpp.i
 
-InitScript.s: InitScript.cpp.s
-.PHONY : InitScript.s
+test_split.s: test_split.cpp.s
+.PHONY : test_split.s
 
 # target to generate assembly for a file
-InitScript.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DisplayImage.dir/build.make CMakeFiles/DisplayImage.dir/InitScript.cpp.s
-.PHONY : InitScript.cpp.s
+test_split.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/test_split.cpp.s
+.PHONY : test_split.cpp.s
 
 # Help Target
 help:
@@ -161,10 +161,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... DisplayImage"
-	@echo "... InitScript.o"
-	@echo "... InitScript.i"
-	@echo "... InitScript.s"
+	@echo "... test_bouchon"
+	@echo "... test_split.o"
+	@echo "... test_split.i"
+	@echo "... test_split.s"
 .PHONY : help
 
 
