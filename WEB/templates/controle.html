@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Contrôle_véhicule - Projet PIF (robot trieur de déchets)</title>
-    
+   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
    
 <style>
         body {
@@ -51,10 +52,22 @@
 </body>
 </html>
 <script type="text/javascript">
-	
+
 	function command(e) {
 		console.log("[DEBUG] Name command: "  +e.name);
-            // code pour faire avancer le véhicule
+        	$.post( "/command", {
+		    javascript_data: e.name 
+		});
+
+
+		//let xhr = new XMLHttpRequest();
+		//xhr.open("POST", "/command");
+		//xhr.send("cmnd="+e.name );
+		//Envoie les informations du header adaptées avec la requête
+		//xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		//xhr.send("cmnd="+e.name);
+
+		// code pour faire avancer le véhicule
         }
 
         
