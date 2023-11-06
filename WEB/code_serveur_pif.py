@@ -34,5 +34,15 @@ def command():
     print(f"[DEBUG] Reciv command : {com=}") 
     return "200"
 
+
+@app.route('/locate', methods=['POST'])
+def locate():
+    data = (request.form["lat"], request.form["lon"], request.form["acc"]) 
+    print(f"[DEBUG] location : {request.form=}") 
+    print(f"[DEBUG] location : {data=}")
+    return "200"
+    
+
+
 if __name__ == '__main__':
     app.run(host='localhost', port=8080)

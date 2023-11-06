@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Serveur Web projet PIF (robot trieur de déchets)</title>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <style>
     h1 em {
         color: white; /* Modifie la couleur du texte du titre en blanc */
@@ -30,4 +31,21 @@
     </style>
 </body>
 </html>
+<script type="text/javascript">
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var accuracy = position.coords.accuracy;
+        	$.post( "/locate", {
+		        lat: latitude,
+                lon: longitude,
+                acc: accuracy  
+		    });    
+            // Faites ce que vous voulez avec les coordonnées GPS ici
+        });
+    } else {
+        console.log("La géolocalisation n'est pas prise en charge par ce navigateur.");
+    }
+</script>
 
