@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contrôle_véhicule - Projet PIF (robot trieur de déchets)</title>
+    
+   
+<style>
+        body {
+    background-image: url('../static/image_controle_vehicule.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+    </style>
+</head>
+<body>
+    <h1><em>Bienvenue sur la page de contrôle du véhicule</em></h1>
+    <style>
+    	h1 em {
+    	color: white
+    	}
+     	button {
+            font-size: 24px; /* Ajuste la taille du texte */
+            padding: 15px 30px; /* Ajuste l'espace autour du texte */
+        }
+    </style>
+
+    
+	<h2>Contrôle table</h2>
+
+	<table style="width:100%; height:20%">
+  	<tr>
+	  <th><button name="FL" onclick="command(this)"><img src="/static/forward_left.png"/></button></th>
+	  <th><button name="F"  onclick="command(this)"><img src="/static/forward.png" /></button></th>
+	  <th><button name="FR" onclick="command(this)"><img src="/static/forward_right.png" /></button></th>
+
+	</tr>
+	<tr>
+	  <th><button name="L"    onclick="command(this)"><img src="/static/left.png" /></button></th>
+	  <th><button name="STOP" onclick="command(this)"><img src="/static/stop.png" width="200" height="200" /></button></th>
+	  <th><button name="R"    onclick="command(this)"><img src="/static/right.png" /></button></th>
+
+	</tr>
+	<tr>
+	  <th><button name="BL" onclick="command(this)"><img src="/static/back_left.png" /></button></th>
+	  <th><button name="B"  onclick="command(this)"><img src="/static/back.png" /></button></th>
+	  <th><button name="BR" onclick="command(this)"><img src="/static/back_right.png" /></button></th>
+
+	</tr>
+	</table>
+
+</body>
+</html>
+<script type="text/javascript">
+	
+	function command(e) {
+		console.log("[DEBUG] Name command: "  +e.name);
+            // code pour faire avancer le véhicule
+        }
+
+        
+</script>
+
+
