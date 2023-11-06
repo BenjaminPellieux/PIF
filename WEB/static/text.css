@@ -1,0 +1,30 @@
+/* text.css */
+body {
+    background-image: url('/static/clear_path.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    display: inline;
+}
+
+.menu li a {
+    text-decoration: none;
+    padding: 20px 40px; 
+    color: black; 
+    background-color: yellow;
+     font-size: 20px; 
+}
+.menu li a:active {
+    background-color: white;
+    color: black;
+}
+
+

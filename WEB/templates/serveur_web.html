@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+
+<!--<script type="text/javascript" src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>-->
+
+<script type="text/javascript"> // la partie back end (ne gère pas la partie visuel du site)
+
+	/*
+  var ros = new ROSLIB.Ros({
+      url: 'ws://192.168.43.12:9090' //url de connexion au websocket correspond à l'ip vm/raspberry. LA connexion peut s'effectuer sur un même réseau s'il n'y a pas de vpn ou parefeu qui pourrait gêner la connexion.
+  });
+
+  ros.on('connection', function() {//lecture de l'état du server
+    document.getElementById("status").innerHTML = "Connected";//ok
+  });
+
+  ros.on('error', function(error) {
+    document.getElementById("status").innerHTML = "Error";//Gros soucis
+  });
+
+  ros.on('close', function() {
+    document.getElementById("status").innerHTML = "Closed";//Le server n'est pas accessible et/ou est fermé
+  });
+
+    var txt_listener = new ROSLIB.Topic({ //définition d'un objet de type ROSLIB.topic (topic)
+        ros: ros,
+        name: '/fix' //si le gps ne fonctionne pas utiliser /gps/fix du demo de navsat_gps
+
+        //je n'ai pas défini de message type mais le logiciel semble le faire de lui même
+    });
+
+    txt_listener.subscribe(function (m) {//je souscris au topic /fix (si existant) et je découpe la data selon ce qui m'intéresse (data.attribut1.attribut2)
+        document.getElementById("X_actual").value = m.latitude;
+        document.getElementById("Y_actual").value = m.longitude;
+        document.getElementById("T_actual").value = m.altitude;
+        document.getElementById("msg").innerHTML = m.header.seq;
+    });
+
+    var cmdVel = new ROSLIB.Topic({ //défini une variable de type topic (ici ce sera /position_final)
+        ros : ros,
+        name : '/position_final',
+        messageType : 'std_msgs/String'
+    });
+    cmdVel.publish();
+
+    
+
+    
+
+    function publish() {
+        var msg = new ROSLIB.Message({ //le document.getElementById sert à récupérer les infos d'un élément par son id
+            data: document.getElementById("X_goal").value + " " + document.getElementById("Y_goal").value + " " + document.getElementById("T_goal").value
+        });
+        cmdVel.publish(msg); //créé le topic /position_final dans ROS
+    }*/
+    
+</script>
+</head>
+
+<body style="text-align: justify; background-color:lightgray"> <!--la partie front end (graphique) peut communiquer avec le back end si c'est prévu (écrit en html/css)-->
+    <h1>Site postant des coordonées cartésiennes sur des topic ros</h1>
+    <p>Connection status: <span id="status"></span></p> <!--Permet simplement de voir la connexion au serveur rosbridge. Le span fait référence au "satuts" du back end-->
+    <table  border="1"><!--Création d'un conteneur de type table pour mettre côte à côte deux conteneurs-->
+        <td class="PointArrivee"> <!-- Premier élement de la table-->
+            <div style="margin-top: 10px">
+                X_destination = <input type="number" id="X_goal" name="X_final" required value="0">
+            </div>
+            <div>
+                Y_destination = <input type="number" id="Y_goal" name="Y_final" required value="0">
+            </div>
+            <div>
+                T_destination = <input type="number" id="T_goal" name="Teta_final" required value="0">
+            </div>
+            <div>
+                <button style="margin-left: 50px; margin-top: 20px" id="button" onclick="publish()">Envoyer les coordonées</button>
+                <!--Ce bouton sert à exécuter la fonction publish()-->
+            </div>
+        </td>
+        <td class="PointActuel"> <!--Ici c'est le deuxième élement de ma table-->
+            <div style="margin-top: 10px">
+                <!--X_robot-->Latitude = <input value="0" type="number" id="X_actual" name="X_robot">
+            </div>
+            <div>
+                <!--X_robot-->Longitude =   <input value="0" type="number" id="Y_actual" name="Y_robot">
+            </div>
+            <div>
+                <!--X_robot-->Altitude = <input value="0" type="number" id="T_actual" name="Teta_robot">
+            </div>
+            <p>Numero sequence: <span id="msg">0</span></p>
+        </td>
+    </table>
+</body> <!--Fin du front end-->
+</html>
