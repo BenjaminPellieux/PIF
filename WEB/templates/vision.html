@@ -4,13 +4,6 @@
     <title>Vision - Projet PIF (robot trieur de déchets)</title>
     <link rel="stylesheet" type="text/css" href="/static/text.css">
    
-    <style>
-        body {
-        background-image: url('/static/image_vision.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        }
-    </style>
 </head>
 <header>
     <ul class="menu"> 
@@ -23,5 +16,67 @@
 </header>
 <body>
     <h1><em>Bienvenue sur la page vision</em></h1>
+ <div class="upload">
+        <a href="#" style="font-size: 30px;">Téléchargement &darr;</a>
+        <input type="file" name="fichier" id="fileUploader" multiple>
+    </div>
+
+    <div class="file-list" id="fileList">
+        <h2>Liste des fichiers téléchargés</h2>
+    </div>
+
+    <script>
+        document.getElementById('fileUploader').addEventListener('change', function() {
+            const fileList = document.getElementById('fileList');
+            const files = this.files;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(file);
+                link.textContent = file.name;
+                link.setAttribute('download', file.name); // Permet le téléchargement
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Supprimer';
+                deleteButton.onclick = function() {
+                    fileList.removeChild(link);
+                    fileList.removeChild(deleteButton);
+                };
+
+                fileList.appendChild(link);
+                fileList.appendChild(deleteButton);
+            }
+        });
+    </script>
+
 </body>
+<style>
+        body {
+            background-image: url('/static/image_vision.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        h1 em {
+            color: white;
+        }
+        .upload {
+            margin-top: 100px;
+            font-size: 30px;
+        }
+        input[type="file"] {
+            font-size: 25px;
+        }
+        .file-list {
+            float: right;
+            padding: 20px;
+        }
+        .file-list a {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .file-list button {
+            margin-right: 5px;
+        }
+</style>
 </html>
