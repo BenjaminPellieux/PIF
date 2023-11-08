@@ -31,9 +31,7 @@ def config():
 
 
 @app.route('/command', methods=['POST'])
-def command():
-    #response.headers['Access-Control-Allow-Origin'] = '*'
-    #input_json = request.get_json(force=True) 
+def command(): 
     com = request.form["javascript_data"] 
     print(f"[DEBUG] Reciv command : {com=}") 
     return "200"
@@ -41,7 +39,7 @@ def command():
 
 @app.route('/area', methods=['POST'])
 def area():
-    data = json.loads(request.form["points"])[0]
+    data = json.loads(request.form["points"])
     area = {i:data[i] for i in range(len(data))}
     print(f"[DEBUG] location : {area=}")
     return "200"
