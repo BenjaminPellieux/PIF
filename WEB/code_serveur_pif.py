@@ -1,5 +1,5 @@
 from flask import Flask, render_template, after_this_request, request
-
+import json
 app = Flask(__name__, static_folder='static')
 
 
@@ -38,11 +38,12 @@ def command():
     print(f"[DEBUG] Reciv command : {com=}") 
     return "200"
 
+
 @app.route('/area', methods=['POST'])
 def area():
-    data = (request.form["points"]) 
-    print(f"[DEBUG] location : {request.form=}") 
-    print(f"[DEBUG] location : {data=}")
+    data = json.loads(request.form["points"])[0]
+    area = {i:data[i] for i in range(len(data))}
+    print(f"[DEBUG] location : {area=}")
     return "200"
 
 @app.route('/locate', methods=['POST'])

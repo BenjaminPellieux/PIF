@@ -81,8 +81,8 @@
                 var readableCoordinates = coordinates.map(function(latlng) {
                     return { lat: latlng.lat, lng: latlng.lng };
                 });
-                console.log(coordinates); // Or send this data to a server
-                submit_area(coordinates)
+                
+                submit_area(JSON.stringify(coordinates))
                 // TODO: Send the data to a server using AJAX or Fetch API
             } else {
                 alert("No shape drawn on the map.");
@@ -90,10 +90,10 @@
         };
 
     	
-	function submit_area(readableCoordinates) {
-		console.log("[DEBUG] new area : " +readableCoordinates);
+	function submit_area(coordinates) {
+		console.log("[DEBUG] new area : " + coordinates);
         	$.post( "/area", {
-		    points: readableCoordinates
+		    points: coordinates
 		});
     }
 
