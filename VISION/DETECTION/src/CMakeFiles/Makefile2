@@ -45,10 +45,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /home/pacem/.local/lib/python3.11/site-packages/cmake/data/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E rm -f
+RM = /home/pacem/.local/lib/python3.11/site-packages/cmake/data/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -63,7 +63,7 @@ CMAKE_BINARY_DIR = /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/test_bouchon.dir/all
+all: CMakeFiles/VisionC.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +71,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/test_bouchon.dir/clean
+clean: CMakeFiles/VisionC.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/test_bouchon.dir
+# Target rules for target CMakeFiles/VisionC.dir
 
 # All Build rule for target.
-CMakeFiles/test_bouchon.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/CMakeFiles --progress-num=1,2 "Built target test_bouchon"
-.PHONY : CMakeFiles/test_bouchon.dir/all
+CMakeFiles/VisionC.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/CMakeFiles --progress-num=1,2 "Built target VisionC"
+.PHONY : CMakeFiles/VisionC.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/test_bouchon.dir/rule: cmake_check_build_system
+CMakeFiles/VisionC.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_bouchon.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/VisionC.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/CMakeFiles 0
-.PHONY : CMakeFiles/test_bouchon.dir/rule
+.PHONY : CMakeFiles/VisionC.dir/rule
 
 # Convenience name for target.
-test_bouchon: CMakeFiles/test_bouchon.dir/rule
-.PHONY : test_bouchon
+VisionC: CMakeFiles/VisionC.dir/rule
+.PHONY : VisionC
 
 # clean rule for target.
-CMakeFiles/test_bouchon.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/clean
-.PHONY : CMakeFiles/test_bouchon.dir/clean
+CMakeFiles/VisionC.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/clean
+.PHONY : CMakeFiles/VisionC.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

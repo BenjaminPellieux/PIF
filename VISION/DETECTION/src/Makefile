@@ -48,10 +48,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /home/pacem/.local/lib/python3.11/site-packages/cmake/data/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E rm -f
+RM = /home/pacem/.local/lib/python3.11/site-packages/cmake/data/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -78,7 +78,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/pacem/.local/lib/python3.11/site-packages/cmake/data/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -117,41 +117,41 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named test_bouchon
+# Target rules for targets named VisionC
 
 # Build rule for target.
-test_bouchon: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_bouchon
-.PHONY : test_bouchon
+VisionC: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VisionC
+.PHONY : VisionC
 
 # fast build rule for target.
-test_bouchon/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/build
-.PHONY : test_bouchon/fast
+VisionC/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/build
+.PHONY : VisionC/fast
 
-test_split.o: test_split.cpp.o
-.PHONY : test_split.o
+VisionC.o: VisionC.cpp.o
+.PHONY : VisionC.o
 
 # target to build an object file
-test_split.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/test_split.cpp.o
-.PHONY : test_split.cpp.o
+VisionC.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/VisionC.cpp.o
+.PHONY : VisionC.cpp.o
 
-test_split.i: test_split.cpp.i
-.PHONY : test_split.i
+VisionC.i: VisionC.cpp.i
+.PHONY : VisionC.i
 
 # target to preprocess a source file
-test_split.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/test_split.cpp.i
-.PHONY : test_split.cpp.i
+VisionC.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/VisionC.cpp.i
+.PHONY : VisionC.cpp.i
 
-test_split.s: test_split.cpp.s
-.PHONY : test_split.s
+VisionC.s: VisionC.cpp.s
+.PHONY : VisionC.s
 
 # target to generate assembly for a file
-test_split.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bouchon.dir/build.make CMakeFiles/test_bouchon.dir/test_split.cpp.s
-.PHONY : test_split.cpp.s
+VisionC.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/VisionC.cpp.s
+.PHONY : VisionC.cpp.s
 
 # Help Target
 help:
@@ -161,10 +161,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test_bouchon"
-	@echo "... test_split.o"
-	@echo "... test_split.i"
-	@echo "... test_split.s"
+	@echo "... VisionC"
+	@echo "... VisionC.o"
+	@echo "... VisionC.i"
+	@echo "... VisionC.s"
 .PHONY : help
 
 
