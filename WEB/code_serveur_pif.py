@@ -25,6 +25,10 @@ def controle():
 def aspiration():
     return render_template("aspiration.html")
 
+@app.route('/configuration')
+def config():
+    return render_template("configuration.html")
+
 
 @app.route('/command', methods=['POST'])
 def command():
@@ -34,6 +38,12 @@ def command():
     print(f"[DEBUG] Reciv command : {com=}") 
     return "200"
 
+@app.route('/area', methods=['POST'])
+def area():
+    data = (request.form["points"]) 
+    print(f"[DEBUG] location : {request.form=}") 
+    print(f"[DEBUG] location : {data=}")
+    return "200"
 
 @app.route('/locate', methods=['POST'])
 def locate():

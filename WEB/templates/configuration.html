@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contrôle_véhicule - Projet PIF (robot trieur de déchets)</title>
+   	
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
+	<link rel="stylesheet" type="text/css" href="/static/text.css">
+	<style>
+        body {
+    		background-image: url('../static/image_controle_vehicule.jpg');
+    		background-size: cover;
+    		background-repeat: no-repeat;
+	}
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css"/>
+</head>
+<header>
+    <ul class="menu"> 
+		<li><a href="/">Accueil</a></li>
+        <li><a href="vision">Vision</a></li>
+        <li><a href="gps">GPS</a></li>
+        <li><a href="aspiration">Aspiration</a></li>
+        <li><a href="controle">Contrôle du véhicule</a></li>
+    </ul>
+</header>
+<body>
+    <h1><em>Bienvenue sur la page de contrôle du véhicule</em></h1>
+    <style>
+    	h1 em {
+    	color: white
+    	}
+     	button {
+            font-size: 24px; /* Ajuste la taille du texte */
+            padding: 15px 30px; /* Ajuste l'espace autour du texte */
+        }
+    </style>
+    <div id="map" style="width: 50%; height: 500px;"></div>
+    
+    <input type="button" id="sendData" value="Sauvegarder la zone de recherche">     
+
+</body>
+</html>
+<script type="text/javascript">
+
+        // Initialisation de la carte
+        var map = L.map('map').setView([48.98479706310472, 1.7016915401253376], 18);
+
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+
+        var drawnItems = new L.FeatureGroup();
+        map.addLayer(drawnItems);
+
+        var drawControl = new L.Control.Draw({
+            edit: {
+                featureGroup: drawnItems
+            }
+        });
+        map.addControl(drawControl);
+
+        var lastLayer;
+
+        map.on(L.Draw.Event.CREATED, function (event) {
+            var layer = event.layer;
+            drawnItems.addLayer(layer);
+            lastLayer = layer; // Store the reference to the layer
+        });
+
+        document.getElementById('sendData').onclick = function() {
+            if (lastLayer) {
+                // Get the coordinates from the last layer
+                var coordinates = lastLayer.getLatLngs();
+                // Convert coordinates to a readable format if necessary
+                var readableCoordinates = coordinates.map(function(latlng) {
+                    return { lat: latlng.lat, lng: latlng.lng };
+                });
+                console.log(coordinates); // Or send this data to a server
+                submit_area(coordinates)
+                // TODO: Send the data to a server using AJAX or Fetch API
+            } else {
+                alert("No shape drawn on the map.");
+            }
+        };
+
+    	
+	function submit_area(readableCoordinates) {
+		console.log("[DEBUG] new area : " +readableCoordinates);
+        	$.post( "/area", {
+		    points: readableCoordinates
+		});
+    }
+
+        
+</script>
+
+
