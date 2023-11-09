@@ -33,7 +33,7 @@ int main() {
         cv::cvtColor(image_blurred, hsv, cv::COLOR_BGR2HSV);
 
 	// Calculer l'histogramme de la teinte (H)
-	int h_bins = 180; // Nombre de bins pour la teinte
+	// Nombre de bins pour la teinte
 	int histSize[] = { 180 };
 	float h_ranges[] = { 0, 180 };
 	const float* ranges[] = { h_ranges };
@@ -55,8 +55,6 @@ int main() {
 	    // Déterminer les seuils pour isoler la couleur majoritaire
 	cv::Scalar lower_hue(most_frequent_hue - hue_range, 20, 20);
 	cv::Scalar upper_hue(most_frequent_hue + hue_range, 255, 255);
-	std::cout << "[DEBUG] lower_hue=" << lower_hue << std::endl;
-	std::cout << "[DEBUG] upper_hue=" << upper_hue << std::endl;
 
 	 // Créer un masque pour les couleurs qui ne sont pas dans la plage de la couleur majoritaire
 	cv::inRange(hsv, lower_hue, upper_hue, mask_majority_color);
@@ -64,7 +62,7 @@ int main() {
 	// Appliquer le masque à l'image d'origine
 
 	// Optionnel: appliquer des opérations morphologiques pour nettoyer le masque
-	kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(12, 12));
+	kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(15, 15));
 	cv::morphologyEx(mask_others, mask_others, cv::MORPH_OPEN, kernel);
 	cv::morphologyEx(mask_others, mask_others, cv::MORPH_CLOSE, kernel);
 	// Trouver les contours dans le masque des autres couleurs
@@ -89,12 +87,9 @@ int main() {
 	    }
 	}
 
-	// Afficher l'image originale avec les détections
         cv::imshow("Detection de l'element", frame);
 
-        // Afficher le masque des autres couleurs
         cv::imshow("Masque des autres couleurs", mask_others);
-	     // Afficher le masque des autres couleurs
         //cv::imshow("Blurred image", );
 
         // Attendre 30ms ou qu'une touche soit pressée
