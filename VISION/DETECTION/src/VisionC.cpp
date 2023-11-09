@@ -52,7 +52,7 @@ int main() {
     mask_others = ~mask_majority_color;
 
     // Optionnel: appliquer des opérations morphologiques pour nettoyer le masque
-    cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
+    cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
     cv::morphologyEx(mask_others, mask_others, cv::MORPH_OPEN, kernel);
     cv::morphologyEx(mask_others, mask_others, cv::MORPH_CLOSE, kernel);
 
@@ -65,7 +65,7 @@ int main() {
         double area = cv::contourArea(contours[i]);
         if (area > 100) { // Filtre basé sur la taille de l'objet
             cv::Rect rect = cv::boundingRect(contours[i]);
-            cv::rectangle(image, rect.tl(), rect.br(), cv::Scalar(0, 255, 0), 2);
+            cv::rectangle(image_blurred, rect.tl(), rect.br(), cv::Scalar(0, 255, 0), 2);
         }
     }
 
