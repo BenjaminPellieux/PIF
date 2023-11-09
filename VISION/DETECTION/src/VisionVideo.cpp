@@ -4,11 +4,6 @@
 #include <unistd.h>
 #include <cstdlib>
 
-
-
-
-
-
 int main() {
     // Ouvrir le flux vidéo
     cv::VideoCapture cap("../Video/Default_Video_Test.mp4");
@@ -17,7 +12,7 @@ int main() {
         return -1;
     }
 
-    cv::Mat frame, image_blurred, hsv, mask_others;
+    cv::Mat frame, image_blurred, hsv, mask_others, mask_majority_color, kernel;
     std::vector<std::vector<cv::Point>> contours;
     cv::Scalar lower_hue, upper_hue;
     int most_frequent_hue = 0;
@@ -37,10 +32,9 @@ int main() {
         // Convertir l'image en espace couleur HSV
         cv::cvtColor(image_blurred, hsv, cv::COLOR_BGR2HSV);
 
-	cv::Mat mask_majority_color, kernel, output;
 	// Calculer l'histogramme de la teinte (H)
 	int h_bins = 180; // Nombre de bins pour la teinte
-	int histSize[] = { h_bins };
+	int histSize[] = { 180 };
 	float h_ranges[] = { 0, 180 };
 	const float* ranges[] = { h_ranges };
 	int channels[] = { 0 };
@@ -52,25 +46,21 @@ int main() {
 	double maxVal = 0;
 	cv::Point minLoc; // Utilisé pour stocker la position du minimum
 	cv::Point maxLoc; // Utilisé pour stocker la position du maximum
-	int most_frequent_hue = 0;
 		// Appel correct à minMaxLoc
-	cv::minMaxLoc(hist_hue, &minVal, &maxVal, &minLoc, &maxLoc);
+	cv::minMaxLoc(hist_hue, 0, &maxVal, &minLoc, &maxLoc);
 
 		// La teinte la plus fréquente sera l'indice de la valeur maximale
-	most_frequent_hue = maxLoc.y; // ou maxLoc.x selon l'orientation de l'histogramme
+	most_frequent_hue = maxLoc.x; // ou maxLoc.x selon l'orientation de l'histogramme
 
 	    // Déterminer les seuils pour isoler la couleur majoritaire
-	int hue_range = 100 ;  // à ajuster selon vos besoins
 	cv::Scalar lower_hue(most_frequent_hue - hue_range, 20, 20);
 	cv::Scalar upper_hue(most_frequent_hue + hue_range, 255, 255);
 	std::cout << "[DEBUG] lower_hue=" << lower_hue << std::endl;
 	std::cout << "[DEBUG] upper_hue=" << upper_hue << std::endl;
 
 	 // Créer un masque pour les couleurs qui ne sont pas dans la plage de la couleur majoritaire
-	mask_majority_color, mask_others;
 	cv::inRange(hsv, lower_hue, upper_hue, mask_majority_color);
 	mask_others = ~mask_majority_color;
-	//cv::bitwise_not(mask_majority_color, mask_majority_color);
 	// Appliquer le masque à l'image d'origine
 
 	// Optionnel: appliquer des opérations morphologiques pour nettoyer le masque
@@ -93,7 +83,7 @@ int main() {
 		// Afficher le numéro et l'aire sur l'image
 		std::string text = "#" + std::to_string(count) + " Area: " + std::to_string(static_cast<int>(area));
 		cv::Point textOrg(rect.x, rect.y - 10); // Position du texte au-dessus du rectangle
-		cv::putText(frame, text, textOrg, cv::FONT_HERSHEY_SIMPLEX, 0.8, cv::Scalar(0, 0, 0), 1);
+		cv::putText(frame, text, textOrg, cv::FONT_HERSHEY_SIMPLEX, 0.8, cv::Scalar(0, 250, 0), 1);
 
 		count++; // Incrémenter le compteur de formes
 	    }

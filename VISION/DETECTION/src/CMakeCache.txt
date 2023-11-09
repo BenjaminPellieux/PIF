@@ -28,7 +28,7 @@ CMAKE_BUILD_TYPE:STRING=
 CMAKE_COLOR_MAKEFILE:BOOL=ON
 
 //CXX compiler
-CMAKE_CXX_COMPILER:STRING=/usr/bin/c++
+CMAKE_CXX_COMPILER:FILEPATH=/usr/lib64/ccache/c++
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -52,32 +52,6 @@ CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
 
 //Flags used by the CXX compiler during RELWITHDEBINFO builds.
 CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
-
-//C compiler
-CMAKE_C_COMPILER:STRING=/usr/bin/cc
-
-//A wrapper around 'ar' adding the appropriate '--plugin' option
-// for the GCC compiler
-CMAKE_C_COMPILER_AR:FILEPATH=/usr/bin/gcc-ar
-
-//A wrapper around 'ranlib' adding the appropriate '--plugin' option
-// for the GCC compiler
-CMAKE_C_COMPILER_RANLIB:FILEPATH=/usr/bin/gcc-ranlib
-
-//Flags used by the C compiler during all build types.
-CMAKE_C_FLAGS:STRING=
-
-//Flags used by the C compiler during DEBUG builds.
-CMAKE_C_FLAGS_DEBUG:STRING=-g
-
-//Flags used by the C compiler during MINSIZEREL builds.
-CMAKE_C_FLAGS_MINSIZEREL:STRING=-Os -DNDEBUG
-
-//Flags used by the C compiler during RELEASE builds.
-CMAKE_C_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
-
-//Flags used by the C compiler during RELWITHDEBINFO builds.
-CMAKE_C_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 
 //Path to a program.
 CMAKE_DLLTOOL:FILEPATH=CMAKE_DLLTOOL-NOTFOUND
@@ -148,7 +122,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=VisionVideo.cpp
+CMAKE_PROJECT_NAME:STATIC=VisionVideo
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -215,44 +189,17 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
-//Value Computed by CMake
-InitScript.cpp_BINARY_DIR:STATIC=/home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
-
-//Value Computed by CMake
-InitScript.cpp_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-InitScript.cpp_SOURCE_DIR:STATIC=/home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
-
 //The directory containing a CMake configuration file for OpenCV.
 OpenCV_DIR:PATH=/usr/lib64/cmake/OpenCV
 
 //Value Computed by CMake
-VisionC.cpp_BINARY_DIR:STATIC=/home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
+VisionVideo_BINARY_DIR:STATIC=/home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src
 
 //Value Computed by CMake
-VisionC.cpp_IS_TOP_LEVEL:STATIC=ON
+VisionVideo_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
-VisionC.cpp_SOURCE_DIR:STATIC=/home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
-
-//Value Computed by CMake
-VisionVideo.cpp_BINARY_DIR:STATIC=/home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src
-
-//Value Computed by CMake
-VisionVideo.cpp_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-VisionVideo.cpp_SOURCE_DIR:STATIC=/home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src
-
-//Value Computed by CMake
-test_split.cpp_BINARY_DIR:STATIC=/home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
-
-//Value Computed by CMake
-test_split.cpp_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-test_split.cpp_SOURCE_DIR:STATIC=/home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
+VisionVideo_SOURCE_DIR:STATIC=/home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src
 
 
 ########################
@@ -295,26 +242,8 @@ CMAKE_CXX_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
 CMAKE_CXX_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_FLAGS_RELWITHDEBINFO
 CMAKE_CXX_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_C_COMPILER
-CMAKE_C_COMPILER-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_C_COMPILER_AR
-CMAKE_C_COMPILER_AR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_C_COMPILER_RANLIB
-CMAKE_C_COMPILER_RANLIB-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_C_FLAGS
-CMAKE_C_FLAGS-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_C_FLAGS_DEBUG
-CMAKE_C_FLAGS_DEBUG-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_C_FLAGS_MINSIZEREL
-CMAKE_C_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_C_FLAGS_RELEASE
-CMAKE_C_FLAGS_RELEASE-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_C_FLAGS_RELWITHDEBINFO
-CMAKE_C_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_DLLTOOL
 CMAKE_DLLTOOL-ADVANCED:INTERNAL=1
-//Path to cache edit program executable.
-CMAKE_EDIT_COMMAND:INTERNAL=/usr/bin/ccmake
 //Executable file format
 CMAKE_EXECUTABLE_FORMAT:INTERNAL=ELF
 //ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS
@@ -341,7 +270,7 @@ CMAKE_GENERATOR_PLATFORM:INTERNAL=
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
 //Source directory with the top level CMakeLists.txt file for this
 // project
-CMAKE_HOME_DIRECTORY:INTERNAL=/home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
+CMAKE_HOME_DIRECTORY:INTERNAL=/home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src
 //Install .so files without execute permission.
 CMAKE_INSTALL_SO_NO_EXE:INTERNAL=0
 //ADVANCED property for variable: CMAKE_LINKER

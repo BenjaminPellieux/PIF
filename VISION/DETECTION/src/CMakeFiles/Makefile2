@@ -54,7 +54,7 @@ RM = /home/pacem/.local/lib/python3.11/site-packages/cmake/data/bin/cmake -E rm 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
+CMAKE_SOURCE_DIR = /home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src

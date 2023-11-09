@@ -57,7 +57,7 @@ RM = /home/pacem/.local/lib/python3.11/site-packages/cmake/data/bin/cmake -E rm 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
+CMAKE_SOURCE_DIR = /home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src
@@ -67,8 +67,8 @@ CMAKE_BINARY_DIR = /home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "No interactive CMake dialog available..."
+	/home/pacem/.local/lib/python3.11/site-packages/cmake/data/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
