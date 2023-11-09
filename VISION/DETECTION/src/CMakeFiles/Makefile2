@@ -57,13 +57,13 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
+CMAKE_BINARY_DIR = /home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/VisionC.dir/all
+all: CMakeFiles/VisionVideo.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +71,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/VisionC.dir/clean
+clean: CMakeFiles/VisionVideo.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/VisionC.dir
+# Target rules for target CMakeFiles/VisionVideo.dir
 
 # All Build rule for target.
-CMakeFiles/VisionC.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/CMakeFiles --progress-num=1,2 "Built target VisionC"
-.PHONY : CMakeFiles/VisionC.dir/all
+CMakeFiles/VisionVideo.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionVideo.dir/build.make CMakeFiles/VisionVideo.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionVideo.dir/build.make CMakeFiles/VisionVideo.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src/CMakeFiles --progress-num=1,2 "Built target VisionVideo"
+.PHONY : CMakeFiles/VisionVideo.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/VisionC.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/VisionC.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/CMakeFiles 0
-.PHONY : CMakeFiles/VisionC.dir/rule
+CMakeFiles/VisionVideo.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/VisionVideo.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src/CMakeFiles 0
+.PHONY : CMakeFiles/VisionVideo.dir/rule
 
 # Convenience name for target.
-VisionC: CMakeFiles/VisionC.dir/rule
-.PHONY : VisionC
+VisionVideo: CMakeFiles/VisionVideo.dir/rule
+.PHONY : VisionVideo
 
 # clean rule for target.
-CMakeFiles/VisionC.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/clean
-.PHONY : CMakeFiles/VisionC.dir/clean
+CMakeFiles/VisionVideo.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionVideo.dir/build.make CMakeFiles/VisionVideo.dir/clean
+.PHONY : CMakeFiles/VisionVideo.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

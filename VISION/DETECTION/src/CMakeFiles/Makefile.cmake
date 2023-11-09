@@ -50,5 +50,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/VisionC.dir/DependInfo.cmake"
+  "CMakeFiles/VisionVideo.dir/DependInfo.cmake"
   )

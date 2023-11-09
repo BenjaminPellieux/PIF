@@ -60,7 +60,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src
+CMAKE_BINARY_DIR = /home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/CMakeFiles /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src/CMakeFiles /home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pacem/Documents/INGE/PROJET/PIF/VISION/DETECTION/src/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pacem/Documents/INGE/S7/PIF/VISION/DETECTION/src/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,41 +117,41 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named VisionC
+# Target rules for targets named VisionVideo
 
 # Build rule for target.
-VisionC: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VisionC
-.PHONY : VisionC
+VisionVideo: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 VisionVideo
+.PHONY : VisionVideo
 
 # fast build rule for target.
-VisionC/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/build
-.PHONY : VisionC/fast
+VisionVideo/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionVideo.dir/build.make CMakeFiles/VisionVideo.dir/build
+.PHONY : VisionVideo/fast
 
-VisionC.o: VisionC.cpp.o
-.PHONY : VisionC.o
+VisionVideo.o: VisionVideo.cpp.o
+.PHONY : VisionVideo.o
 
 # target to build an object file
-VisionC.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/VisionC.cpp.o
-.PHONY : VisionC.cpp.o
+VisionVideo.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionVideo.dir/build.make CMakeFiles/VisionVideo.dir/VisionVideo.cpp.o
+.PHONY : VisionVideo.cpp.o
 
-VisionC.i: VisionC.cpp.i
-.PHONY : VisionC.i
+VisionVideo.i: VisionVideo.cpp.i
+.PHONY : VisionVideo.i
 
 # target to preprocess a source file
-VisionC.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/VisionC.cpp.i
-.PHONY : VisionC.cpp.i
+VisionVideo.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionVideo.dir/build.make CMakeFiles/VisionVideo.dir/VisionVideo.cpp.i
+.PHONY : VisionVideo.cpp.i
 
-VisionC.s: VisionC.cpp.s
-.PHONY : VisionC.s
+VisionVideo.s: VisionVideo.cpp.s
+.PHONY : VisionVideo.s
 
 # target to generate assembly for a file
-VisionC.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionC.dir/build.make CMakeFiles/VisionC.dir/VisionC.cpp.s
-.PHONY : VisionC.cpp.s
+VisionVideo.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VisionVideo.dir/build.make CMakeFiles/VisionVideo.dir/VisionVideo.cpp.s
+.PHONY : VisionVideo.cpp.s
 
 # Help Target
 help:
@@ -161,10 +161,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... VisionC"
-	@echo "... VisionC.o"
-	@echo "... VisionC.i"
-	@echo "... VisionC.s"
+	@echo "... VisionVideo"
+	@echo "... VisionVideo.o"
+	@echo "... VisionVideo.i"
+	@echo "... VisionVideo.s"
 .PHONY : help
 
 
