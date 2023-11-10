@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/VisionVideo.dir/VisionVideo.cpp.o"
-  "CMakeFiles/VisionVideo.dir/VisionVideo.cpp.o.d"
   "VisionVideo"
   "VisionVideo.pdb"
 )
