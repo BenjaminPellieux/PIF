@@ -16,11 +16,14 @@ ul {
     color: black;
     background-color: yellow;
     font-size: 20px;
-    border-radius: 10px; /* Adjust the value to control the roundness */
+    border-radius: 10px;
 }
 .menu li a:active {
     background-color: white;
     color: black;
 }
+
+
+
 
 

@@ -3,12 +3,34 @@
 <head>
     <title>Contrôle_véhicule - Projet PIF (robot trieur de déchets)</title>
    	
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
-	<link rel="stylesheet" type="text/css" href="/static/text.css">
-	<style>
+    <link rel="stylesheet" type="text/css" href="/static/text.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/text.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css"/>
+</head>
+<header>
+<h1><em>Bienvenue sur la page de Configuration de WALL-E</em></h1>
+    <ul class="menu"> 
+        <li><a href="/">Accueil</a></li>
+        <li><a href="vision">Vision</a></li>
+        <li><a href="gps">GPS</a></li>
+        <li><a href="aspiration">Aspiration</a></li>
+        <li><a href="controle">Contrôle du véhicule</a></li>
+        <li><a href="configuration">Configuration</a></li>
+    </ul>
+</header>
+<body>
+    <div id="map" style="width: 50%; height: 600px; margin-top: 40px;"></div>  
+    
+</body>
+<input type="button" id="sendData" value="Sauvegarder la zone de recherche"> 
+<style type="text/css">
         body {
     		background-color: lightblue;
     		background-size: cover;
@@ -39,41 +61,15 @@
                 font-size: 24px;
             }
         }
-    </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </style>
-    <link rel="stylesheet" type="text/css" href="/static/text.css">
-    </style>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css"/>
-</head>
-<header>
-	<h1><em>Bienvenue sur la page de Configuration de WALL-E</em></h1>
-    	<style>
-    	h1 em {
+        h1 em {
     	color: black
-    	}
-     	button {
+        }
+        button {
             font-size: 24px; /* Ajuste la taille du texte */
             padding: 15px 30px; /* Ajuste l'espace autour du texte */
         }
-        </style>
-    <ul class="menu"> 
-        <li><a href="/">Accueil</a></li>
-        <li><a href="vision">Vision</a></li>
-        <li><a href="gps">GPS</a></li>
-        <li><a href="aspiration">Aspiration</a></li>
-        <li><a href="controle">Contrôle du véhicule</a></li>
-        <li><a href="configuration">Configuration</a></li>
-    </ul>
-</header>
-<body>
-    </style>
-    <div id="map" style="width: 50%; height: 600px; margin-top: 40px;"></div>
-    
-    <input type="button" id="sendData" value="Sauvegarder la zone de recherche">     
+</style>
 
-</body>
 </html>
 <script type="text/javascript">
 
