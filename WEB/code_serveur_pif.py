@@ -1,6 +1,6 @@
 from flask import Flask, render_template, after_this_request, request
 import json
-from location import *
+#from location import *
 app = Flask(__name__, static_folder='static')
 
 

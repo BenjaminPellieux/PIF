@@ -1,3 +1,5 @@
+area={0: {'lat': 48.98487780087469, 'lng': 1.7008799314498901}, 1: {'lat': 48.98430044482715, 'lng': 1.7023819684982302}, 2: {'lat': 48.98470529885388, 'lng': 1.7030149698257449}, 3: {'lat': 48.98533897681444, 'lng': 1.701936721801758}, 4: {'lat': 48.984870759987565, 'lng': 1.7008477449417116}}                                                                                                                                        
+
 # FIle of search  area py
 
 def mon_chaton(data):
@@ -23,6 +25,7 @@ def mon_chaton(data):
     print(f"[DEBUG] coordonné {Point1=}")
     print(f"[DEBUG] coordonné {Point2=}")
     print(f"[DEBUG] coordonné {Point3=}")
+    print(f"[DEBUG] coordonné {Point4=}")
 
         # Calcul des équations des 4 droites
     droite1 = equation_droite(Point1, Point2)
@@ -44,8 +47,8 @@ def equation_droite(coord1, coord2):
     m = (y2 - y1) / (x2 - x1)
     b = y1 - m * x1
     
-    print(f"[DEBUG] {m=} {b=}"
+    print(f"[DEBUG] {m=} {b=}")
     return m, b
-
+mon_chaton(area)
 
 
