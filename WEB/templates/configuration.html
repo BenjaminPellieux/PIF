@@ -3,24 +3,21 @@
 <head>
     <title>Contrôle_véhicule - Projet PIF (robot trieur de déchets)</title>
    	
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
-	<link rel="stylesheet" type="text/css" href="/static/text.css">
-	<style>
-        body {
-    		background-image: url('../static/image_controle_vehicule.jpg');
-    		background-size: cover;
-    		background-repeat: no-repeat;
-	}
-    </style>
+    <link rel="stylesheet" type="text/css" href="/static/text.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/text.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css"/>
 </head>
 <header>
+<h1 style="font-size: 45px;"><em>Bienvenue sur la page de Configuration de WALL-E</em></h1>
     <ul class="menu"> 
-		<li><a href="/">Accueil</a></li>
+        <li><a href="/">Accueil</a></li>
         <li><a href="vision">Vision</a></li>
         <li><a href="gps">GPS</a></li>
         <li><a href="aspiration">Aspiration</a></li>
@@ -29,21 +26,50 @@
     </ul>
 </header>
 <body>
-    <h1><em>Bienvenue sur la page de Configuration de WALL-E</em></h1>
-    <style>
-    	h1 em {
-    	color: white
-    	}
-     	button {
+    <div id="map" style="width: 50%; height: 600px; margin-top: 40px;"></div>  
+    
+</body>
+<input type="button" id="sendData" value="Sauvegarder la zone de recherche" style="font-size: 30px; padding: 10px 20px;"> 
+<style type="text/css">
+        body {
+    		background-color: lightblue;
+    		background-size: cover;
+    		background-repeat: no-repeat;
+    		font-family: Arial, sans-serif;
+    	 	width: 100%; /* La page prendra 100% de la largeur de la fenêtre */
+    	          min-height: 100vh; /* La page occupera au minimum 100% de la hauteur de la fenêtre */
+    	          margin: 0; /* Aucune marge par défaut pour le body */
+    	          display: flex; /* Pour permettre le redimensionnement vertical */
+    	          flex-direction: column;
+        }
+        .menu {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+        .menu li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        .menu a {
+            text-decoration: none;
+            color: white;
+        }
+        /* Media Queries pour ajuster les styles pour différentes tailles d'écran */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+        }
+        h1 em {
+    	color: black
+        }
+        button {
             font-size: 24px; /* Ajuste la taille du texte */
             padding: 15px 30px; /* Ajuste l'espace autour du texte */
         }
-    </style>
-    <div id="map" style="width: 50%; height: 500px;"></div>
-    
-    <input type="button" id="sendData" value="Sauvegarder la zone de recherche">     
+</style>
 
-</body>
 </html>
 <script type="text/javascript">
 
