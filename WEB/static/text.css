@@ -1,9 +1,4 @@
 /* text.css */
-body {
-    background-image: url('/static/clear_path.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
 
 ul {
     list-style-type: none;

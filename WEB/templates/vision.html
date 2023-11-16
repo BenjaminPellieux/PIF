@@ -3,81 +3,57 @@
 <head>
     <title>Vision - Projet PIF (robot trieur de déchets)</title>
     <link rel="stylesheet" type="text/css" href="/static/text.css">
-   
-</head>
-<header>
-    <ul class="menu"> 
-        <li><a href="/">Accueil</a></li>
-        <li><a href="vision">Vision</a></li>
-        <li><a href="gps">GPS</a></li>
-        <li><a href="aspiration">Aspiration</a></li>
-        <li><a href="controle">Contrôle du véhicule</a></li>
-        <li><a href="configuration">Configuration</a></li>
-    </ul>
-</header>
-<body>
-    <h1><em>Bienvenue sur la page vision</em></h1>
- <div class="upload">
-        <a href="#" style="font-size: 30px;">Téléchargement &darr;</a>
-        <input type="file" name="fichier" id="fileUploader" multiple>
-    </div>
-
-    <div class="file-list" id="fileList">
-        <h2>Liste des fichiers téléchargés</h2>
-    </div>
-
-    <script>
-        document.getElementById('fileUploader').addEventListener('change', function() {
-            const fileList = document.getElementById('fileList');
-            const files = this.files;
-
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(file);
-                link.textContent = file.name;
-                link.setAttribute('download', file.name); // Permet le téléchargement
-
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Supprimer';
-                deleteButton.onclick = function() {
-                    fileList.removeChild(link);
-                    fileList.removeChild(deleteButton);
-                };
-
-                fileList.appendChild(link);
-                fileList.appendChild(deleteButton);
-            }
-        });
-    </script>
-
-</body>
-<style>
+    <style>
         body {
             background-image: url('/static/image_vision.jpg');
             background-size: cover;
             background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            width: 100%; /* La page prendra 100% de la largeur de la fenêtre */
+            min-height: 100vh; /* La page occupera au minimum 100% de la hauteur de la fenêtre */
+            margin: 0; /* Aucune marge par défaut pour le body */
+            display: flex; /* Pour permettre le redimensionnement vertical */
+            flex-direction: column;0
         }
-        h1 em {
+        .menu {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+        .menu li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        .menu a {
+            text-decoration: none;
             color: white;
         }
-        .upload {
-            margin-top: 100px;
-            font-size: 30px;
+        /* Media Queries pour ajuster les styles pour différentes tailles d'écran */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
         }
-        input[type="file"] {
-            font-size: 25px;
-        }
-        .file-list {
-            float: right;
-            padding: 20px;
-        }
-        .file-list a {
-            display: block;
-            margin-bottom: 10px;
-        }
-        .file-list button {
-            margin-right: 5px;
-        }
-</style>
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/text.css">
+    </style>
+</head>
+<body>
+    <h1><em>Bienvenue sur la page vision</em></h1>
+    <style>
+    h1 em {
+    color: white
+    }
+    </style>
+    <ul class="menu"> 
+
+	<li><a href="/">Accueil</a></li>
+	<li><a href="vision">Vision</a></li>
+        <li><a href="GPS">GPS</a></li>
+        <li><a href="aspiration">Aspiration</a></li>
+        <li><a href="controle">Contrôle du véhicule</a></li>
+        <li><a href="configuration">Configuration</a></li>
+    </ul>
+</body>
 </html>
