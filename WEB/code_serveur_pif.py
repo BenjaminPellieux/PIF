@@ -1,5 +1,6 @@
 from flask import Flask, render_template, after_this_request, request
 import json
+from location import *
 app = Flask(__name__, static_folder='static')
 
 
@@ -41,6 +42,7 @@ def command():
 def area():
     data = json.loads(request.form["points"])
     area = {i:data[i] for i in range(len(data))}
+    mon_chaton(area)
     print(f"[DEBUG] location : {area=}")
     return "200"
 
