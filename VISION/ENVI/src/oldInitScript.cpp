@@ -100,6 +100,40 @@ uint8_t mean_cal(cv::Mat img){
     return sum / total_px;
 }
 
+void hsv_img(cv::Mat img){
+    cv::Mat hsv_img, dst_mean, dst_median;    
+    cv::cvtColor(img, hsv_img, cv::COLOR_BGR2HSV);
+    cv::Vec3b tmp_pixel;
+    // for(int i = 0;  i!= hsv_img.rows; i++){
+    //     for(int j = 0; j != hsv_img.cols; j++){
+    //         tmp_pixel = hsv_img.at<cv::Vec3b>(i,j);
+    //         //std::cout<<"id: "<< i*j+j << " H: "<< (int)tmp_pixel[0] << " S: " << (int)tmp_pixel[1] << " V: "<< (int)tmp_pixel[2] << "\n";
+    //     } 
+
+    // }
+
+    uint8_t mean = mean_cal(hsv_img);
+    //cv::imshow("HSV img", hsv_img);
+    cv::threshold(img, dst_mean, 255 - mean, 255, cv::THRESH_BINARY); 
+    cv::imshow("Threshold img mean H", dst_mean);
+    
+    // uint8_t median = median_cal(hsv_img);
+    // cv::threshold(img, dst_median, 255 - median, 255, cv::THRESH_BINARY); 
+    // cv::imshow("Threshold img median H", dst_median);
+    cv::waitKey(0);
+
+    //cv::imwrite("opencv-thresh-binary-inv.jpg", dst); 
+    /*
+    
+        ret,thresh1 = cv.threshold(img,127,255,cv.THRESH_BINARY)
+        ret,thresh2 = cv.threshold(img,127,255,cv.THRESH_BINARY_INV)
+        ret,thresh3 = cv.threshold(img,127,255,cv.THRESH_TRUNC)
+        ret,thresh4 = cv.threshold(img,127,255,cv.THRESH_TOZERO)
+        ret,thresh5 = cv.threshold(img,127,255,cv.THRESH_TOZERO_INV)
+    */
+
+}
+
 cv::Mat grey_img(cv::Mat img){
 
     cv::Mat dst_mean, dst_median, dst_main, graymat;
@@ -131,25 +165,13 @@ int main(int argc, char** argv) {
     cv::GaussianBlur( image, img, cv::Size( 9, 9 ), 2);
     //cv::imshow("Image lisse", img);
 
-    std::vector<int> compression_params;
-    compression_params.push_back(cv::IMWRITE_PNG_COMPRESSION);
-    compression_params.push_back(9);
     cv::Mat greyImg = grey_img(img);
     cv::imshow("Grey", greyImg);
 
-    bool result = false;
-    try
-    {
-        result = cv::imwrite("image_grise.png", greyImg, compression_params);
-
-    }
-    catch (const cv::Exception& ex)
-    {
-        fprintf(stderr, "Exception converting image to PNG format: %s\n", ex.what());
-    }
-
     //std::cout<<greyImg.empty();
     //std::cout<<"\n";
+    //hsv_img(img);
+    //etalonage(img);
     // Attendre une touche pour fermer la fenêtre
     cv::waitKey(0);
 
