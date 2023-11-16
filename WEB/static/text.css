@@ -12,10 +12,11 @@ ul {
 
 .menu li a {
     text-decoration: none;
-    padding: 20px 40px; 
-    color: black; 
+    padding: 20px 40px;
+    color: black;
     background-color: yellow;
-     font-size: 20px; 
+    font-size: 20px;
+    border-radius: 10px; /* Adjust the value to control the roundness */
 }
 .menu li a:active {
     background-color: white;
