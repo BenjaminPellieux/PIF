@@ -37,6 +37,10 @@ def command():
     print(f"[DEBUG] Reciv command : {com=}") 
     return "200"
 
+@app.route('/bridge_test')
+def bridge():
+    return render_template("rosbridge.html")
+
 
 @app.route('/area', methods=['POST'])
 def area():
