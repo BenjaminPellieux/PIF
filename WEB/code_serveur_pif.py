@@ -1,6 +1,8 @@
-from flask import Flask, render_template, after_this_request, request
+from flask import Flask, render_template, jsonify, request
 import json
 #from location import *
+from handle_request import *
+from client_rosbridge import *
 app = Flask(__name__, static_folder='static')
 
 
@@ -30,24 +32,42 @@ def aspiration():
 def config():
     return render_template("configuration.html")
 
-
-@app.route('/command', methods=['POST'])
-def command(): 
-    com = request.form["javascript_data"] 
-    print(f"[DEBUG] Reciv command : {com=}") 
-    return "200"
-
 @app.route('/bridge_test')
 def bridge():
     return render_template("rosbridge.html")
 
+@app.route('/endpoint', methods=['POST'])
+def endpoint():
+    data = request.json
+    print(data)
+    # Traiter ou stocker les données ici
+    return "Données reçues"
+
+@app.route('/command', methods=['POST'])
+def command(): 
+    handle_command(request.form["comd"])
+    return "200"
+
+@app.route('/get_topic_value', methods=['POST'])
+def get_topic_value():
+    compteur = 0
+    data = request.json
+    topic = data['topic']
+    message_type = data['message_type']
+    # S'abonner, attendre la donnée et se désabonner
+    ws_app.subscribe(topic, message_type)
+    while topic not in ws_app.topic_data and compteur<100:
+        compteur+=1
+        pass
+    if compteur >= 100:
+        return jsonify("ERROR")
+    value = ws_app.topic_data.pop(topic)
+    return jsonify(value)
+    
 
 @app.route('/area', methods=['POST'])
 def area():
-    data = json.loads(request.form["points"])
-    area = {i:data[i] for i in range(len(data))}
-    mon_chaton(area)
-    print(f"[DEBUG] location : {area=}")
+    handle_points(json.loads(request.form["points"]))
     return "200"
 
 @app.route('/locate', methods=['POST'])
