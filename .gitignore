@@ -1,0 +1,17 @@
+# Fichiers et dossiers Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Dossiers de l'environnement virtuel
+venv/
+env/
+
+# Fichiers de configuration IDE spécifiques
+.idea/
+.vscode/
+
+# Autres fichiers et dossiers à ignorer
+.DS_Store
+*.log
+
