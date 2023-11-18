@@ -7,6 +7,7 @@ SEND_INTERVAL = 2
 
 # Dictionnaire pour stocker la dernière valeur de chaque topic
 last_topics_values = {}
+IP_RASP = "10.8.0.3"
 
 # Timestamp de la dernière fois où les données ont été envoyées
 last_send_time = 0
@@ -21,7 +22,7 @@ class WebSocketApp(Thread):
         self.topic_to_subscribe = None
 
     def run(self):
-        self.ws = websocket.WebSocketApp("ws://10.8.0.2:9090",
+        self.ws = websocket.WebSocketApp(f"ws://{IP_RASP}:9090",
                                          on_message=self.on_message,
                                          on_error=self.on_error,
                                          on_close=self.on_close)
