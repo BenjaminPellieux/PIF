@@ -112,6 +112,8 @@
 <script type="text/javascript">
     // Coordonnée de L'ISTY !!!
 
+
+    var error = false;
     var pose = {
         orientation: {
             w: 0.0,
@@ -147,14 +149,14 @@
 
 	//Simulez la réception de nouvelles données GPS toutes les 2 secondes
 	setInterval(function() {
-    	// Remplacez les valeurs par vos données GPS en temps réel
-        requestTopicValue('/jackal_velocity_controller/odom', 'nav_msgs/Odometry');
-        requestTopicValue('/clock', 'rosgraph_msgs/Clock');
-        console.log("[INFO] update");
+        // Recuperation des donnée du topic  
+        requestTopicValue('/odometry/filtered', 'nav_msgs/Odometry');
+        // Remplacez les valeurs par vos données odom en temps réel 
         updateData(pose, clock);
-		updateMarker(newLat+pose.position.x/10000, newLng+pose.position.y/10000);
+		// Remplacez les valeurs par vos données GPS en temps réel sur la MAP
+        updateMarker(newLat+pose.position.x/10000, newLng+pose.position.y/10000);
 
-    }, 500);
+    }, 1000);
     	
 	function command(e) {
 		console.log("[DEBUG] Name command: "  +e.name);
@@ -174,15 +176,14 @@
         })
         .then(response => response.json())
         .then(data => {
-            if ("ERROR" in data){
-                alert("Une erreur est survenue\n WALL-E semble déconécter !!!")
-            }
-            console.log(`Valeur pour ${topic}: `, data);
-            if ((data) && (topic == "/jackal_velocity_controller/odom")){
+            console.log(`[INFO] Update Valeur pour ${topic}: `, data);
+            if ("ERROR" === data){
+                //alert("Une erreur est survenue\n WALL-E semble déconécter !!!")
+                error =  true;
+            }else{
                 pose = data.pose.pose;
-            }
-            else{
-                clock = data.clock;
+                clock = data.header.stamp;
+                error = false;
             }
         })
         .catch(error => console.error('Erreur lors de la récupération des données:', error));
@@ -190,8 +191,15 @@
 
     function updateData() {
         var dataTable = document.getElementById('dataTable');
-        dataTable.innerHTML = ''; // Effacer le contenu actuel
-        dataTable.appendChild(createTableFromData(pose, clock));
+        if (error){
+            var error = document.createElement('h2');
+            error.innerHTML = "Une erreur est survenue lors de la recupérration des données";
+            dataTable.insertBefore(error, dataTable.children[0]);
+        }else{
+            dataTable.innerHTML = ''; // Effacer le contenu actuel
+            dataTable.appendChild(createTableFromData(pose, clock));
+        }
+        
     }
 
     function createTableFromData(pose, clock) {
@@ -231,13 +239,8 @@
             tbody.appendChild(tr);
         }
     }
-
+    // Ajoutez le tableau à la div avec l'ID 'poseTable'
     updateData(pose, clock)
-// Ajoutez le tableau à la div avec l'ID 'poseTable'
-//document.getElementById('poseTable').appendChild(createTableFromPose(pose));
-        // Utilisez cette fonction pour demander la valeur d'un topic
-        // requestTopicValue('/jackal_velocity_controller/odom', 'nav_msgs/Odometry');
-        // requestTopicValue('/clock', 'rosgraph_msgs/Clock');
 
 </script>
 

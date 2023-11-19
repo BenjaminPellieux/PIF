@@ -1,6 +1,7 @@
 import json
 import websocket
 from threading import Thread
+from time import sleep
 
 # Interval en secondes pour l'envoi des données
 SEND_INTERVAL = 2
@@ -22,6 +23,9 @@ class WebSocketApp(Thread):
         self.topic_to_subscribe = None
 
     def run(self):
+        self.connect()
+
+    def connect(self):
         self.ws = websocket.WebSocketApp(f"ws://{IP_RASP}:9090",
                                          on_message=self.on_message,
                                          on_error=self.on_error,
@@ -40,12 +44,26 @@ class WebSocketApp(Thread):
         print("Erreur :", error)
 
     def on_close(self, ws):
-        print("Connexion fermée")
+        print("Connexion fermée. Tentative de reconnexion...")
+        self.ws = None
+        self.topic_to_subscribe = None
+        self.topic_data.clear()
+        sleep(5)  # Attendre avant de retenter la connexion
+        self.connect()  # Tentative de reconnexion
+
+
+
 
     def on_open(self, ws):
         print("Connexion établie avec le serveur Rosbridge")
 
+
     def subscribe(self, topic, message_type):
+        if not self.ws.sock or not self.ws.sock.connected:
+            print("WebSocket n'est pas connecté. Tentative de reconnexion...")
+            self.connect()
+            return  # Sortir de la méthode pour éviter d'envoyer des données
+
         self.topic_to_subscribe = topic
         subscribe_message = {
             "op": "subscribe",
@@ -53,6 +71,12 @@ class WebSocketApp(Thread):
             "type": message_type
         }
         self.ws.send(json.dumps(subscribe_message))
+        # try:
+        #     self.ws.send(json.dumps(subscribe_message))
+        # except Exception as e:
+        #     print(f"[ERROR] Error:\n{e}") 
+        #     ws_app = WebSocketApp()
+        #     ws_app.start()
 
     def unsubscribe(self, topic):
         unsubscribe_message = {
