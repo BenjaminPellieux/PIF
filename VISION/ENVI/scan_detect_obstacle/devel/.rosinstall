@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/ros/catkin_ws/src/scan_detect_obstacle/devel/setup.sh
