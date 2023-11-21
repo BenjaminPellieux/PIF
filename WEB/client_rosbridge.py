@@ -58,6 +58,24 @@ class WebSocketApp(Thread):
         print("Connexion établie avec le serveur Rosbridge")
 
 
+    def publish(self, topic, message_type, message):
+        """
+        Publie un message sur un topic spécifique.
+        """
+        if not self.ws or not self.ws.sock or not self.ws.sock.connected:
+            print("WebSocket n'est pas connecté. Tentative de reconnexion...")
+            self.connect()
+            return
+
+        publish_message = {
+            "op": "publish",
+            "topic": topic,
+            "msg": message,
+            "type": message_type
+        }
+        self.ws.send(json.dumps(publish_message))
+
+
     def subscribe(self, topic, message_type):
         if not self.ws.sock or not self.ws.sock.connected:
             print("WebSocket n'est pas connecté. Tentative de reconnexion...")
@@ -71,12 +89,6 @@ class WebSocketApp(Thread):
             "type": message_type
         }
         self.ws.send(json.dumps(subscribe_message))
-        # try:
-        #     self.ws.send(json.dumps(subscribe_message))
-        # except Exception as e:
-        #     print(f"[ERROR] Error:\n{e}") 
-        #     ws_app = WebSocketApp()
-        #     ws_app.start()
 
     def unsubscribe(self, topic):
         unsubscribe_message = {
@@ -89,3 +101,8 @@ class WebSocketApp(Thread):
 # Instanciation du client WebSocket
 ws_app = WebSocketApp()
 ws_app.start()
+
+# topic = "/votre_topic"
+# message_type = "votre_type_de_message"  # Par exemple, "std_msgs/String"
+# message = {"data": "valeur"}  # Assurez-vous que cela correspond au type de message
+# ws_app.publish(topic, message_type, message)
