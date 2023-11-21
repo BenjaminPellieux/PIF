@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify, request
 import json
 #from location import *
 from handle_request import *
-from client_rosbridge import *
+# from client_rosbridge import *
 app = Flask(__name__, static_folder='static')
 
 
@@ -39,28 +39,27 @@ def bridge():
 @app.route('/endpoint', methods=['POST'])
 def endpoint():
     data = request.json
+
     print(data)
     # Traiter ou stocker les données ici
     return "Données reçues"
 
 @app.route('/command', methods=['POST'])
-def command(): 
+def command():
     handle_command(request.form["comd"])
     return "200"
 
 @app.route('/get_topic_value', methods=['POST'])
 def get_topic_value():
-    compteur = 0
     data = request.json
     topic = data['topic']
     message_type = data['message_type']
     # S'abonner, attendre la donnée et se désabonner
     ws_app.subscribe(topic, message_type)
-    while topic not in ws_app.topic_data and compteur<100:
-        compteur+=1
+    if not ws_app.topic_data:
+        return "ERROR"
+    while topic not in ws_app.topic_data:
         pass
-    if compteur >= 100:
-        return jsonify("ERROR")
     value = ws_app.topic_data.pop(topic)
     return jsonify(value)
     

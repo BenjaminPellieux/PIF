@@ -3,16 +3,7 @@ import websocket
 from threading import Thread
 from time import sleep
 
-# Interval en secondes pour l'envoi des données
-SEND_INTERVAL = 2
-
-# Dictionnaire pour stocker la dernière valeur de chaque topic
-last_topics_values = {}
 IP_RASP = "10.8.0.3"
-
-# Timestamp de la dernière fois où les données ont été envoyées
-last_send_time = 0
-ws_app = None
 
 class WebSocketApp(Thread):
     def __init__(self):
@@ -42,29 +33,20 @@ class WebSocketApp(Thread):
 
     def on_error(self, ws, error):
         print("Erreur :", error)
-
-    def on_close(self, ws):
-        print("Connexion fermée. Tentative de reconnexion...")
-        self.ws = None
-        self.topic_to_subscribe = None
-        self.topic_data.clear()
         sleep(5)  # Attendre avant de retenter la connexion
         self.connect()  # Tentative de reconnexion
 
-
-
+    def on_close(self, ws):
+        print("Connexion fermée. Tentative de reconnexion...")
+        self.on_error(self.ws)
 
     def on_open(self, ws):
         print("Connexion établie avec le serveur Rosbridge")
 
-
     def publish(self, topic, message_type, message):
-        """
-        Publie un message sur un topic spécifique.
-        """
-        if not self.ws or not self.ws.sock or not self.ws.sock.connected:
+        if not self.ws or not self.ws.sock or not self  .ws.sock.connected:
             print("WebSocket n'est pas connecté. Tentative de reconnexion...")
-            self.connect()
+            self.on_close(self.ws)
             return
 
         publish_message = {
@@ -75,12 +57,11 @@ class WebSocketApp(Thread):
         }
         self.ws.send(json.dumps(publish_message))
 
-
     def subscribe(self, topic, message_type):
-        if not self.ws.sock or not self.ws.sock.connected:
+        if not self.ws or not self.ws.sock or not self.ws.sock.connected:
             print("WebSocket n'est pas connecté. Tentative de reconnexion...")
-            self.connect()
-            return  # Sortir de la méthode pour éviter d'envoyer des données
+            self.on_close(self.ws)
+            return
 
         self.topic_to_subscribe = topic
         subscribe_message = {
@@ -101,8 +82,3 @@ class WebSocketApp(Thread):
 # Instanciation du client WebSocket
 ws_app = WebSocketApp()
 ws_app.start()
-
-# topic = "/votre_topic"
-# message_type = "votre_type_de_message"  # Par exemple, "std_msgs/String"
-# message = {"data": "valeur"}  # Assurez-vous que cela correspond au type de message
-# ws_app.publish(topic, message_type, message)
