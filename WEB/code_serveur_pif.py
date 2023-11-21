@@ -2,7 +2,6 @@ from flask import Flask, render_template, jsonify, request
 import json
 #from location import *
 from handle_request import *
-# from client_rosbridge import *
 app = Flask(__name__, static_folder='static')
 
 
@@ -48,6 +47,13 @@ def endpoint():
 def command():
     handle_command(request.form["comd"])
     return "200"
+
+@app.route('/newspeed', methods=['POST'])
+def new_speed():
+    change_speed(request.form["speed"])
+    return "200"
+
+
 
 @app.route('/get_topic_value', methods=['POST'])
 def get_topic_value():

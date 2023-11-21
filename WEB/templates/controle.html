@@ -2,276 +2,70 @@
 <html>
 <head>
     <title>Contrôle_véhicule - Projet PIF (robot trieur de déchets)</title>
-   	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-	<link rel="stylesheet" type="text/css" href="/static/text.css">
-	<style>
-         body {
-            background-color: white;
-            background-size: cover;
-            background-repeat: no-repeat;
-            font-family: Arial, sans-serif;
-            width: 100%;
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        header {
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 45px;
-            margin: 20px 0;
-        }
-
-        h1 em {
-            color: black;
-        }
-
-        .menu {
-            list-style: none;
-            padding: 0;
-            text-align: center;
-            margin: 0;
-        }
-
-        .menu li {
-            display: inline-block;
-            margin: 0 10px;
-        }
-
-        .menu a {
-            text-decoration: none;
-            color: black; /* Change text color to black */
-        }
-
-        .container {
-            display: grid;
-            grid-template-columns: 49% 45%;
-            gap: 10px;
-        }
-
-        /* Media Queries for adjusting styles for different screen sizes */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 24px;
-            }
-
-            .menu {
-                flex-direction: column;
-            }
-
-            .menu li {
-                display: block;
-                margin: 10px 0;
-            }
-        }
-    </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </style>
     <link rel="stylesheet" type="text/css" href="/static/text.css">
-    </style>
+    <link rel="stylesheet" type="text/css" href="/static/style/controle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
-<header>   
-    <h1 style="font-size: 45px;"><em>Bienvenue sur la page de contrôle du véhicule</em></h1>
-    <style>
-    	h1 em {
-    	color: black
-    	}
-    </style>
-    <ul class="menu"> 
-        <li><a href="/">Accueil</a></li>
-        <li><a href="vision">Vision</a></li>
-        <li><a href="gps">GPS</a></li>
-        <li><a href="aspiration">Aspiration</a></li>
-        <li><a href="controle">Contrôle du véhicule</a></li>
-        <li><a href="configuration">Configuration</a></li>
-    </ul>
-</header> 
+
 <body>
-    <style>
-     	button {
-            font-size: 24px; /* Ajuste la taille du texte */
-            padding: 15px 30px; /* Ajuste l'espace autour du texte */
-        }
-    </style>
-    <div class="container" style="width: 100%; height: 666px; margin-top: 40px;">
+    <header>   
+        <h1 style="font-size: 45px;"><em>Bienvenue sur la page de contrôle du véhicule</em></h1>
+        <ul class="menu"> 
+            <li><a href="/">Accueil</a></li>
+            <li><a href="vision">Vision</a></li>
+            <li><a href="gps">GPS</a></li>
+            <li><a href="aspiration">Aspiration</a></li>
+            <li><a href="controle">Contrôle du véhicule</a></li>
+            <li><a href="configuration">Configuration</a></li>
+        </ul>
+    </header> 
+    <div class="containerup">
         <div id="video" style="height: 100%; background-color: black;"></div>
         <div id="map" style="height: 100%; "></div>
-        
     </div>
     
-    <div class="container"> 
-        <div id="table_dir" >
+    <div class="containerdown"> 
+        <div id="table_dir" class="controle-panel" >
             <h2>Contrôle directionnel </h2>
-            <table class="dir" style="margin-left: 20%; width:50%; height:20%">
+            <table class="dir" style="margin-left: 5%; width:40%;">
                 <tr>
                     <td></td> 
-                    <th><img name="F" onclick="command(this)" src="/static/images/Fond_blanc.png" width="150" height="150"/></th>
+                    <th><img src="/static/images/Fond_blanc.png" width="150" height="150"/></th>
                     <th><img name="F" onclick="command(this)" src="/static/images/forward.png" /></th>
-                    <th><img name="F" onclick="command(this)" src="/static/images/Fond_blanc.png" width="150" height="150"/></th>
+                    <th><img src="/static/images/Fond_blanc.png" width="150" height="150"/></th>
                 </tr>
                 <tr>
                     <td></td>
-                    <th><img name="L" onclick="command(this)" src="/static/images/left.png" /></th>
+                    <th><img name="L" onclick="command(this)" src="/static/images/rotation_gauche.jpeg" /></th>
                     <th><img name="STOP" onclick="command(this)" src="/static/images/stop.png" width="150" height="150" /></th>
-                    <th><img name="R" onclick="command(this)" src="/static/images/right.png" /></th>
+                    <th><img name="R" onclick="command(this)" src="/static/images/rotation_droite.jpeg" /></th>
                 </tr>
                 <tr>
                     <td></td> 
-                    <th><img name="B" onclick="command(this)" src="/static/images/Fond_blanc.png" width="150" height="150"/></th>
+                    <th><img src="/static/images/Fond_blanc.png" width="150" height="150"/></th>
                     <th><img name="B" onclick="command(this)" src="/static/images/back.png" /></th>
-                    <th><img name="B" onclick="command(this)" src="/static/images/Fond_blanc.png" width="150" height="150"/></th>
+                    <th><img src="/static/images/Fond_blanc.png" width="150" height="150"/></th>
                 </tr>
             </table>
+            
         </div>
-        <div>
+        <div class="slider-container" style="width: 15%;">
+            <h3 id="speedValue">Vitesse: 5</h3>
+            <input type="range" id="speedRange" orient="vertical" min="1" max="10" value="5">
+        </div>
+
+        <div class="topic-value" style="width: 40%;">
             <h2>Topic value</h2>
             <div id="dataTable">
             </div>
         </div>
-        <button type="reset" name="reset" onclick="command(this)">Reset Odometry</button>
     </div>
-    </body>    
+    <script type="text/javascript" src="/static/src/controle.js"></script>
 </body>
 </html>
-<script type="text/javascript">
-    // Coordonnée de L'ISTY !!!
 
-
-    var error = false;
-    var pose = {
-        orientation: {
-            w: 0.0,
-            x: 0,
-            y: 0,
-            z: 0.0
-        },
-        position: {
-            x: 0.0,
-            y: 0.0,
-            z: 0
-        }
-    };
-    var odom = pose;
-
-    var clock = {
-        nsecs: 0,
-        secs: 0
-    };
-    var newLat = 48.98479706310472; 
-    var newLng = 1.7016915401253376;
-	var map = L.map('map').setView([newLat, newLng], 18); // Réglage initial de la carte 
-	    //Ajoutez une couche OpenStreetMap : Utilisez la couche TileLayer de Leaflet pour afficher la carte OpenStreetMap.
-	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-	}).addTo(map);
-	var marker = L.marker([newLat, newLng]).addTo(map);
-
-	function updateMarker(lat, lng) {
-    		marker.setLatLng([lat, lng]).update();
-    		map.setView([lat, lng], map.getZoom());
-	}			
-
-	//Simulez la réception de nouvelles données GPS toutes les 2 secondes
-	setInterval(function() {
-        // Recuperation des donnée du topic  
-        requestTopicValue('/odometry/filtered', 'nav_msgs/Odometry');
-        // Remplacez les valeurs par vos données odom en temps réel 
-        updateData(pose, clock);
-		// Remplacez les valeurs par vos données GPS en temps réel sur la MAP
-        updateMarker(newLat+pose.position.x/10000, newLng+pose.position.y/10000);
-
-    }, 1000);
-    	
-	function command(e) {
-		console.log("[DEBUG] Name command: "  +e.name);
-        	$.post( "/command", {
-		    comd: e.name 
-		});
-    }
-
-
-    function requestTopicValue(topic, messageType) {
-        fetch('http://localhost:8080/get_topic_value', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ topic: topic, message_type: messageType })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(`[INFO] Update Valeur pour ${topic}: `, data);
-            if ("ERROR" === data){
-                //alert("Une erreur est survenue\n WALL-E semble déconécter !!!")
-                error =  true;
-            }else{
-                pose = data.pose.pose;
-                clock = data.header.stamp;
-                error = false;
-            }
-        })
-        .catch(error => console.error('Erreur lors de la récupération des données:', error));
-    }
-
-    function updateData() {
-        var dataTable = document.getElementById('dataTable');
-        if (error){
-            var error = document.createElement('h2');
-            error.innerHTML = "Une erreur est survenue lors de la recupérration des données";
-            dataTable.insertBefore(error, dataTable.children[0]);
-        }else{
-            dataTable.innerHTML = ''; // Effacer le contenu actuel
-            dataTable.appendChild(createTableFromData(pose, clock));
-        }
-        
-    }
-
-    function createTableFromData(pose, clock) {
-        var table = document.createElement('table');
-        var thead = document.createElement('thead');
-        var tbody = document.createElement('tbody');
-        table.appendChild(thead);
-        table.appendChild(tbody);
-
-        // Création de l'en-tête du tableau
-        var row = document.createElement('tr');
-        var th1 = document.createElement('th');
-        th1.textContent = 'Property';
-        var th2 = document.createElement('th');
-        th2.textContent = 'Value';
-        row.appendChild(th1);
-        row.appendChild(th2);
-        thead.appendChild(row);
-
-        // Ajout des lignes pour orientation, position et clock
-        addRows(tbody, 'orientation', pose.orientation);
-        addRows(tbody, 'position', pose.position);
-        addRows(tbody, 'clock', clock);
-
-        return table;
-    }
-
-    function addRows(tbody, parentKey, dataObject) {
-        for (var key in dataObject) {
-            var tr = document.createElement('tr');
-            var tdKey = document.createElement('td');
-            tdKey.textContent = parentKey + '.' + key;
-            var tdValue = document.createElement('td');
-            tdValue.textContent = dataObject[key];
-            tr.appendChild(tdKey);
-            tr.appendChild(tdValue);
-            tbody.appendChild(tr);
-        }
-    }
-    // Ajoutez le tableau à la div avec l'ID 'poseTable'
-    updateData(pose, clock)
-
-</script>
 
 
