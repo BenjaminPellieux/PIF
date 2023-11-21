@@ -4,34 +4,61 @@
     <title>Vision - Projet PIF (robot trieur de déchets)</title>
     <link rel="stylesheet" type="text/css" href="/static/text.css">
     <style>
-        body {
+         body {
             background-image: url('/static/images/image_vision.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             font-family: Arial, sans-serif;
-            width: 100%; /* La page prendra 100% de la largeur de la fenêtre */
-            min-height: 100vh; /* La page occupera au minimum 100% de la hauteur de la fenêtre */
-            margin: 0; /* Aucune marge par défaut pour le body */
-            display: flex; /* Pour permettre le redimensionnement vertical */
-            flex-direction: column;0
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
         }
+
+        header {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 45px;
+            margin: 20px 0;
+        }
+
+        h1 em {
+            color: white;
+        }
+
         .menu {
             list-style: none;
             padding: 0;
             text-align: center;
+            margin: 0;
         }
+
         .menu li {
             display: inline-block;
             margin: 0 10px;
         }
+
         .menu a {
             text-decoration: none;
             color: white;
         }
-        /* Media Queries pour ajuster les styles pour différentes tailles d'écran */
+
+        /* Media Queries for adjusting styles for different screen sizes */
         @media (max-width: 768px) {
             h1 {
                 font-size: 24px;
+            }
+
+            .menu {
+                flex-direction: column;
+            }
+
+            .menu li {
+                display: block;
+                margin: 10px 0;
             }
         }
     </style>
