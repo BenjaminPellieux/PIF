@@ -7,40 +7,68 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 	<link rel="stylesheet" type="text/css" href="/static/text.css">
 	<style>
-        body {
-    		background-color: white;
-    		background-size: cover;
-    		background-repeat: no-repeat;
-    		font-family: Arial, sans-serif;
-    	          width: 100%; /* La page prendra 100% de la largeur de la fenêtre */
-    	          min-height: 100vh; /* La page occupera au minimum 100% de la hauteur de la fenêtre */
-    	          margin: 0; /* Aucune marge par défaut pour le body */
-    	          display: flex; /* Pour permettre le redimensionnement vertical */
-    	          flex-direction: column;
+         body {
+            background-color: white;
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
         }
+
+        header {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 45px;
+            margin: 20px 0;
+        }
+
+        h1 em {
+            color: black;
+        }
+
         .menu {
             list-style: none;
             padding: 0;
             text-align: center;
+            margin: 0;
         }
+
         .menu li {
             display: inline-block;
             margin: 0 10px;
         }
+
         .menu a {
             text-decoration: none;
-            color: white;
+            color: black; /* Change text color to black */
         }
-        /* Media Queries pour ajuster les styles pour différentes tailles d'écran */
+
+        .container {
+            display: grid;
+            grid-template-columns: 49% 45%;
+            gap: 10px;
+        }
+
+        /* Media Queries for adjusting styles for different screen sizes */
         @media (max-width: 768px) {
             h1 {
                 font-size: 24px;
             }
-       }
-       .container {
-            display: grid; /* Utilise CSS Grid */
-            grid-template-columns: 49% 45%; /* Deux colonnes de même taille */
-            gap: 10px; /* Espacement entre les éléments de la grille */
+
+            .menu {
+                flex-direction: column;
+            }
+
+            .menu li {
+                display: block;
+                margin: 10px 0;
+            }
         }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
