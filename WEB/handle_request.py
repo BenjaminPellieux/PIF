@@ -25,7 +25,8 @@ def handle_command(cmnd):
         for command_type, values in command_changes.items():
             for axis, value in values.items():
                 commande_move[command_type][axis] = value * current_speed
-    commande_move["angular"]["z"] +=  ws_app.orient["z"]
+            if command_type != "angular":
+                commande_move["angular"]["z"] +=  ws_app.orient["z"]
     ws_app.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', command_changes)
 
 #/cmd_vel geometry_msgs/Twist
