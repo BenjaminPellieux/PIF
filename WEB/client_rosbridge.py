@@ -2,7 +2,6 @@ import json
 import websocket
 from threading import Thread
 from time import sleep
-from dataclasses import dataclass
 
 IP_RASP = "10.8.0.3"
 

@@ -1,6 +1,5 @@
 from flask import Flask, render_template, jsonify, request
 import json
-#from location import *
 from handle_request import *
 app = Flask(__name__, static_folder='static')
 
