@@ -37,11 +37,18 @@ class WebSocketApp(Thread):
     def on_error(self, ws: websocket, error: str) -> None:
         print("Erreur :", error)
         sleep(5)  # Attendre avant de retenter la connexion
-        self.connect()  # Tentative de reconnexion
+        try:
+            self.connect()  # Tentative de reconnexion
+        except Exception as e:
+            print("[ERROR] Echeque de la connexion ")
+
 
     def on_close(self, ws: websocket) -> None:
         print("Connexion fermée. Tentative de reconnexion...")
-        self.on_error(self.ws)
+        try:
+            self.on_error(self.ws)
+        except Exception as e:
+            print("[ERROR]")
 
     def on_open(self, ws: websocket) -> None:
         print("Connexion établie avec le serveur Rosbridge")
