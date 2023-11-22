@@ -27,8 +27,10 @@ def handle_command(cmnd):
                 commande_move[command_type][axis] = value * current_speed
             if command_type != "angular":
                 commande_move["angular"]["z"] +=  ws_app.orient["z"]
-    ws_app.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', command_changes)
-
+    try: 
+        ws_app.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', command_changes)
+    except:
+        print("[ERROR] WebSocket closed")
 #/cmd_vel geometry_msgs/Twist
 def get_bridge_topic():
     print(f"[DEBUG] Get bridge topic") 
