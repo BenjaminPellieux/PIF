@@ -14,6 +14,8 @@ nav_msgs
 ydlidar
 std_msgs
 tf
+pcl_ros
+
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
 #include <nav_msgs/Odometry.h>
