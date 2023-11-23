@@ -2,114 +2,70 @@
 <html>
 <head>
     <title>Contrôle_véhicule - Projet PIF (robot trieur de déchets)</title>
-   	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-	<link rel="stylesheet" type="text/css" href="/static/text.css">
-	<style>
-        body {
-    		background-image: url('../static/image_controle_vehicule.jpg');
-    		background-size: cover;
-    		background-repeat: no-repeat;
-	}
-    </style>
+    <link rel="stylesheet" type="text/css" href="/static/text.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/controle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
-<header>
-    <ul class="menu"> 
-		<li><a href="/">Accueil</a></li>
-        <li><a href="vision">Vision</a></li>
-        <li><a href="gps">GPS</a></li>
-        <li><a href="aspiration">Aspiration</a></li>
-        <li><a href="controle">Contrôle du véhicule</a></li>
-		<li><a href="configuration">Configuration</a></li>
-    </ul>
-</header>
+
 <body>
-    <h1><em>Bienvenue sur la page de contrôle du véhicule</em></h1>
-    <style>
-    	h1 em {
-    	color: white
-    	}
-     	button {
-            font-size: 24px; /* Ajuste la taille du texte */
-            padding: 15px 30px; /* Ajuste l'espace autour du texte */
-        }
-    </style>
-    	<div id="map" style="width: 50%; height: 400px;"></div>
-    	<script>
+    <header>   
+        <h1 style="font-size: 45px;"><em>Bienvenue sur la page de contrôle du véhicule</em></h1>
+        <ul class="menu"> 
+            <li><a href="/">Accueil</a></li>
+            <li><a href="vision">Vision</a></li>
+            <li><a href="gps">GPS</a></li>
+            <li><a href="aspiration">Aspiration</a></li>
+            <li><a href="controle">Contrôle du véhicule</a></li>
+            <li><a href="configuration">Configuration</a></li>
+        </ul>
+    </header> 
+    <div class="containerup">
+        <div id="video" style="height: 100%; background-color: black;"></div>
+        <div id="map" style="height: 100%; "></div>
+    </div>
+    
+    <div class="containerdown"> 
+        <div id="table_dir" class="controle-panel" >
+            <h2>Contrôle directionnel </h2>
+            <table class="dir" style="margin-left: 5%; width:40%;">
+                <tr>
+                    <td></td> 
+                    <th><img src="/static/images/Fond_blanc.png" width="150" height="150"/></th>
+                    <th><img name="F" onclick="command(this)" src="/static/images/forward.png" /></th>
+                    <th><img src="/static/images/Fond_blanc.png" width="150" height="150"/></th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <th><img name="L" onclick="command(this)" src="/static/images/rotation_gauche.jpeg" /></th>
+                    <th><img name="STOP" onclick="command(this)" src="/static/images/stop.png" width="150" height="150" /></th>
+                    <th><img name="R" onclick="command(this)" src="/static/images/rotation_droite.jpeg" /></th>
+                </tr>
+                <tr>
+                    <td></td> 
+                    <th><img src="/static/images/Fond_blanc.png" width="150" height="150"/></th>
+                    <th><img name="B" onclick="command(this)" src="/static/images/back.png" /></th>
+                    <th><img src="/static/images/Fond_blanc.png" width="150" height="150"/></th>
+                </tr>
+            </table>
+            
+        </div>
+        <div class="slider-container" style="width: 15%;">
+            <h3 id="speedValue">Vitesse: 5</h3>
+            <input type="range" id="speedRange" orient="vertical" min="1" max="10" value="5">
+        </div>
 
-	</script>
-	    
-	<h2>Contrôle directionnel </h2>
-
-	<table style="width:50%; height:20%">
-  	<tr>
-	  <th><img name="FL" onclick="command(this)" src="/static/forward_left.png"/></th>
-	  <th><img name="F"  onclick="command(this)" src="/static/forward.png" /></th>
-	  <th><img name="FR" onclick="command(this)" src="/static/forward_right.png" /></th>
-
-	</tr>
-	<tr>
-	  <th><img name="L"    onclick="command(this)" src="/static/left.png" /></th>
-	  <th><img name="STOP" onclick="command(this)" src="/static/stop.png" width="150" height="150" /></th>
-	  <th><img name="R"    onclick="command(this)" src="/static/right.png" /></th>
-
-	</tr>
-	<tr>
-	  <th><img name="BL" onclick="command(this)" src="/static/back_left.png" /></th>
-	  <th><img name="B"  onclick="command(this)" src="/static/back.png" /></th>
-	  <th><img name="BR" onclick="command(this)" src="/static/back_right.png" /></th>
-
-	</tr>
-	</table>
-
+        <div class="topic-value" style="width: 40%;">
+            <h2>Topic value</h2>
+            <div id="dataTable">
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/static/src/controle.js"></script>
 </body>
 </html>
-<script type="text/javascript">
-	var map = L.map('map').setView([0, 0], 18); // Réglage initial de la carte 
-	//Ajoutez une couche OpenStreetMap : Utilisez la couche TileLayer de Leaflet pour afficher la carte OpenStreetMap.
-	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-	}).addTo(map);
-	var marker = L.marker([0, 0]).addTo(map);
 
-	function updateMarker(lat, lng) {
-    		marker.setLatLng([lat, lng]).update();
-    		map.setView([lat, lng], map.getZoom());
-	}			
-
-	// Simulez la réception de nouvelles données GPS toutes les 2 secondes
-	setInterval(function() {
-    	// Remplacez les valeurs par vos données GPS en temps réel
-			// Coordonnée de L'ISTY !!!
-    		var newLat = 48.98479706310472; 
-    		var newLng = 1.7016915401253376;
-		updateMarker(newLat, newLng);
-	}, 500);
-    	
-	function command(e) {
-		console.log("[DEBUG] Name command: "  +e.name);
-        	$.post( "/command", {
-		    javascript_data: e.name 
-		});
-    }
-
-        
-	if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-            var accuracy = position.coords.accuracy;
-        	$.post( "/locate", {
-		        lat: latitude,
-                lon: longitude,
-                acc: accuracy  
-		    });    
-            // Faites ce que vous voulez avec les coordonnées GPS ici
-        });
-    } else {
-        console.log("La géolocalisation n'est pas prise en charge par ce navigateur.");
-    }
-</script>
 
 
