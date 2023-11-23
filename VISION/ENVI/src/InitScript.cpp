@@ -14,7 +14,7 @@ cv::Mat grey_img(cv::Mat img){
     // cv::imwrite("../Imres/test_threshold    ")
 }
 
-cv::Mat can_go_forward(cv::Mat img){
+bool can_go_forward(cv::Mat img){
     std::cout << img.rows;
     std::cout << "\n";
     std::cout << img.cols;
@@ -26,18 +26,47 @@ cv::Mat can_go_forward(cv::Mat img){
     int part = 4;
     int taille_part = img.rows/part;
 
+    float ratio_fonce_autorise = 0.05; //ratio de pixels foncés autorisés
+    int min_j = 0; //la 1ère colonne observée
+    int max_j; //la dernière clonne observée
+
+    //à partir de la 2ème partie de l'image qu'on observe, on ne regarde que le centre
+    //la zone observée est réactualisée à chaque partie de l'image
+    int b = 0; //compte le nombre de partie ou le robot peut aller
+
     for (int p = 1; p <= part; p++){
-	for(int i = taille_part*(part-p); i<taille_part*(part-p+1);i++){ //int i = taille_part*(part-p); i<taille_part*(part-p+1);i++
-		for (int j = 0; j < largeur; j++){
-			std::cout << (int)img.at<uchar>(i,j);
+	int f = 0;
+	int  c = 0;
+	max_j = min_j + largeur;
+	for(int i = taille_part*(part-p); i<taille_part*(part-p+1);i++){
+		for (int j = min_j; j < max_j; j++){
+			if ( (int) img.at<uchar>(i,j) < 60) {//si pixel est foncé
+				f++;
+			}
+			else{
+				c++;
+			}
 		}
     	}
+	if (f<taille_part*(part-p+1)*largeur*ratio_fonce_autorise){
+		std::cout << "clair\n";
+		b++;
+	}
+	else {
+		std::cout << "foncé\n";
+		break;
+	}
+	min_j = min_j + largeur*0.1; //offset a gauche pour la partie des lignes qu'on regarde
+	largeur =  largeur*0.8; //nouvelle zone à regarder
+	// on passe donc les 10ers%,  on regarde les 80% suivants,  et les 10 derniers % sont ignorés
     }
 
-    
-   
-
-    return img;
+    if (b>=part*0.5){
+	return true;
+    }
+    else {
+	return false;
+    }
 }
 
 
@@ -111,7 +140,8 @@ int main(int argc, char** argv) {
     cv::Mat segmentedGray;
     cv::cvtColor(segmented, segmentedGray, cv::COLOR_BGR2GRAY);
 
-    segmentedGray = can_go_forward(segmentedGray);
+    bool b = can_go_forward(segmentedGray);
+    std::cout << b;
     // Afficher l'image résultante
     cv::imshow("Surfaces approximativement uniformes en niveaux de gris", segmentedGray);
     cv::waitKey(0);
