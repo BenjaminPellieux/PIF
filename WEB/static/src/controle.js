@@ -38,6 +38,7 @@ function updateMarker(lat, lng) {
 setInterval(function() {
     // Recuperation des donnée du topic  
     requestTopicValue('/odometry/filtered', 'nav_msgs/Odometry');
+    requestTopicValue('/navsat/fix', 'sensors_msg/NavSatFix');
     // Remplacez les valeurs par vos données odom en temps réel 
     updateData(pose, clock);
     // Remplacez les valeurs par vos données GPS en temps réel sur la MAP
