@@ -14,7 +14,7 @@ cv::Mat grey_img(cv::Mat img){
     // cv::imwrite("../Imres/test_threshold    ")
 }
 
-bool can_go_forward(cv::Mat img){
+cv::Mat can_go_forward(cv::Mat img){
     std::cout << img.rows;
     std::cout << "\n";
     std::cout << img.cols;
@@ -24,12 +24,12 @@ bool can_go_forward(cv::Mat img){
     int hauteur = img.rows;
 
     int part = 4;
-    int taille_part = img.cols/4;
+    int taille_part = img.rows/part;
 
     for (int p = 1; p <= part; p++){
-	for(int i = taille_part*(part-p); i<=taille_part*(part-p+1);i++){
-		for (int j = 0; j <= img.cols-1; j++){
-			int h = 0;
+	for(int i = taille_part*(part-p); i<taille_part*(part-p+1);i++){ //int i = taille_part*(part-p); i<taille_part*(part-p+1);i++
+		for (int j = 0; j < largeur; j++){
+			std::cout << (int)img.at<uchar>(i,j);
 		}
     	}
     }
@@ -37,7 +37,7 @@ bool can_go_forward(cv::Mat img){
     
    
 
-    return false;
+    return img;
 }
 
 
@@ -106,12 +106,12 @@ int main(int argc, char** argv) {
         }
     }
 
-    can_go_forward(image);
 
     // Convertir l'image segmentée en niveaux de gris
     cv::Mat segmentedGray;
     cv::cvtColor(segmented, segmentedGray, cv::COLOR_BGR2GRAY);
 
+    segmentedGray = can_go_forward(segmentedGray);
     // Afficher l'image résultante
     cv::imshow("Surfaces approximativement uniformes en niveaux de gris", segmentedGray);
     cv::waitKey(0);
@@ -122,3 +122,4 @@ int main(int argc, char** argv) {
 
     return EXIT_SUCCESS;
 }
+
