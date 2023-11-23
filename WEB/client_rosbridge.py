@@ -2,8 +2,9 @@ import json
 import websocket
 from threading import Thread
 from time import sleep
-
-IP_RASP = "10.8.0.3"
+IP_RASP = "192.168.131.1"
+# IP_RASP = "10.8.0.2"
+PORT = "11311"
 
 
 class WebSocketApp(Thread):
@@ -18,7 +19,7 @@ class WebSocketApp(Thread):
         self.connect()
 
     def connect(self):
-        self.ws: websocket = websocket.WebSocketApp(f"ws://{IP_RASP}:9090",
+        self.ws: websocket = websocket.WebSocketApp(f"ws://{IP_RASP}:{PORT}",
                                          on_message=self.on_message,
                                          on_error=self.on_error,
                                          on_close=self.on_close)
