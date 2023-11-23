@@ -14,6 +14,33 @@ cv::Mat grey_img(cv::Mat img){
     // cv::imwrite("../Imres/test_threshold    ")
 }
 
+bool can_go_forward(cv::Mat img){
+    std::cout << img.rows;
+    std::cout << "\n";
+    std::cout << img.cols;
+    std::cout << "\n";
+
+    int largeur = img.cols;
+    int hauteur = img.rows;
+
+    int part = 4;
+    int taille_part = img.cols/4;
+
+    for (int p = 1; p <= part; p++){
+	for(int i = taille_part*(part-p); i<=taille_part*(part-p+1);i++){
+		for (int j = 0; j <= img.cols-1; j++){
+			int h = 0;
+		}
+    	}
+    }
+
+    
+   
+
+    return false;
+}
+
+
 int main(int argc, char** argv) {
     
 
@@ -65,7 +92,7 @@ int main(int argc, char** argv) {
 
     // Effectuer la segmentation par k-means
     cv::Mat labels, centers;
-    cv::kmeans(data, k, labels, cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 100, 0.2), 3, cv::KMEANS_RANDOM_CENTERS, centers);
+    cv::kmeans(data, k, labels, cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 100, 0.8), 3, cv::KMEANS_RANDOM_CENTERS, centers);
 
     // Convertir les centres des clusters en entiers (niveaux de gris)
     centers.convertTo(centers, CV_8U);
@@ -78,6 +105,8 @@ int main(int argc, char** argv) {
             segmented.at<cv::Vec3b>(i, j) = centers.at<cv::Vec3b>(clusterIndex, 0);
         }
     }
+
+    can_go_forward(image);
 
     // Convertir l'image segmentée en niveaux de gris
     cv::Mat segmentedGray;
