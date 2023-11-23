@@ -20,14 +20,22 @@ var clock = {
     nsecs: 0,
     secs: 0
 };
-var newLat = 48.98479706310472; 
-var newLng = 1.7016915401253376;
-var map = L.map('map').setView([newLat, newLng], 18); // Réglage initial de la carte 
+var OrignLat = 48.98479706310472; 
+var OrigLng = 1.7016915401253376;
+
+var NewLat = 49.900000000642166;
+var NewLng = 8.90000009517094;
+
+var DiffLat = 0.915202938;
+var DiffLng = 7.198308555;
+
+
+var map = L.map('map').setView([OrignLat, OrigLng], 18); // Réglage initial de la carte 
 //Ajoutez une couche OpenStreetMap : Utilisez la couche TileLayer de Leaflet pour afficher la carte OpenStreetMap.
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
-var marker = L.marker([newLat, newLng]).addTo(map);
+var marker = L.marker([OrignLat, OrigLng]).addTo(map);
 
 function updateMarker(lat, lng) {
     marker.setLatLng([lat, lng]).update();
@@ -37,12 +45,12 @@ function updateMarker(lat, lng) {
 //Simulez la réception de nouvelles données GPS toutes les 2 secondes
 setInterval(function() {
     // Recuperation des donnée du topic  
-    requestTopicValue('/odometry/filtered', 'nav_msgs/Odometry');
-    requestTopicValue('/navsat/fix', 'sensors_msg/NavSatFix');
+    requestTopicValue('/odometry/filtered');
+    requestTopicValue('/navsat/fix');
     // Remplacez les valeurs par vos données odom en temps réel 
     updateData(pose, clock);
     // Remplacez les valeurs par vos données GPS en temps réel sur la MAP
-    updateMarker(newLat+pose.position.x/10000, newLng+pose.position.y/10000);
+    updateMarker(NewLat - DiffLat, NewLng - DiffLng);
     
 }, 1000);
 
@@ -77,13 +85,13 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-function requestTopicValue(topic, messageType) {
+function requestTopicValue(topic) {
     fetch('/get_topic_value', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ topic: topic, message_type: messageType })
+    body: JSON.stringify({ topic: topic})
 })
 .then(response => response.json())
 .then(data => {
@@ -91,10 +99,14 @@ function requestTopicValue(topic, messageType) {
     if ("ERROR" === data){
         //alert("Une erreur est survenue\n WALL-E semble déconécter !!!")
         error =  true;
-    }else{
+    }else if(topic == "/odometry/filtered"){
         pose = data.pose.pose;
         clock = data.header.stamp;
         error = false;
+    }else{
+        NewLat = data.latitude;
+        NewLng = data.longitude;
+        
     }
 })
 .catch(error => console.error('Erreur lors de la récupération des données:', error));
