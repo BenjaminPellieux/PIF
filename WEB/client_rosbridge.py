@@ -2,9 +2,10 @@ import json
 import websocket
 from threading import Thread
 from time import sleep
-IP_RASP = "192.168.131.1"
-# IP_RASP = "10.8.0.2"
-PORT = "11311"
+# IP_RASP = "192.168.131.1"
+IP_RASP = "10.8.0.2"
+PORT = "9090"
+# PORT = "11311"
 
 
 class WebSocketApp(Thread):
@@ -31,6 +32,7 @@ class WebSocketApp(Thread):
         topic: str = data.get('topic')
         if topic and topic == self.topic_to_subscribe:
             self.topic_data[topic] = data['msg']
+            print(f"[DEBUG] {topic=} {self.topic_data=}")
             if self.topic_data:
                 self.orient = self.topic_data[topic]["pose"]["pose"]["orientation"]
             self.unsubscribe(topic)
