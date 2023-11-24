@@ -1,0 +1,3 @@
+/home/ros/PIF/PIF/VISION/ENVI/src/CMakeFiles/rebuild_cache.dir
+/home/ros/PIF/PIF/VISION/ENVI/src/CMakeFiles/edit_cache.dir
+/home/ros/PIF/PIF/VISION/ENVI/src/CMakeFiles/InitScript.dir
