@@ -44,8 +44,12 @@ function updateMarker(lat, lng) {
 
 //Simulez la réception de nouvelles données GPS toutes les 2 secondes
 setInterval(function() {
-    // Recuperation des donnée du topic  
+    // Recuperation des donnée du topic
     requestTopicValue('/odometry/filtered');
+    setTimeout(function(){ 
+        console.log("INFO SLEEPING");
+    }, 2000);  
+
     requestTopicValue('/navsat/fix');
     // Remplacez les valeurs par vos données odom en temps réel 
     updateData(pose, clock);

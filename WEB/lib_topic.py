@@ -18,6 +18,9 @@ commande_move: dict = {"linear": {
                     }
                 }
 
+topic_type_dict: dict ={  "/odometry/filtered": "nav_msgs/Odometry",
+                           "/navsat/fix" :  "sensor_msgs/NavSatFix"}
+
 
 # command_topic: dict = {
 #     "reset": {

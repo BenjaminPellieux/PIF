@@ -58,6 +58,8 @@ def new_speed():
 def get_topic_value():
     data = request.json
     topic = data['topic']
+    ws_app.subscribe(topic, topic_type_dict[topic])
+    print(f"[INFO][UPDATE_TOPIC] topic: {topic} type: {topic_type_dict[topic]} Data {True if ws_app.topic_data.get(topic) else False}")
     if ws_app.topic_data.get(topic):
         return jsonify(ws_app.topic_data.get(topic))
     return jsonify("ERROR")
