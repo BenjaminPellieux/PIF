@@ -4,8 +4,8 @@
     <title>Vision - Projet PIF (robot trieur de déchets)</title>
     <link rel="stylesheet" type="text/css" href="/static/text.css">
     <style>
-         body {
-            background-image: url('/static/images/image_vision.jpg');
+          body {
+            background-color: lightgrey;
             background-size: cover;
             background-repeat: no-repeat;
             font-family: Arial, sans-serif;
@@ -15,6 +15,11 @@
             display: flex;
             flex-direction: column;
         }
+        .project-image {
+            width: 900px; 
+            height: auto; 
+            margin: 20px 0; 
+        }
 
         header {
             text-align: center;
@@ -23,10 +28,6 @@
         h1 {
             font-size: 45px;
             margin: 20px 0;
-        }
-
-        h1 em {
-            color: white;
         }
 
         .menu {
@@ -44,6 +45,15 @@
         .menu a {
             text-decoration: none;
             color: white;
+        }
+        
+        .Descriptif {
+            text-align: center; /* Centre le texte à l'intérieur du bloc Descriptif */
+        }
+        
+         .project-description {
+            font-size: 25px; /* Nouvelle taille de texte */
+            text-align: center;
         }
 
         /* Media Queries for adjusting styles for different screen sizes */
@@ -68,11 +78,6 @@
 </head>
 <body>
     <h1 style="font-size: 45px;"><em>Bienvenue sur la page vision</em></h1>
-    <style>
-    h1 em {
-    color: white
-    }
-    </style>
     <ul class="menu"> 
         <li><a href="/">Accueil</a></li>
         <li><a href="vision">Vision</a></li>
@@ -81,5 +86,19 @@
         <li><a href="controle">Contrôle du véhicule</a></li>
         <li><a href="configuration">Configuration</a></li>
     </ul>
+
+    <div class="Descriptif">
+        <h1> INFORMATIONS PARTIE VISION ENVIRONNEMENT</h1>
+        <hr />
+        <p class="project-description">
+            "Ici, les recherches faites dans cette partie vision environnement, permettra au véhicule de savoir s'il peut ou non avancer dans son environnement!"
+        </p>
+        <h1> INFORMATIONS PARTIE VISION DECHETS</h1>
+        <hr />
+        <p class="project-description">
+            " Ici, dans cette partie,les recherches faites permettra au véhicule de localiser les déchets et de déterminer si le déchet trouvé fait partie de l'une de ces trois catégories sélectionnées pour la reconnaissance des déchets (les bouchons de bouteilles en plastique, les mégots et les capsules). Ensuite, il le ramassera!"
+        </p> 
+        <img class="project-image" src="static/images/reconnaissance.jpg" alt="Reconnaissance de déchets"
+    </div>
 </body>
 </html>

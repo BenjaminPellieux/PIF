@@ -1,23 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serveur Web projet PIF (robot trieur de déchets)</title>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <style>
-        body {
-    	background-image: url('/static/images/clear_path.jpg');
-    	background-size: cover;
-    	background-repeat: no-repeat;
-    	background-attachment: fixed; /* Fixer l'image de fond */
-    	font-family: Arial, sans-serif;
-    	width: 100%;
-    	min-width: 500px; /* Largeur minimale */
-    	min-height: 500px; /* Hauteur minimale */
-    	margin: 0;
-    	display: flex;
-    	flex-direction: column;
-	     }
-
+          body {
+            background-color: lightgrey;
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-image {
+            width: 900px; 
+            height: auto; 
+            margin: 20px 0; 
+        }
 
         header {
             text-align: center;
@@ -26,10 +30,6 @@
         h1 {
             font-size: 45px;
             margin: 20px 0;
-        }
-
-        h1 em {
-            color: white;
         }
 
         .menu {
@@ -48,6 +48,15 @@
             text-decoration: none;
             color: white;
         }
+        
+        .Descriptif {
+            text-align: center; /* Centre le texte à l'intérieur du bloc Descriptif */
+        }
+        
+         .project-description {
+            font-size: 25px; /* Nouvelle taille de texte */
+            text-align: center;
+        }
 
         /* Media Queries for adjusting styles for different screen sizes */
         @media (max-width: 768px) {
@@ -65,30 +74,31 @@
             }
         }
     </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </style>
     <link rel="stylesheet" type="text/css" href="/static/text.css">
 </head>
-<header>
-    <h1 style="font-size: 45px;"><em>Bienvenue sur la page Web du robot PIF</em></h1>
-    <ul class="menu"> 
-        <li><a href="/">Accueil</a></li>
-        <li><a href="vision">Vision</a></li>
-        <li><a href="gps">GPS</a></li>
-        <li><a href="aspiration">Aspiration</a></li>
-        <li><a href="controle">Contrôle du véhicule</a></li>
-        <li><a href="configuration">Configuration</a></li>
-    </ul>
-
-</header>
 <body>
+    <header>
+        <h1 style="font-size: 45px;"><em>Bienvenue sur la page Web du robot PIF</em></h1>
+        <ul class="menu"> 
+            <li><a href="/">Accueil</a></li>
+            <li><a href="vision">Vision</a></li>
+            <li><a href="gps">GPS</a></li>
+            <li><a href="aspiration">Aspiration</a></li>
+            <li><a href="controle">Contrôle du véhicule</a></li>
+            <li><a href="configuration">Configuration</a></li>
+        </ul>
+    </header>
     
-    <p style="font-size: 25px;"><b>But du projet PIF</b>: Reconnaître, récupérer et trier les déchets de façon autonome, dans des bacs respectifs</p>
-    <style>
-    p {
-        color: white; /* Modifie la couleur du texte du titre en blanc */
-	}
-    </style>
+    <p class="project-description"><b>But du projet PIF</b>: Reconnaître, récupérer et trier les déchets de façon autonome, dans des bacs respectifs.</p>
+
+    <div class="Descriptif">
+        <img class="project-image" src="static/images/clear_path.jpg" alt="Clear path (Wall-E PIF)">
+        <h1> INFORMATIONS </h1>
+        <hr />
+        <p class="project-description">
+            "Dans ce serveur, vous trouverez les différentes recherches effectuées par notre groupe de projet, ainsi qu'une page attribuée à chaque tâche et recherche faite, ainsi que des commandes, le pilotage du véhicule et des mises en application !"
+        </p> 
+    </div>
 </body>
 </html>
 <script type="text/javascript">
@@ -101,11 +111,10 @@
 		        lat: latitude,
                 lon: longitude,
                 acc: accuracy  
-		    });    
+		    }); 
             // Faites ce que vous voulez avec les coordonnées GPS ici
         });
     } else {
         console.log("La géolocalisation n'est pas prise en charge par ce navigateur.");
     }
 </script>
-
