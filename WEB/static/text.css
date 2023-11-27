@@ -31,7 +31,7 @@ h1 {
 /* Media Query for adjusting styles for smaller screens */
 @media (max-width: 900px) {
     .menu li a {
-        padding: 10px 20px; /* Adjusted padding for smaller screens */
-        font-size: 16px; /* Adjusted font size for smaller screens */
+        padding: 10px 10px; /* Adjusted padding for smaller screens */
+        font-size: 15px; /* Adjusted font size for smaller screens */
     }
 }

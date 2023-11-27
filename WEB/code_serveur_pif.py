@@ -58,16 +58,11 @@ def new_speed():
 def get_topic_value():
     data = request.json
     topic = data['topic']
-    message_type = data['message_type']
-    # S'abonner, attendre la donnée et se désabonner
-    ws_app.subscribe(topic, message_type)
-    if not ws_app.topic_data:
-        return "ERROR"
-    while topic not in ws_app.topic_data:
-        pass
-    value = ws_app.topic_data.pop(topic)
-    return jsonify(value)
-    
+    ws_app.subscribe(topic, topic_type_dict[topic])
+    print(f"[INFO][UPDATE_TOPIC] topic: {topic} type: {topic_type_dict[topic]} Data {True if ws_app.topic_data.get(topic) else False}")
+    if ws_app.topic_data.get(topic):
+        return jsonify(ws_app.topic_data.get(topic))
+    return jsonify("ERROR")
 
 @app.route('/area', methods=['POST'])
 def area():

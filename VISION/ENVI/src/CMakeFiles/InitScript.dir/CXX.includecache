@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ros/PIF/PIF/VISION/ENVI/src/InitScript.cpp
+opencv4/opencv2/opencv.hpp
+-
+opencv4/opencv2/highgui/highgui.hpp
+-
+iostream
+-
+stdint.h
+-
+
