@@ -12,6 +12,7 @@ env/
 .vscode/
 
 # Autres fichiers et dossiers à ignorer
+*.sh
 .DS_Store
 *.log
 
