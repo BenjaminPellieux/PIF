@@ -1,4 +1,4 @@
-/* text.css */
+/* index.css */
 
 ul {
     list-style-type: none;
@@ -26,6 +26,15 @@ ul {
 
 h1 {
     text-align: center;
+}
+
+.logo-container {
+    float: left; /* Aligner le conteneur du logo à gauche */
+}
+
+.logo-container img {
+    height: 60px; /* Ajuster la hauteur du logo selon vos besoins */
+    width: auto; /* Garantir que la largeur s'ajuste proportionnellement à la hauteur */
 }
 
 /* Media Query for adjusting styles for smaller screens */
