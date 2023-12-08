@@ -12,7 +12,8 @@ env/
 .vscode/
 
 # Autres fichiers et dossiers à ignorer
-*.sh
+
+gourceviseo.sh
 .DS_Store
 *.log
 
