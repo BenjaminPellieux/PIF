@@ -1,0 +1,2 @@
+
+-DCATKIN_DEVEL_PREFIX=/home/ros/PIF/VISION/ENVI/devel -DCMAKE_INSTALL_PREFIX=/home/ros/PIF/VISION/ENVI/install -G Unix Makefiles
