@@ -4,6 +4,7 @@
 #include <vector>
 #include <unistd.h>
 #include <cstdlib>
+#include <ros/ros.h>
 
 
 // struct Waste{
@@ -17,6 +18,12 @@
 // } typedef Waste;
 
 
+
+void change_origin(cv::Rect* closest_rect, int img_y, int mid_width ){
+    closest_rect->y = img_y - closest_rect->y;
+    closest_rect->x -= mid_width;
+}
+
 int main() {
     // Ouvrir le flux vidéo
     cv::VideoCapture cap("../Video/Default_Video_Test.mp4");
@@ -27,9 +34,11 @@ int main() {
 
     cv::Mat frame, image_blurred, hsv, mask_others, mask_majority_color, kernel;
     std::vector<std::vector<cv::Point>> contours;
-    std::vector<cv::Rect> Waste_list;
 
     cv::Scalar lower_sat, upper_sat;
+    int mid_height = 0;
+    int mid_width = 0;
+        
     int most_frequent_sat = 0;
     int sat_range = 30; // Vous pouvez ajuster cette plage selon vos besoins
 
@@ -40,8 +49,8 @@ int main() {
             std::cout << "Fin de la vidéo" << std::endl;
             break;
         }
-        int mid_height = frame.rows / 2;
-        int mid_width = frame.cols / 2;
+        mid_height = frame.rows / 2;
+        mid_width = frame.cols / 2;
         // Appliquer un filtre gaussien pour lisser l'image
         cv::GaussianBlur(frame, image_blurred, cv::Size(9, 9), 3, 3);
 
@@ -80,6 +89,8 @@ int main() {
         // Trouver les contours dans le masque des autres couleurs
         cv::findContours(mask_others.clone(), contours, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
         int count = 1;
+        cv::Rect max_y_rect;
+        max_y_rect.y=0;
 
         for (size_t i = 0; i < contours.size(); i++) {
             double area = cv::contourArea(contours[i]);
@@ -88,7 +99,9 @@ int main() {
                 std::cout<<"DEBUG count" <<count<<'\n';
                 std::cout << "[LOG] Forme " << count << " area: " << area << "\n";
                 cv::rectangle(frame, rect.tl(), rect.br(), cv::Scalar(0, 255, 0), 2);
-
+                if (rect.y > max_y_rect.y){
+                    max_y_rect = rect;
+                }
                 // Afficher le numéro et l'aire sur l'image
                 std::string text = "#" + std::to_string(count) + " Area: " + std::to_string(static_cast<int>(area));
                 cv::Point textOrg(rect.x, rect.y - 10); // Position du texte au-dessus du rectangle
@@ -98,7 +111,8 @@ int main() {
                 count++; // Incrémenter le compteur de formes
             }
         }
-
+        change_origin(&max_y_rect, frame.rows, mid_width); 
+        std::cout<<"Closest pos x: "<<max_y_rect.x<<" y: "<<max_y_rect.y<<"\n"; 
         // std::sort(Waste_list.begin(), Waste_list.end(), Waste::compareY);
         cv::imshow("Detection de l'element", frame);
         cv::imshow("Masque des autres couleurs", mask_others);
