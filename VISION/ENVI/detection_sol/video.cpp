@@ -89,7 +89,7 @@ int main() {
     createTrackbar("VALUE low", "Reglage", &hsvSettings.low_v, 255, Low_v);
     createTrackbar("VALUE high", "Reglage", &hsvSettings.high_v, 255, High_v);
 
-    createTrackbar("Threshold White", "Reglage", &hsvSettings.threshold_white, 255, ThresholdWhite);
+    createTrackbar("Threshold White", "Reglage", &hsvSettings.threshold_white, 100, ThresholdWhite);
 
     while (true) {
         // Capturer une image depuis la webcam
