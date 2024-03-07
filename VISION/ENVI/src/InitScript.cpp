@@ -15,10 +15,12 @@ cv::Mat grey_img(cv::Mat img){
 }
 
 bool can_go_forward(cv::Mat img){
+    /*
     std::cout << img.rows;
     std::cout << "\n";
     std::cout << img.cols;
     std::cout << "\n";
+    */
 
     int largeur = img.cols;
     int hauteur = img.rows;
