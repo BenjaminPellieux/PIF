@@ -3,6 +3,66 @@
 
 using namespace cv;
 
+// Structure pour les réglages HSV
+struct HSVSettings {
+    int low_h = 0, high_h = 179;
+    int low_s = 0, high_s = 255;
+    int low_v = 0, high_v = 255;
+    int threshold_white = 5;  // Ajout du seuil
+};
+
+// Instancier la structure de réglages HSV
+HSVSettings hsvSettings;
+
+// Fonctions de rappel pour ajuster les plages de valeurs HSV
+void Low_h(int, void*) {
+    if (hsvSettings.low_h > hsvSettings.high_h) {
+        hsvSettings.high_h = hsvSettings.low_h;
+        setTrackbarPos("HUE high", "Reglage", hsvSettings.high_h);
+    }
+}
+
+void High_h(int, void*) {
+    if (hsvSettings.high_h < hsvSettings.low_h) {
+        hsvSettings.low_h = hsvSettings.high_h;
+        setTrackbarPos("HUE low", "Reglage", hsvSettings.low_h);
+    }
+}
+
+void Low_s(int, void*) {
+    if (hsvSettings.low_s > hsvSettings.high_s) {
+        hsvSettings.high_s = hsvSettings.low_s;
+        setTrackbarPos("SATURATION high", "Reglage", hsvSettings.high_s);
+    }
+}
+
+void High_s(int, void*) {
+    if (hsvSettings.high_s < hsvSettings.low_s) {
+        hsvSettings.low_s = hsvSettings.high_s;
+        setTrackbarPos("SATURATION low", "Reglage", hsvSettings.low_s);
+    }
+}
+
+void Low_v(int, void*) {
+    if (hsvSettings.low_v > hsvSettings.high_v) {
+        hsvSettings.high_v = hsvSettings.low_v;
+        setTrackbarPos("VALUE high", "Reglage", hsvSettings.high_v);
+    }
+}
+
+void High_v(int, void*) {
+    if (hsvSettings.high_v < hsvSettings.low_v) {
+        hsvSettings.low_v = hsvSettings.high_v;
+        setTrackbarPos("VALUE low", "Reglage", hsvSettings.low_v);
+    }
+}
+
+// Fonction de rappel pour ajuster la valeur de "Threshold White"
+void ThresholdWhite(int, void*) {
+    // Ajoutez ici le code pour obtenir la valeur de la trackbar
+    hsvSettings.threshold_white = getTrackbarPos("Threshold White", "Reglage");
+}
+
 int main() {
     // Initialiser la capture vidéo depuis la webcam
     VideoCapture cap;
@@ -13,6 +73,23 @@ int main() {
         std::cerr << "Erreur lors de l'ouverture de la webcam." << std::endl;
         return -1;
     }
+
+    // Création des fenêtres
+    namedWindow("Image", WINDOW_AUTOSIZE);
+    namedWindow("Reglage", WINDOW_AUTOSIZE);
+    namedWindow("Seuillage", WINDOW_AUTOSIZE);
+
+    // Création des trackbars pour les réglages des plages de couleurs
+    createTrackbar("HUE low", "Reglage", &hsvSettings.low_h, 179, Low_h);
+    createTrackbar("HUE high", "Reglage", &hsvSettings.high_h, 179, High_h);
+
+    createTrackbar("SATURATION low", "Reglage", &hsvSettings.low_s, 255, Low_s);
+    createTrackbar("SATURATION high", "Reglage", &hsvSettings.high_s, 255, High_s);
+
+    createTrackbar("VALUE low", "Reglage", &hsvSettings.low_v, 255, Low_v);
+    createTrackbar("VALUE high", "Reglage", &hsvSettings.high_v, 255, High_v);
+
+    createTrackbar("Threshold White", "Reglage", &hsvSettings.threshold_white, 255, ThresholdWhite);
 
     while (true) {
         // Capturer une image depuis la webcam
@@ -25,30 +102,19 @@ int main() {
             break;
         }
 
-        // Convertir l'image en niveaux de gris
-        Mat gray;
-        cvtColor(src, gray, COLOR_BGR2GRAY);
+        // Convertir l'image en espace de couleur HSV
+        Mat hsv;
+        cvtColor(src, hsv, COLOR_BGR2HSV);
 
-        // Appliquer Canny Edge Detector
-        Mat edges;
-        Canny(gray, edges, 80, 255);
-
-        // Remplir les zones non-obstacle avec du blanc
-        Mat dst = Mat::zeros(src.size(), CV_8UC1);
-        for (int i = 0; i < edges.cols; ++i) {
-            int j = edges.rows - 1;
-            for (j = edges.rows - 1; j > 0; --j) {
-                if (edges.at<uchar>(j, i) > 0) {
-                    break;
-                }
-            }
-            dst(Range(j, dst.rows - 1), Range(i, i + 1)) = 255;
-        }
+        // Appliquer un masque en utilisant les valeurs HSV ajustées
+        Mat mask;
+        inRange(hsv, Scalar(hsvSettings.low_h, hsvSettings.low_s, hsvSettings.low_v),
+                Scalar(hsvSettings.high_h, hsvSettings.high_s, hsvSettings.high_v), mask);
 
         // Appliquer l'érosion pour éliminer le bruit
         Mat erosion;
         Mat element = getStructuringElement(MORPH_RECT, Size(10, 10));
-        erode(dst, erosion, element);
+        erode(mask, erosion, element);
 
         // Appliquer le flou gaussien
         Mat result;
@@ -58,15 +124,12 @@ int main() {
         Mat bottomRegion = result.rowRange(result.rows * 0.8, result.rows - 1);
         double whitePercentage = (countNonZero(bottomRegion) * 100.0) / bottomRegion.total();
 
-        // Définir un seuil pour considérer la présence d'obstacles
-        double thresholdWhite = 5.0;
-
         // Afficher le résultat
-        namedWindow("Result", WINDOW_NORMAL);
-        imshow("Result", result);
+        imshow("Image", src);
+        imshow("Seuillage", result);
 
         // Faire quelque chose en fonction du pourcentage de pixels blancs
-        if (whitePercentage > thresholdWhite) {
+        if (whitePercentage > hsvSettings.threshold_white) {
             std::cout << "Obstacle détecté, ne pas avancer." << std::endl;
             // Ajouter ici le code pour arrêter le véhicule
         } else {
@@ -85,4 +148,3 @@ int main() {
 
     return 0;
 }
-
