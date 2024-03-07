@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="essai_flexbe">
+
+	<executable package_path="Wall-E_flexbe_behaviors.essai_flexbe_sm" class="essai_flexbeSM" />
+	<tagstring></tagstring>
+	<author>Erwan MAWART</author>
+	<date>Mon Mar 04 2024</date>
+	<description>
+		c'est une présentation.
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+
+</behavior>

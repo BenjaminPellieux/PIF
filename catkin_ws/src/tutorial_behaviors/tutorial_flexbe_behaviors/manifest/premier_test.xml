@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Premier_test">
+
+	<executable package_path="tutorial_flexbe_behaviors.premier_test_sm" class="Premier_testSM" />
+	<tagstring></tagstring>
+	<author>P. Blazevic</author>
+	<date>Fri Nov 05 2021</date>
+	<description>
+		Ceci est mon premier test
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+	<params>
+
+		<param type="numeric" name="waiting_time" default="1" label="waiting_time" hint="Sets the waiting_time">
+			<min value="1" />
+			<max value="5" />
+		</param>
+
+	</params>
+
+
+</behavior>

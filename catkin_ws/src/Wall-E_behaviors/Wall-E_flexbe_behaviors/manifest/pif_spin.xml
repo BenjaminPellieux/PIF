@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="PIF_Spin">
+
+	<executable package_path="Wall-E_flexbe_behaviors.pif_spin_sm" class="PIF_SpinSM" />
+	<tagstring>PIF</tagstring>
+	<author>Erwan MAWART</author>
+	<date>Thu Mar 07 2024</date>
+	<description>
+		Detection dechet.
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+	<params>
+
+		<param type="text" name="wait_time" default="1" label="wait_time" hint="Sets the wait_time" />
+
+		<param type="text" name="topic_detectTrash" default="" label="topic_detectTrash" hint="Sets the topic_detectTrash" />
+
+		<param type="text" name="topic_cmd_vel" default="" label="topic_cmd_vel" hint="Sets the topic_cmd_vel" />
+
+	</params>
+
+
+</behavior>
