@@ -12,7 +12,8 @@ target_link_libraries(bin/CVVidHoughCircle ${OpenCV_LIBS} )
 add_executable(bin/CVVidInRangeBlobHSV src/CVVidInRangeBlobHSV.cpp)
 target_link_libraries(bin/CVVidInRangeBlobHSV ${OpenCV_LIBS} )
 
-
+add_executable(bin/Test_Opencv_exe src/Test_Opencv.cpp )
+target_link_libraries(bin/Test_Opencv_exe ${OpenCV_LIBS} )
 
 
 

@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/ros/PIF/Vision_bouchon/src/InRangeBlobHSV.cpp
+/home/ros/Vision_bouchon/src/InRangeBlobHSV.cpp
 opencv2/imgproc/imgproc.hpp
-/home/ros/PIF/Vision_bouchon/src/opencv2/imgproc/imgproc.hpp
+/home/ros/Vision_bouchon/src/opencv2/imgproc/imgproc.hpp
 opencv2/highgui/highgui.hpp
-/home/ros/PIF/Vision_bouchon/src/opencv2/highgui/highgui.hpp
+/home/ros/Vision_bouchon/src/opencv2/highgui/highgui.hpp
 stdlib.h
 -
 stdio.h

@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ros/PIF/Vision_bouchon
+CMAKE_SOURCE_DIR = /home/ros/Vision_bouchon
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ros/PIF/Vision_bouchon
+CMAKE_BINARY_DIR = /home/ros/Vision_bouchon
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ros/PIF/Vision_bouchon/CMakeFiles /home/ros/PIF/Vision_bouchon/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ros/Vision_bouchon/CMakeFiles /home/ros/Vision_bouchon/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ros/PIF/Vision_bouchon/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ros/Vision_bouchon/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -109,6 +109,19 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+#=============================================================================
+# Target rules for targets named bin/Test_Opencv_exe
+
+# Build rule for target.
+bin/Test_Opencv_exe: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bin/Test_Opencv_exe
+.PHONY : bin/Test_Opencv_exe
+
+# fast build rule for target.
+bin/Test_Opencv_exe/fast:
+	$(MAKE) -f CMakeFiles/bin/Test_Opencv_exe.dir/build.make CMakeFiles/bin/Test_Opencv_exe.dir/build
+.PHONY : bin/Test_Opencv_exe/fast
 
 #=============================================================================
 # Target rules for targets named bin/CVVidInRangeBlobHSV
@@ -230,6 +243,33 @@ src/InRangeBlobHSV.cpp.s:
 	$(MAKE) -f CMakeFiles/bin/InRangeBlobHSV.dir/build.make CMakeFiles/bin/InRangeBlobHSV.dir/src/InRangeBlobHSV.cpp.s
 .PHONY : src/InRangeBlobHSV.cpp.s
 
+src/Test_Opencv.o: src/Test_Opencv.cpp.o
+
+.PHONY : src/Test_Opencv.o
+
+# target to build an object file
+src/Test_Opencv.cpp.o:
+	$(MAKE) -f CMakeFiles/bin/Test_Opencv_exe.dir/build.make CMakeFiles/bin/Test_Opencv_exe.dir/src/Test_Opencv.cpp.o
+.PHONY : src/Test_Opencv.cpp.o
+
+src/Test_Opencv.i: src/Test_Opencv.cpp.i
+
+.PHONY : src/Test_Opencv.i
+
+# target to preprocess a source file
+src/Test_Opencv.cpp.i:
+	$(MAKE) -f CMakeFiles/bin/Test_Opencv_exe.dir/build.make CMakeFiles/bin/Test_Opencv_exe.dir/src/Test_Opencv.cpp.i
+.PHONY : src/Test_Opencv.cpp.i
+
+src/Test_Opencv.s: src/Test_Opencv.cpp.s
+
+.PHONY : src/Test_Opencv.s
+
+# target to generate assembly for a file
+src/Test_Opencv.cpp.s:
+	$(MAKE) -f CMakeFiles/bin/Test_Opencv_exe.dir/build.make CMakeFiles/bin/Test_Opencv_exe.dir/src/Test_Opencv.cpp.s
+.PHONY : src/Test_Opencv.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -238,6 +278,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... bin/Test_Opencv_exe"
 	@echo "... bin/CVVidInRangeBlobHSV"
 	@echo "... bin/CVVidHoughCircle"
 	@echo "... bin/InRangeBlobHSV"
@@ -250,6 +291,9 @@ help:
 	@echo "... src/InRangeBlobHSV.o"
 	@echo "... src/InRangeBlobHSV.i"
 	@echo "... src/InRangeBlobHSV.s"
+	@echo "... src/Test_Opencv.o"
+	@echo "... src/Test_Opencv.i"
+	@echo "... src/Test_Opencv.s"
 .PHONY : help
 
 

@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/ros/PIF/Vision_bouchon/src/CVVidHoughCircle.cpp
+/home/ros/Vision_bouchon/src/CVVidHoughCircle.cpp
 opencv2/highgui/highgui.hpp
-/home/ros/PIF/Vision_bouchon/src/opencv2/highgui/highgui.hpp
+/home/ros/Vision_bouchon/src/opencv2/highgui/highgui.hpp
 opencv2/imgproc/imgproc.hpp
-/home/ros/PIF/Vision_bouchon/src/opencv2/imgproc/imgproc.hpp
+/home/ros/Vision_bouchon/src/opencv2/imgproc/imgproc.hpp
 iostream
 -
 stdio.h
