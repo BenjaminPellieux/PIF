@@ -6,7 +6,7 @@ TARGET = vision_pixel_par_pixel
 
 all: $(TARGET)
 
-$(TARGET): vision.cpp
+$(TARGET): video.cpp
 	$(CXX) $(CXXFLAGS) -o $@ $< $(OPENCV_LIBS)
 
 clean:
