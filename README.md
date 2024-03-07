@@ -1,7 +1,5 @@
 # Projet PIF / WALL-E
 
-Vive l'ISTY !!!!
-PS:  On veut un GitLab.isty.fr
 
 ## À Propos du Projet
 
