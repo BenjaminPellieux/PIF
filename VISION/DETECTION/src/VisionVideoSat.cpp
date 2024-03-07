@@ -26,7 +26,7 @@ void change_origin(cv::Rect* closest_rect, int img_y, int mid_width ){
 
 int main() {
     // Ouvrir le flux vidéo
-    cv::VideoCapture cap("../Video/Default_Video_Test.mp4");
+    cv::VideoCapture cap("Video/Default_Video_Test.mp4");
     if(!cap.isOpened()) {
         std::cout << "Erreur: Impossible d'ouvrir la vidéo." << std::endl;
         return -1;

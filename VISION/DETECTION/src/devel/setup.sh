@@ -11,7 +11,7 @@
 
 # since this file is sourced either use the provided _CATKIN_SETUP_DIR
 # or fall back to the destination set at configure time
-: ${_CATKIN_SETUP_DIR:=/home/sah0622/Documents/Dossier_personnel/PIF/VISION/DETECTION/src/devel}
+: ${_CATKIN_SETUP_DIR:=/home/ros/PIF/VISION/DETECTION/src/devel}
 _SETUP_UTIL="$_CATKIN_SETUP_DIR/_setup_util.py"
 unset _CATKIN_SETUP_DIR
 

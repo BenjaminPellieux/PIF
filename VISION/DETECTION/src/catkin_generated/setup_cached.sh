@@ -5,9 +5,8 @@
 # it emulates the modifications of the setup script without recurring computations
 
 # new environment variables
-export CMAKE_PREFIX_PATH="/home/sah0622/Documents/Dossier_personnel/PIF/VISION/DETECTION/src/devel"
-export LD_LIBRARY_PATH=""
-export PKG_CONFIG_PATH=""
-export PYTHONPATH=""
 
 # modified environment variables
+export CMAKE_PREFIX_PATH="/home/ros/PIF/VISION/DETECTION/src/devel:$CMAKE_PREFIX_PATH"
+export ROSLISP_PACKAGE_DIRECTORIES="/home/ros/PIF/VISION/DETECTION/src/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
+export ROS_PACKAGE_PATH="/home/sah0622/Documents/Dossier_personnel/PIF/VISION/DETECTION/src:/home/ros/PIF/VISION/DETECTION/src:$ROS_PACKAGE_PATH"
