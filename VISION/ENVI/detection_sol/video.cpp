@@ -121,7 +121,7 @@ int main() {
         GaussianBlur(erosion, result, Size(5, 5), 4);
 
         // Déterminer si le véhicule peut avancer ou non
-        Mat bottomRegion = result.rowRange(result.rows * 0.8, result.rows - 1);
+        Mat bottomRegion = result.rowRange(result.rows * 0.6, result.rows - 1);
         double whitePercentage = (countNonZero(bottomRegion) * 100.0) / bottomRegion.total();
 
         // Afficher le résultat
@@ -130,10 +130,10 @@ int main() {
 
         // Faire quelque chose en fonction du pourcentage de pixels blancs
         if (whitePercentage > hsvSettings.threshold_white) {
-            std::cout << "Obstacle détecté, ne pas avancer." << std::endl;
+            std::cout << "Obstacle détecté,ne pas avancer." << std::endl;
             // Ajouter ici le code pour arrêter le véhicule
         } else {
-            std::cout << "Aucun obstacle détecté, vous pouvez avancer." << std::endl;
+            std::cout << "Aucun obstacle détecté, avancer." << std::endl;
             // Ajouter ici le code pour commander l'avancement du véhicule
         }
 
