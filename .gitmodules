@@ -1,0 +1,6 @@
+[submodule "catkin_ws/src/flexbe_behavior_engine"]
+	path = catkin_ws/src/flexbe_behavior_engine
+	url = git@github.com:FlexBE/flexbe_behavior_engine.git
+[submodule "catkin_ws/src/flexbe_app"]
+	path = catkin_ws/src/flexbe_app
+	url = git@github.com:FlexBE/flexbe_app.git
