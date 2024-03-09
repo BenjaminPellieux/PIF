@@ -90,17 +90,16 @@ list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
 
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # Special rule for the target test
 test:
@@ -113,17 +112,6 @@ test/fast: test
 
 .PHONY : test/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -134,6 +122,18 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -166,6 +166,36 @@ preinstall/fast:
 depend:
 	cd /home/ros/PIF/catkin_ws/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+# Convenience name for target.
+coord_gps/CMakeFiles/clean_test_results_coord_gps.dir/rule:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/clean_test_results_coord_gps.dir/rule
+.PHONY : coord_gps/CMakeFiles/clean_test_results_coord_gps.dir/rule
+
+# Convenience name for target.
+clean_test_results_coord_gps: coord_gps/CMakeFiles/clean_test_results_coord_gps.dir/rule
+
+.PHONY : clean_test_results_coord_gps
+
+# fast build rule for target.
+clean_test_results_coord_gps/fast:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/clean_test_results_coord_gps.dir/build.make coord_gps/CMakeFiles/clean_test_results_coord_gps.dir/build
+.PHONY : clean_test_results_coord_gps/fast
+
+# Convenience name for target.
+coord_gps/CMakeFiles/_run_tests_coord_gps_roslaunch-check_launch.dir/rule:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/_run_tests_coord_gps_roslaunch-check_launch.dir/rule
+.PHONY : coord_gps/CMakeFiles/_run_tests_coord_gps_roslaunch-check_launch.dir/rule
+
+# Convenience name for target.
+_run_tests_coord_gps_roslaunch-check_launch: coord_gps/CMakeFiles/_run_tests_coord_gps_roslaunch-check_launch.dir/rule
+
+.PHONY : _run_tests_coord_gps_roslaunch-check_launch
+
+# fast build rule for target.
+_run_tests_coord_gps_roslaunch-check_launch/fast:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/_run_tests_coord_gps_roslaunch-check_launch.dir/build.make coord_gps/CMakeFiles/_run_tests_coord_gps_roslaunch-check_launch.dir/build
+.PHONY : _run_tests_coord_gps_roslaunch-check_launch/fast
 
 # Convenience name for target.
 coord_gps/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
@@ -213,21 +243,6 @@ geometry_msgs_generate_messages_cpp/fast:
 .PHONY : geometry_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
-coord_gps/CMakeFiles/roscpp_generate_messages_lisp.dir/rule:
-	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
-.PHONY : coord_gps/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-roscpp_generate_messages_lisp: coord_gps/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
-
-.PHONY : roscpp_generate_messages_lisp
-
-# fast build rule for target.
-roscpp_generate_messages_lisp/fast:
-	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make coord_gps/CMakeFiles/roscpp_generate_messages_lisp.dir/build
-.PHONY : roscpp_generate_messages_lisp/fast
-
-# Convenience name for target.
 coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule:
 	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
 .PHONY : coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
@@ -271,6 +286,21 @@ geometry_msgs_generate_messages_py: coord_gps/CMakeFiles/geometry_msgs_generate_
 geometry_msgs_generate_messages_py/fast:
 	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make coord_gps/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
 .PHONY : geometry_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+coord_gps/CMakeFiles/_run_tests_coord_gps_roslaunch-check.dir/rule:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/_run_tests_coord_gps_roslaunch-check.dir/rule
+.PHONY : coord_gps/CMakeFiles/_run_tests_coord_gps_roslaunch-check.dir/rule
+
+# Convenience name for target.
+_run_tests_coord_gps_roslaunch-check: coord_gps/CMakeFiles/_run_tests_coord_gps_roslaunch-check.dir/rule
+
+.PHONY : _run_tests_coord_gps_roslaunch-check
+
+# fast build rule for target.
+_run_tests_coord_gps_roslaunch-check/fast:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/_run_tests_coord_gps_roslaunch-check.dir/build.make coord_gps/CMakeFiles/_run_tests_coord_gps_roslaunch-check.dir/build
+.PHONY : _run_tests_coord_gps_roslaunch-check/fast
 
 # Convenience name for target.
 coord_gps/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule:
@@ -348,6 +378,21 @@ roscpp_generate_messages_nodejs/fast:
 .PHONY : roscpp_generate_messages_nodejs/fast
 
 # Convenience name for target.
+coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+.PHONY : coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+rosgraph_msgs_generate_messages_cpp: coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+
+.PHONY : rosgraph_msgs_generate_messages_cpp
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_cpp/fast:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
+.PHONY : rosgraph_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
 coord_gps/CMakeFiles/roscpp_generate_messages_cpp.dir/rule:
 	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
 .PHONY : coord_gps/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
@@ -378,6 +423,21 @@ sensor_msgs_generate_messages_eus/fast:
 .PHONY : sensor_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
+coord_gps/CMakeFiles/run_tests_coord_gps_roslaunch-check_launch.dir/rule:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/run_tests_coord_gps_roslaunch-check_launch.dir/rule
+.PHONY : coord_gps/CMakeFiles/run_tests_coord_gps_roslaunch-check_launch.dir/rule
+
+# Convenience name for target.
+run_tests_coord_gps_roslaunch-check_launch: coord_gps/CMakeFiles/run_tests_coord_gps_roslaunch-check_launch.dir/rule
+
+.PHONY : run_tests_coord_gps_roslaunch-check_launch
+
+# fast build rule for target.
+run_tests_coord_gps_roslaunch-check_launch/fast:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/run_tests_coord_gps_roslaunch-check_launch.dir/build.make coord_gps/CMakeFiles/run_tests_coord_gps_roslaunch-check_launch.dir/build
+.PHONY : run_tests_coord_gps_roslaunch-check_launch/fast
+
+# Convenience name for target.
 coord_gps/CMakeFiles/roscpp_generate_messages_py.dir/rule:
 	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/roscpp_generate_messages_py.dir/rule
 .PHONY : coord_gps/CMakeFiles/roscpp_generate_messages_py.dir/rule
@@ -406,6 +466,21 @@ std_msgs_generate_messages_lisp: coord_gps/CMakeFiles/std_msgs_generate_messages
 std_msgs_generate_messages_lisp/fast:
 	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make coord_gps/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
 .PHONY : std_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+coord_gps/CMakeFiles/run_tests_coord_gps.dir/rule:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/run_tests_coord_gps.dir/rule
+.PHONY : coord_gps/CMakeFiles/run_tests_coord_gps.dir/rule
+
+# Convenience name for target.
+run_tests_coord_gps: coord_gps/CMakeFiles/run_tests_coord_gps.dir/rule
+
+.PHONY : run_tests_coord_gps
+
+# fast build rule for target.
+run_tests_coord_gps/fast:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/run_tests_coord_gps.dir/build.make coord_gps/CMakeFiles/run_tests_coord_gps.dir/build
+.PHONY : run_tests_coord_gps/fast
 
 # Convenience name for target.
 coord_gps/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule:
@@ -468,6 +543,36 @@ std_msgs_generate_messages_nodejs/fast:
 .PHONY : std_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
+coord_gps/CMakeFiles/roscpp_generate_messages_eus.dir/rule:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/roscpp_generate_messages_eus.dir/rule
+.PHONY : coord_gps/CMakeFiles/roscpp_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+roscpp_generate_messages_eus: coord_gps/CMakeFiles/roscpp_generate_messages_eus.dir/rule
+
+.PHONY : roscpp_generate_messages_eus
+
+# fast build rule for target.
+roscpp_generate_messages_eus/fast:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/roscpp_generate_messages_eus.dir/build.make coord_gps/CMakeFiles/roscpp_generate_messages_eus.dir/build
+.PHONY : roscpp_generate_messages_eus/fast
+
+# Convenience name for target.
+coord_gps/CMakeFiles/run_tests_coord_gps_roslaunch-check.dir/rule:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/run_tests_coord_gps_roslaunch-check.dir/rule
+.PHONY : coord_gps/CMakeFiles/run_tests_coord_gps_roslaunch-check.dir/rule
+
+# Convenience name for target.
+run_tests_coord_gps_roslaunch-check: coord_gps/CMakeFiles/run_tests_coord_gps_roslaunch-check.dir/rule
+
+.PHONY : run_tests_coord_gps_roslaunch-check
+
+# fast build rule for target.
+run_tests_coord_gps_roslaunch-check/fast:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/run_tests_coord_gps_roslaunch-check.dir/build.make coord_gps/CMakeFiles/run_tests_coord_gps_roslaunch-check.dir/build
+.PHONY : run_tests_coord_gps_roslaunch-check/fast
+
+# Convenience name for target.
 coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule:
 	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
 .PHONY : coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/rule
@@ -483,6 +588,36 @@ rosgraph_msgs_generate_messages_eus/fast:
 .PHONY : rosgraph_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
+coord_gps/CMakeFiles/roscpp_generate_messages_lisp.dir/rule:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+.PHONY : coord_gps/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+roscpp_generate_messages_lisp: coord_gps/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+
+.PHONY : roscpp_generate_messages_lisp
+
+# fast build rule for target.
+roscpp_generate_messages_lisp/fast:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make coord_gps/CMakeFiles/roscpp_generate_messages_lisp.dir/build
+.PHONY : roscpp_generate_messages_lisp/fast
+
+# Convenience name for target.
+coord_gps/CMakeFiles/_catkin_empty_exported_target.dir/rule:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/_catkin_empty_exported_target.dir/rule
+.PHONY : coord_gps/CMakeFiles/_catkin_empty_exported_target.dir/rule
+
+# Convenience name for target.
+_catkin_empty_exported_target: coord_gps/CMakeFiles/_catkin_empty_exported_target.dir/rule
+
+.PHONY : _catkin_empty_exported_target
+
+# fast build rule for target.
+_catkin_empty_exported_target/fast:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/_catkin_empty_exported_target.dir/build.make coord_gps/CMakeFiles/_catkin_empty_exported_target.dir/build
+.PHONY : _catkin_empty_exported_target/fast
+
+# Convenience name for target.
 coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule:
 	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
 .PHONY : coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
@@ -496,6 +631,21 @@ rosgraph_msgs_generate_messages_lisp: coord_gps/CMakeFiles/rosgraph_msgs_generat
 rosgraph_msgs_generate_messages_lisp/fast:
 	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
 .PHONY : rosgraph_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+coord_gps/CMakeFiles/_run_tests_coord_gps.dir/rule:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/_run_tests_coord_gps.dir/rule
+.PHONY : coord_gps/CMakeFiles/_run_tests_coord_gps.dir/rule
+
+# Convenience name for target.
+_run_tests_coord_gps: coord_gps/CMakeFiles/_run_tests_coord_gps.dir/rule
+
+.PHONY : _run_tests_coord_gps
+
+# fast build rule for target.
+_run_tests_coord_gps/fast:
+	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/_run_tests_coord_gps.dir/build.make coord_gps/CMakeFiles/_run_tests_coord_gps.dir/build
+.PHONY : _run_tests_coord_gps/fast
 
 # Convenience name for target.
 coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/rule:
@@ -526,36 +676,6 @@ coord_gps_node: coord_gps/CMakeFiles/coord_gps_node.dir/rule
 coord_gps_node/fast:
 	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/coord_gps_node.dir/build.make coord_gps/CMakeFiles/coord_gps_node.dir/build
 .PHONY : coord_gps_node/fast
-
-# Convenience name for target.
-coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule:
-	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-.PHONY : coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-rosgraph_msgs_generate_messages_cpp: coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : rosgraph_msgs_generate_messages_cpp
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_cpp/fast:
-	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make coord_gps/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
-.PHONY : rosgraph_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-coord_gps/CMakeFiles/roscpp_generate_messages_eus.dir/rule:
-	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 coord_gps/CMakeFiles/roscpp_generate_messages_eus.dir/rule
-.PHONY : coord_gps/CMakeFiles/roscpp_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-roscpp_generate_messages_eus: coord_gps/CMakeFiles/roscpp_generate_messages_eus.dir/rule
-
-.PHONY : roscpp_generate_messages_eus
-
-# fast build rule for target.
-roscpp_generate_messages_eus/fast:
-	cd /home/ros/PIF/catkin_ws/build && $(MAKE) -f coord_gps/CMakeFiles/roscpp_generate_messages_eus.dir/build.make coord_gps/CMakeFiles/roscpp_generate_messages_eus.dir/build
-.PHONY : roscpp_generate_messages_eus/fast
 
 src/coord_gps_node.o: src/coord_gps_node.cpp.o
 
@@ -593,36 +713,44 @@ help:
 	@echo "... install/strip"
 	@echo "... install"
 	@echo "... list_install_components"
+	@echo "... edit_cache"
+	@echo "... clean_test_results_coord_gps"
+	@echo "... _run_tests_coord_gps_roslaunch-check_launch"
 	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_nodejs"
 	@echo "... geometry_msgs_generate_messages_cpp"
-	@echo "... roscpp_generate_messages_lisp"
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... sensor_msgs_generate_messages_py"
 	@echo "... geometry_msgs_generate_messages_py"
+	@echo "... _run_tests_coord_gps_roslaunch-check"
 	@echo "... sensor_msgs_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_lisp"
 	@echo "... geometry_msgs_generate_messages_lisp"
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... roscpp_generate_messages_nodejs"
+	@echo "... test"
+	@echo "... rosgraph_msgs_generate_messages_cpp"
 	@echo "... roscpp_generate_messages_cpp"
 	@echo "... sensor_msgs_generate_messages_eus"
+	@echo "... run_tests_coord_gps_roslaunch-check_launch"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... std_msgs_generate_messages_lisp"
+	@echo "... run_tests_coord_gps"
 	@echo "... sensor_msgs_generate_messages_cpp"
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_nodejs"
+	@echo "... rebuild_cache"
+	@echo "... roscpp_generate_messages_eus"
 	@echo "... install/local"
+	@echo "... run_tests_coord_gps_roslaunch-check"
 	@echo "... rosgraph_msgs_generate_messages_eus"
+	@echo "... roscpp_generate_messages_lisp"
+	@echo "... _catkin_empty_exported_target"
 	@echo "... rosgraph_msgs_generate_messages_lisp"
+	@echo "... _run_tests_coord_gps"
 	@echo "... rosgraph_msgs_generate_messages_nodejs"
 	@echo "... coord_gps_node"
-	@echo "... rosgraph_msgs_generate_messages_cpp"
-	@echo "... test"
-	@echo "... edit_cache"
-	@echo "... roscpp_generate_messages_eus"
-	@echo "... rebuild_cache"
 	@echo "... src/coord_gps_node.o"
 	@echo "... src/coord_gps_node.i"
 	@echo "... src/coord_gps_node.s"
