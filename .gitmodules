@@ -1,0 +1,15 @@
+[submodule "catkin_ws/src/flexbe_behavior_engine"]
+	path = catkin_ws/src/flexbe_behavior_engine
+	url = git@github.com:FlexBE/flexbe_behavior_engine.git
+[submodule "catkin_ws/src/flexbe_app"]
+	path = catkin_ws/src/flexbe_app
+	url = git@github.com:FlexBE/flexbe_app.git
+[submodule "Integration/Wall-E_Behaviors"]
+	path = Integration/Wall-E_Behaviors
+	url = git@github.com:BlueWan14/Wall-E_Behaviors.git
+[submodule "Integration/flexbe_app"]
+	path = Integration/flexbe_app
+	url = git@github.com:FlexBE/flexbe_app.git
+[submodule "Integration/flexbe_behavior_engine"]
+	path = Integration/flexbe_behavior_engine
+	url = git@github.com:FlexBE/flexbe_behavior_engine.git
