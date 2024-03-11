@@ -18,12 +18,6 @@ def controle():
 def config():
     return render_template("configuration.html")
 
-@app.route('/endpoint', methods=['POST'])
-def endpoint():
-    data = request.json
-    print(data)
-    return "Données reçues"
-
 @app.route('/command', methods=['POST'])
 def command():
     handle_command(request.form["comd"])

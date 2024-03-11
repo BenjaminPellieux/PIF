@@ -1,10 +1,10 @@
 from client_rosbridge import *
 from lib_topic import *
 from datetime import datetime
-current_speed = 5
+current_speed: float = 0.5
 
 
-def handle_zone(data):
+def handle_zone(data: list):
     area: dict = {i:data[0][i] for i in range(len(data[0]))}
     print(f"[DEBUG]  area: {area=} {len(area)=})")
     topic_type: str = "geometry_msgs/PointStamped"
@@ -28,16 +28,16 @@ def handle_zone(data):
     except:
         print("[ERROR] WebSocket closed")
 
-def change_speed(speed):
+def change_speed(speed: str):
     global current_speed
     if ws_app.topic_data:
         current_speed = int(speed)
 
-def handle_command(cmnd):
+def handle_command(cmnd: str):
 
      # Vérifiez si la clé est présente dans command_topic
     if cmnd in command_topic:
-        command_changes = command_topic[cmnd]
+        command_changes: dict = command_topic[cmnd]
 
         # Mise à jour des valeurs de 'linear' et 'angular' dans 'commande_move'
         for command_type, values in command_changes.items():
@@ -49,9 +49,4 @@ def handle_command(cmnd):
         ws_app.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', command_changes)
     except:
         print("[ERROR] WebSocket closed")
-
-
-def get_bridge_topic():
-    print(f"[DEBUG] Get bridge topic") 
-
 
