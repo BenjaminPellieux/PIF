@@ -1,0 +1,7 @@
+roscore
+roslaunch sick_tim sick_tim551_2050001.launch
+rosrun tf static_transform_publisher 0 0 0 0 0 0 global_frame laser_mount_link 0
+roslaunch ydlidar_ros X4.launch
+rosrun scan_detect_obstacle scan_detect_obstacle_node 
+rosrun rviz rviz
+

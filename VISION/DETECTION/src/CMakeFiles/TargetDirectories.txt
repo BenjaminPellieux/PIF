@@ -1,3 +1,0 @@
-/home/sah0622/Documents/Dossier_personnel/PIF/VISION/DETECTION/src/CMakeFiles/rebuild_cache.dir
-/home/sah0622/Documents/Dossier_personnel/PIF/VISION/DETECTION/src/CMakeFiles/edit_cache.dir
-/home/sah0622/Documents/Dossier_personnel/PIF/VISION/DETECTION/src/CMakeFiles/VisionVideo.dir

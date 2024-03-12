@@ -3,9 +3,10 @@ import websocket
 from threading import Thread
 from time import sleep
 # IP_RASP = "192.168.131.1"
-IP_RASP = "10.8.0.2"
+IP_RASP = "10.8.0.3"
 PORT = "9090"
 # PORT = "11311"
+
 
 
 class WebSocketApp(Thread):
@@ -26,40 +27,40 @@ class WebSocketApp(Thread):
                                          on_close=self.on_close)
         self.ws.on_open = self.on_open
         self.ws.run_forever()
+    
+    def reconnect(self):
+        while not self.ws or not self.ws.sock or not self.ws.sock.connected:
+            print("[INFO] Tentative de reconnexion...")
+            sleep(5)  # Délai avant de retenter la connexion
+            self.connect()
 
     def on_message(self, ws:  websocket, message: json) -> None:
         data: dict = json.loads(message)
         topic: str = data.get('topic')
         if topic and topic == self.topic_to_subscribe:
             self.topic_data[topic] = data['msg']
-            print(f"[DEBUG] {topic=} {self.topic_data=}")
-            if self.topic_data:
+            if self.topic_data and topic == "/odometry/filtered":
                 self.orient = self.topic_data[topic]["pose"]["pose"]["orientation"]
             self.unsubscribe(topic)
 
     def on_error(self, ws: websocket, error: str) -> None:
-        print("Erreur :", error)
+        print("[INFO][ON_ERROR] Erreur :", error)
         sleep(5)  # Attendre avant de retenter la connexion
-        try:
-            self.connect()  # Tentative de reconnexion
-        except Exception as e:
-            print("[ERROR] Echeque de la connexion ")
+        self.reconnect()
 
 
     def on_close(self, ws: websocket) -> None:
-        print("Connexion fermée. Tentative de reconnexion...")
-        try:
-            self.on_error(self.ws)
-        except Exception as e:
-            print("[ERROR]")
+        print("[INFO][ON_CLOSE] Connexion fermée. Tentative de reconnexion...")
+        sleep(5)
+        self.reconnect()
+
 
     def on_open(self, ws: websocket) -> None:
-        print("Connexion établie avec le serveur Rosbridge")
+        print("[INFO][ON_OPEN] Connexion établie avec le serveur Rosbridge")
 
     def publish(self, topic: str, message_type: str, message: dict) -> None:
         if not self.ws or not self.ws.sock:
-            print("WebSocket n'est pas connecté. Tentative de reconnexion...")
-            self.on_close(self.ws)
+            print("[INFO][PUBLISH] WebSocket n'est pas connecté. Tentative de reconnexion...")
             return
 
         publish_message: dict = {
@@ -72,10 +73,10 @@ class WebSocketApp(Thread):
 
     def subscribe(self, topic: str, message_type: str) -> None:
         if not self.ws or not self.ws.sock or not self.ws.sock.connected:
-            print("WebSocket n'est pas connecté. Tentative de reconnexion...")
-            self.on_close(self.ws)
+            print("[INFO][SUBSCRIBE] WebSocket n'est pas connecté. Tentative de reconnexion...")
             return
-
+        
+        print("[INFO][SUBSCRIBE]")
         self.topic_to_subscribe: str = topic
         subscribe_message: dict = {
             "op": "subscribe",
@@ -85,6 +86,7 @@ class WebSocketApp(Thread):
         self.ws.send(json.dumps(subscribe_message))
 
     def unsubscribe(self, topic: str) -> None:
+        print("[INFO][UNSUBSCRIBE]")
         unsubscribe_message: dict = {
             "op": "unsubscribe",
             "topic": topic
@@ -95,3 +97,8 @@ class WebSocketApp(Thread):
 # Instanciation du client WebSocket
 ws_app: WebSocketApp = WebSocketApp()
 ws_app.start()
+
+# Utilisation de l'instance
+
+# Exemple d'abonnement à plusieurs topics
+

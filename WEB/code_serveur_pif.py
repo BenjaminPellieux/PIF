@@ -10,37 +10,13 @@ app = Flask(__name__, static_folder='static')
 def index():
     return render_template("index.html")
 
-@app.route('/vision')
-def vision():
-    return render_template("vision.html")
-
-@app.route('/gps')
-def gps():
-    return render_template("gps.html")
-
 @app.route('/controle')
 def controle():
     return render_template("controle.html")
 
-@app.route('/aspiration')
-def aspiration():
-    return render_template("aspiration.html")
-
 @app.route('/configuration')
 def config():
     return render_template("configuration.html")
-
-@app.route('/bridge_test')
-def bridge():
-    return render_template("rosbridge.html")
-
-@app.route('/endpoint', methods=['POST'])
-def endpoint():
-    data = request.json
-
-    print(data)
-    # Traiter ou stocker les données ici
-    return "Données reçues"
 
 @app.route('/command', methods=['POST'])
 def command():
@@ -58,20 +34,15 @@ def new_speed():
 def get_topic_value():
     data = request.json
     topic = data['topic']
-    message_type = data['message_type']
-    # S'abonner, attendre la donnée et se désabonner
-    ws_app.subscribe(topic, message_type)
-    if not ws_app.topic_data:
-        return "ERROR"
-    while topic not in ws_app.topic_data:
-        pass
-    value = ws_app.topic_data.pop(topic)
-    return jsonify(value)
-    
+    ws_app.subscribe(topic, topic_type_dict[topic])
+    print(f"[INFO][UPDATE_TOPIC] topic: {topic} type: {topic_type_dict[topic]} Data {True if ws_app.topic_data.get(topic) else False}")
+    if ws_app.topic_data.get(topic):
+        return jsonify(ws_app.topic_data.get(topic))
+    return jsonify("ERROR")
 
 @app.route('/area', methods=['POST'])
 def area():
-    handle_points(json.loads(request.form["points"]))
+    handle_zone(json.loads(request.form["points"]))
     return "200"
 
 @app.route('/locate', methods=['POST'])
@@ -84,4 +55,4 @@ def locate():
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=8080)
+    app.run(host='localhost', port=8080, ssl_context=('cert.pem', 'key.pem'))
