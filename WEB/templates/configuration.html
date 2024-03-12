@@ -135,23 +135,24 @@
 
         document.getElementById('sendData').onclick = function() {
             if (lastLayer) {
-                // Get the coordinates from the last layer
                 var coordinates = lastLayer.getLatLngs();
-                // Convert coordinates to a readable format if necessary
-                var readableCoordinates = coordinates.map(function(latlng) {
-                    return { lat: latlng.lat, lng: latlng.lng };
-                });
-                
-                submit_area(JSON.stringify(coordinates))
-                // TODO: Send the data to a server using AJAX or Fetch API
+                if (coordinates[0].length != 4){
+                    alert("Saisie incorrecte selectionnez une zone CARRE !")
+                }else {
+                    var readableCoordinates = coordinates.map(function(latlng) {
+                                                            return { lat: latlng.lat, lng: latlng.lng };
+                    });
+                    
+                    submit_area(JSON.stringify(coordinates))
+                }
             } else {
                 alert("No shape drawn on the map.");
             }
         };
 
-    	
 	function submit_area(coordinates) {
-		console.log("[DEBUG] new area : " + coordinates);
+		console.log("[DEBUG] new area : " + coordinates + typeof(coordinates[0]) );
+
         	$.post( "/area", {
 		    points: coordinates
 		});

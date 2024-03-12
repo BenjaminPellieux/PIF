@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *.pyo
 
+
 # Dossiers de l'environnement virtuel
 venv/
 env/
@@ -14,7 +15,8 @@ env/
 .vscode/
 
 # Autres fichiers et dossiers à ignorer
-*.sh
+
+gourceviseo.sh
 .DS_Store
 *.log
 
@@ -31,3 +33,5 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+
+catkin_generated/
