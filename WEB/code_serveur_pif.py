@@ -10,37 +10,13 @@ app = Flask(__name__, static_folder='static')
 def index():
     return render_template("index.html")
 
-@app.route('/vision')
-def vision():
-    return render_template("vision.html")
-
-@app.route('/gps')
-def gps():
-    return render_template("gps.html")
-
 @app.route('/controle')
 def controle():
     return render_template("controle.html")
 
-@app.route('/aspiration')
-def aspiration():
-    return render_template("aspiration.html")
-
 @app.route('/configuration')
 def config():
     return render_template("configuration.html")
-
-@app.route('/bridge_test')
-def bridge():
-    return render_template("rosbridge.html")
-
-@app.route('/endpoint', methods=['POST'])
-def endpoint():
-    data = request.json
-
-    print(data)
-    # Traiter ou stocker les données ici
-    return "Données reçues"
 
 @app.route('/command', methods=['POST'])
 def command():
@@ -79,4 +55,4 @@ def locate():
 
 
 if __name__ == '__main__':
-    app.run(host='54.36.103.170', port=8080)
+    app.run(host='localhost', port=8080, ssl_context=('cert.pem', 'key.pem'))
