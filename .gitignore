@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *.pyo
 
+
 # Dossiers de l'environnement virtuel
 venv/
 env/

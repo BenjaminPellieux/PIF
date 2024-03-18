@@ -1,5 +1,6 @@
 # Projet PIF / WALL-E
 
+
 ## À Propos du Projet
 
 Le projet PIF / WALL-E est un effort collaboratif visant à créer un robot aspirateur de déchets autonome. Ce projet intègre des technologies avancées en robotique, IA, et développement web pour relever le défi de la gestion des déchets dans les espaces urbains et naturels.
