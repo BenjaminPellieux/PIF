@@ -6,12 +6,12 @@ project( VisionVideoSat LANGUAGES CXX )
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs)
+#find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs)
 find_package( OpenCV REQUIRED )
 
 
 
-message( "found catkin: ${catkin_FOUND}" ) # shows '1'
+#message( "found catkin: ${catkin_FOUND}" ) # shows '1'
 message( "roscpp include_dir: ${roscpp_INCLUDE_DIRS}" ) # shows *nothing*
 
 
