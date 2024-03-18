@@ -68,13 +68,13 @@ set(detect_waste_CONFIG_INCLUDED TRUE)
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
   set(detect_waste_SOURCE_PREFIX /home/ros/PIF/catkin_ws/src/detect_waste)
-  set(detect_waste_DEVEL_PREFIX /home/ros/PIF/catkin_ws/src/detect_waste/devel)
+  set(detect_waste_DEVEL_PREFIX /home/ros/PIF/catkin_ws/devel)
   set(detect_waste_INSTALL_PREFIX "")
   set(detect_waste_PREFIX ${detect_waste_DEVEL_PREFIX})
 else()
   set(detect_waste_SOURCE_PREFIX "")
   set(detect_waste_DEVEL_PREFIX "")
-  set(detect_waste_INSTALL_PREFIX /usr/local)
+  set(detect_waste_INSTALL_PREFIX /home/ros/PIF/catkin_ws/install)
   set(detect_waste_PREFIX ${detect_waste_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/ros/PIF/catkin_ws/src/detect_waste/devel/lib;/home/ros/PIF/catkin_ws/src/devel/lib;/home/ros/catkin_ws/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/ros/PIF/catkin_ws/devel/lib;/home/ros/PIF/catkin_ws/src/devel/lib;/home/ros/catkin_ws/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
     ros::NodeHandle nh;
     ros::Publisher detect_pub = nh.advertise<geometry_msgs::Point>("Topic", 1000);
     
-    cv::VideoCapture cap("../Video/Default_Video_Test.mp4");
+    cv::VideoCapture cap("/home/ros/PIF/VISION/DETECTION/Video/Default_Video_Test.mp4");
     if(!cap.isOpened()) {
         std::cout << "Erreur: Impossible d'ouvrir la vidéo." << std::endl;
         return EXIT_FAILURE;

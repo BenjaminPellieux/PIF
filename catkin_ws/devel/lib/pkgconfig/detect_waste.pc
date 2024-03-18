@@ -1,4 +1,4 @@
-prefix=/home/ros/PIF/catkin_ws/src/detect_waste/devel
+prefix=/home/ros/PIF/catkin_ws/devel
 
 Name: detect_waste
 Description: Description of detect_waste

@@ -11,7 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   roscpp
   std_msgs
-)
+  )
 find_package(Boost REQUIRED COMPONENTS system)
 find_package(OpenCV REQUIRED)
 
@@ -24,7 +24,10 @@ find_package(OpenCV REQUIRED)
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
-catkin_package(CATKIN_DEPENDS geometry_msgs roscpp std_msgs)
+catkin_package(
+	DEPENDS Boost
+	CATKIN_DEPENDS geometry_msgs roscpp std_msgs
+	INCLUDE_DIRS include)
 
 ###########
 ## Build ##
@@ -32,16 +35,17 @@ catkin_package(CATKIN_DEPENDS geometry_msgs roscpp std_msgs)
 
 message( "found catkin: ${catkin_FOUND}" ) # shows '1'
 message( "roscpp include_dir: ${roscpp_INCLUDE_DIRS}" ) # shows *nothing*
+message( "OpenCV include_dir: ${OpenCV_INCLUDE_DIRS}" ) # shows *nothing*
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(  ${catkin_INCLUDE_DIRS})
+include_directories( ${catkin_INCLUDE_DIRS} )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME}_node src/detect_waste.cpp)
+add_executable(${PROJECT_NAME}_node src/detect_waste_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
