@@ -4,7 +4,6 @@
 #include <vector>
 #include <unistd.h>
 #include <cstdlib>
-#include <ros/ros.h>
 
 
 #define SAT_RANGE 30
@@ -17,11 +16,10 @@ void change_origin(cv::Rect* closest_rect, int img_y, int mid_width ){
 
 int main() {
     // Ouvrir le flux vidéo
-    ros::init(argc, argv, "dechet_finder_node");
-    ros::NodeHandle nh;
-    ros::Publisher detect_pub = nh.advertise<geometry_msgs::Point>("Topic", 1000);
     
-    cv::VideoCapture cap("../Video/Default_Video_Test.mp4");
+    cv::VideoCapture cap("/home/ros/PIF/VISION/DETECTION/Video/Default_Video_Test.mp4");
+    
+    std::cout << cv::getBuildInformation() << std::endl;
     if(!cap.isOpened()) {
         std::cout << "Erreur: Impossible d'ouvrir la vidéo." << std::endl;
         return EXIT_FAILURE;
@@ -34,7 +32,7 @@ int main() {
     u_int16_t mid_width = 0;
     
 
-    while(ros::ok()) {
+    while(1) {
         // Lire une nouvelle frame
         bool bSuccess = cap.read(frame);
         if (!bSuccess) {
@@ -76,7 +74,7 @@ int main() {
         cv::findContours(mask_others.clone(), contours, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
         u_int8_t count_area = 1;
         cv::Rect max_y_rect;
-        max_y_rect.y=0;
+        max_y_rect.y= 0 ;
 
         for (size_t i = 0; i < contours.size(); i++) {
             double area = cv::contourArea(contours[i]);
@@ -102,15 +100,11 @@ int main() {
             }
         }
         change_origin(&max_y_rect, frame.rows, mid_width); 
+	std::cout<<"Frame row: "<<frame.rows << "Max y rect: " << max_y_rect.y << std::endl;
         std::cout<<"Closest pos x: "<<max_y_rect.x<<" y: "<<max_y_rect.y<<"\n";
-	geometry_msgs::Point msg;
-        msg.x = max_y_rect.x;
-        msg.y = max_y_rect.y;
-        detect_pub.publish(msg);
 	cv::imshow("Detection de l'element", frame);
         cv::imshow("Masque des autres couleurs", mask_others);
 
-	ros::spinOnce();
         if (cv::waitKey(30) >= 0) break;
     }
 

@@ -68,13 +68,13 @@ set(sick_tim_CONFIG_INCLUDED TRUE)
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
   set(sick_tim_SOURCE_PREFIX /home/ros/PIF/catkin_ws/src/sick_tim-melodic)
-  set(sick_tim_DEVEL_PREFIX /home/ros/PIF/catkin_ws/devel)
+  set(sick_tim_DEVEL_PREFIX /home/ros/PIF/catkin_ws/src/sick_tim-melodic/devel)
   set(sick_tim_INSTALL_PREFIX "")
   set(sick_tim_PREFIX ${sick_tim_DEVEL_PREFIX})
 else()
   set(sick_tim_SOURCE_PREFIX "")
   set(sick_tim_DEVEL_PREFIX "")
-  set(sick_tim_INSTALL_PREFIX /home/ros/PIF/catkin_ws/install)
+  set(sick_tim_INSTALL_PREFIX /usr/local)
   set(sick_tim_PREFIX ${sick_tim_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(sick_tim_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/ros/PIF/catkin_ws/devel/include;/home/ros/PIF/catkin_ws/src/sick_tim-melodic/include;/usr/include;/usr/include/libusb-1.0 " STREQUAL " ")
+if(NOT "/home/ros/PIF/catkin_ws/src/sick_tim-melodic/devel/include;/home/ros/PIF/catkin_ws/src/sick_tim-melodic/include;/usr/include;/usr/include/libusb-1.0 " STREQUAL " ")
   set(sick_tim_INCLUDE_DIRS "")
-  set(_include_dirs "/home/ros/PIF/catkin_ws/devel/include;/home/ros/PIF/catkin_ws/src/sick_tim-melodic/include;/usr/include;/usr/include/libusb-1.0")
+  set(_include_dirs "/home/ros/PIF/catkin_ws/src/sick_tim-melodic/devel/include;/home/ros/PIF/catkin_ws/src/sick_tim-melodic/include;/usr/include;/usr/include/libusb-1.0")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT "http://wiki.ros.org/sick_tim " STREQUAL " ")
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/ros/PIF/catkin_ws/devel/lib;/home/ros/PIF/catkin_ws/devel/lib;/home/ros/catkin_ws/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/ros/PIF/catkin_ws/src/sick_tim-melodic/devel/lib;/home/ros/catkin_ws/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

@@ -17,11 +17,13 @@ void change_origin(cv::Rect* closest_rect, int img_y, int mid_width ){
 
 int main(int argc, char** argv) {
     // Ouvrir le flux vidéo
-    ros::init(argc, argv, "detect_waste");
-    ros::NodeHandle nh;
-    ros::Publisher detect_pub = nh.advertise<geometry_msgs::Point>("Topic", 1000);
-    
-    cv::VideoCapture cap("/home/ros/PIF/VISION/DETECTION/Video/Default_Video_Test.mp4");
+    //ros::init(argc, argv, "detect_waste");
+    //ros::NodeHandle nh;
+   // ros::Publisher detect_pub = nh.advertise<geometry_msgs::Point>("Topic", 1000);
+    std::cout<<"DEBUG START Detect waste" << std::endl;	
+    std::string pipeline = "filesrc location=/home/ros/PIF/VISION/DETECTION/Video/Video_Test.mp4 ! decodebin ! videoconvert ! appsink";  
+    cv::VideoCapture cap(pipeline, cv::CAP_GSTREAMER);
+
     if(!cap.isOpened()) {
         std::cout << "Erreur: Impossible d'ouvrir la vidéo." << std::endl;
         return EXIT_FAILURE;
@@ -106,7 +108,7 @@ int main(int argc, char** argv) {
 	geometry_msgs::Point msg;
         msg.x = max_y_rect.x;
         msg.y = max_y_rect.y;
-        detect_pub.publish(msg);
+        //detect_pub.publish(msg);
 	cv::imshow("Detection de l'element", frame);
         cv::imshow("Masque des autres couleurs", mask_others);
 
