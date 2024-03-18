@@ -1,0 +1,8 @@
+prefix=/home/ros/PIF/catkin_ws/src/detect_waste/devel
+
+Name: detect_waste
+Description: Description of detect_waste
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: geometry_msgs roscpp std_msgs

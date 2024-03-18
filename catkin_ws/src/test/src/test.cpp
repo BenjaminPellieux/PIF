@@ -1,11 +1,11 @@
-#include <iostream.h>
+//#include <iostream.h>
 #include <ros/ros.h>
-
-ros::Publisher pub;
-void lidarCallBackFct(const std_msgs::Bool &);
+#include "sensor_msgs/msg/nav_sat_fix.hpp"
+//void lidarCallBackFct(const std_msgs::Bool &);
 
 int main(int argc, char** argv) {
 	
+	ros::Publisher pub;
 	std_msgs::Bool var;
 
 	ros::init(argc, argv, "package");
@@ -14,5 +14,5 @@ int main(int argc, char** argv) {
 	var = true;
 	pub.publish(var)
 	ros::spin();
-	return EXIT_SUCCES;
+	return EXIT_SUCCESS;
 }
