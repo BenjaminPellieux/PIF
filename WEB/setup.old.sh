@@ -16,8 +16,5 @@ setup () {
     cd ..
 }
 
-setup "code_serveur_pif" 5000
-setup "ClientEleve" 5001
-setup "ClientProf" 5002
-
+setup "code_serveur_pif" 8080
 echo "Installation terminée"
