@@ -29,7 +29,7 @@
 
         h1 {
             font-size: 45px;
-            margin: 80px 0;
+            margin: 65px 0;
         }
 
         .menu {
@@ -58,6 +58,12 @@
             text-align: center;
         }
 
+ 	.bottom-left {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            margin: 10px;
+        }
         /* Media Queries for adjusting styles for different screen sizes */
         @media (max-width: 768px) {
             h1 {
@@ -79,7 +85,7 @@
 <body>
     <header>
      <div class="logo-container">
-            <img src="static/images/isty.png" alt="Votre Logo">
+            <img src="static/images/isty.png" alt="Logo ISTY">
         </div>
         
         <h1 style="font-size: 45px;"><em>Bienvenue sur la page Web du robot PIF</em></h1>
@@ -90,16 +96,53 @@
         </ul>
     </header>
     
-    <p class="project-description"><b>But du projet PIF</b>: Reconnaître, récupérer et trier les déchets de façon autonome, dans des bacs respectifs.</p>
+    <p class="project-description"><b>But du projet PIF</b>: Reconnaître, récupérer et trier les déchets de façon autonome, dans des 		bacs respectifs.</p>
 
     <div class="Descriptif">
         <img class="project-image" src="static/images/clear_path.jpg" alt="Clear path (Wall-E PIF)">
         <h1> INFORMATIONS </h1>
         <hr />
         <p class="project-description">
-            "Dans ce serveur, vous trouverez les différentes recherches effectuées par notre groupe de projet( recherches faites, commandes, pilotage du véhicule )!"
+            Dans ce serveur, vous trouverez les résultats des différentes tâches effectuées tout au long du projet par notre équipe( 		domaine de la vision, commandes, pilotage du véhicule... )!
+            
+        <br> Avec une organisation rigoureuse et un gros travail d'équipe, nous avons pu développer ce prototype de robot ramasseur de 	déchets autonome!</br>
+        
         </p> 
     </div>
+    <style>
+    	body {
+    		display: flex;
+    		align-items: center;
+    		justify-content: center;
+    		height: 100vh;
+    		margin: 0;
+	      }
+
+	button {
+    		padding: 10px;
+	       }
+	       
+    </style>
+    
+    <button onclick="toggleVisibility()">Voir plus</button>
+
+    <p id="moreText" class="hidden" style="font-size: 25px;">
+       Dans la page, "Contrôle du véhicule", vous trouverez une carte avec la localisation du véhicule et les commandes pour son 			pilotage.
+       
+       <br style="font-size: 25px;"> Dans la page, "Configuration", vous trouverez la zone de rapatriement, la détection des 			déchets...</br>
+    </p>
+
+    <script>
+        function toggleVisibility() {
+            var moreText = document.getElementById("moreText");
+            moreText.classList.toggle("hidden");
+        }
+    </script>
+    
+    <address class="bottom-left">  
+    Institut des Sciences et Techniques des Yvelines - ISTY  //  Adresse: 28 Bd Roger Salengro, 78711 Mantes-la-Ville 
+    </address>
+    
 </body>
 </html>
 <script type="text/javascript">

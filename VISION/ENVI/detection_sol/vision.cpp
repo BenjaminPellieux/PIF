@@ -5,7 +5,7 @@ using namespace cv;
 
 int main() {
     // Charger l'image depuis un fichier
-    Mat src = imread("pont.jpg");
+    Mat src = imread("route.jpg");
 
     // Vérifier si l'image est correctement chargée
     if (src.empty()) {
