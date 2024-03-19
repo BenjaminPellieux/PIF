@@ -16,7 +16,7 @@ env/
 
 # Autres fichiers et dossiers à ignorer
 
-gourceviseo.sh
+# gourceviseo.sh
 .DS_Store
 *.log
 
