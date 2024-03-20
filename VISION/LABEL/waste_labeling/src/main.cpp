@@ -30,6 +30,7 @@ ros::Publisher pu_label("Label/id", &str_msg);
 
 
 void setup() {
+  str_msg.data = "NULL";
   Serial.begin(9600);
   mySerial.begin(9600);
   huskylens.begin(mySerial);
@@ -40,6 +41,7 @@ void setup() {
 }
 
 void loop() {
+  Serial.println("LOOP.");
   if (!huskylens.request()) {
     Serial.println("Failed to request data from HuskyLens, will retry.");
     delay(100);
@@ -58,10 +60,15 @@ void loop() {
         str_msg.data = "CAP"; 
         Serial.println("Capsule de biere trouvee!");           
       }
+      else{
+        str_msg.data = "NULL";
+      }
       pu_label.publish( &str_msg );
       nh.spinOnce();
     }
+
   }
+  pu_label.publish( &str_msg );
   delay(300); 
 }
 
