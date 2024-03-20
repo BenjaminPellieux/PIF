@@ -13,6 +13,8 @@ env/
 # Fichiers de configuration IDE spécifiques
 .idea/
 .vscode/
+./VISION/LABEL/waste_labeling/lib/ros_lib
+
 
 # Autres fichiers et dossiers à ignorer
 
