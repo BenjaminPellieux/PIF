@@ -3,7 +3,6 @@
 // use commande:  rosrun rosserial_arduino make_libraries.py .
 // In lib folder to get ros.h lib
 
-#include <Wire.h>
 #include <HUSKYLENS.h>
 #include "SoftwareSerial.h"
 #include <ros.h>
@@ -68,7 +67,6 @@ void loop() {
     }
 
   }
-  pu_label.publish( &str_msg );
   delay(300); 
 }
 
