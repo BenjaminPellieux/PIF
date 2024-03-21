@@ -1,8 +1,0 @@
-prefix=/home/ros/catkin_ws/src/scan_detect_obstacle/devel
-
-Name: scan_detect_obstacle
-Description: Description of scan_detect_obstacle
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: roscpp sensor_msgs nav_msgs visualization_msgs tf

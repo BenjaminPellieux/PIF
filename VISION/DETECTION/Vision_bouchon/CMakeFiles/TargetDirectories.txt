@@ -1,5 +1,0 @@
-/home/ros/PIF/Vision_bouchon/CMakeFiles/rebuild_cache.dir
-/home/ros/PIF/Vision_bouchon/CMakeFiles/edit_cache.dir
-/home/ros/PIF/Vision_bouchon/CMakeFiles/bin/CVVidInRangeBlobHSV.dir
-/home/ros/PIF/Vision_bouchon/CMakeFiles/bin/CVVidHoughCircle.dir
-/home/ros/PIF/Vision_bouchon/CMakeFiles/bin/InRangeBlobHSV.dir

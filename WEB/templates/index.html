@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serveur Web projet PIF (robot trieur de déchets)</title>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <style>
-    	body {
-            background-image: url('/static/images/clear_path.jpg');
+          body {
+            background-color: lightgrey;
             background-size: cover;
             background-repeat: no-repeat;
             font-family: Arial, sans-serif;
@@ -15,6 +17,11 @@
             display: flex;
             flex-direction: column;
         }
+        .project-image {
+            width: 900px; 
+            height: auto; 
+            margin: 20px 0; 
+        }
 
         header {
             text-align: center;
@@ -22,11 +29,7 @@
 
         h1 {
             font-size: 45px;
-            margin: 20px 0;
-        }
-
-        h1 em {
-            color: white;
+            margin: 65px 0;
         }
 
         .menu {
@@ -45,7 +48,22 @@
             text-decoration: none;
             color: white;
         }
+        
+        .Descriptif {
+            text-align: center; /* Centre le texte à l'intérieur du bloc Descriptif */
+        }
+        
+         .project-description {
+            font-size: 25px; /* Nouvelle taille de texte */
+            text-align: center;
+        }
 
+ 	.bottom-left {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            margin: 10px;
+        }
         /* Media Queries for adjusting styles for different screen sizes */
         @media (max-width: 768px) {
             h1 {
@@ -62,30 +80,69 @@
             }
         }
     </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </style>
-    <link rel="stylesheet" type="text/css" href="/static/text.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/index.css">
 </head>
-<header>
-    <h1 style="font-size: 45px;"><em>Bienvenue sur la page Web du robot PIF</em></h1>
-    <ul class="menu"> 
-        <li><a href="/">Accueil</a></li>
-        <li><a href="vision">Vision</a></li>
-        <li><a href="gps">GPS</a></li>
-        <li><a href="aspiration">Aspiration</a></li>
-        <li><a href="controle">Contrôle du véhicule</a></li>
-        <li><a href="configuration">Configuration</a></li>
-    </ul>
-
-</header>
 <body>
+    <header>
+     <div class="logo-container">
+            <img src="static/images/isty.png" alt="Logo ISTY">
+        </div>
+        
+        <h1 style="font-size: 45px;"><em>Bienvenue sur la page Web du robot PIF</em></h1>
+        <ul class="menu"> 
+            <li><a href="/">Accueil</a></li>
+            <li><a href="controle">Contrôle du véhicule</a></li>
+            <li><a href="configuration">Configuration</a></li>
+        </ul>
+    </header>
     
-    <p style="font-size: 25px;"><b>But du projet PIF</b>: Reconnaître, récupérer et trier les déchets de façon autonome, dans des bacs respectifs</p>
+    <p class="project-description"><b>But du projet PIF</b>: Reconnaître, récupérer et trier les déchets de façon autonome, dans des 		bacs respectifs.</p>
+
+    <div class="Descriptif">
+        <img class="project-image" src="static/images/clear_path.jpg" alt="Clear path (Wall-E PIF)">
+        <h1> INFORMATIONS </h1>
+        <hr />
+        <p class="project-description">
+            Dans ce serveur, vous trouverez les résultats des différentes tâches effectuées tout au long du projet par notre équipe( 		domaine de la vision, commandes, pilotage du véhicule... )!
+            
+        <br> Avec une organisation rigoureuse et un gros travail d'équipe, nous avons pu développer ce prototype de robot ramasseur de 	déchets autonome!</br>
+        
+        </p> 
+    </div>
     <style>
-    p {
-        color: white; /* Modifie la couleur du texte du titre en blanc */
-	}
+    	body {
+    		display: flex;
+    		align-items: center;
+    		justify-content: center;
+    		height: 100vh;
+    		margin: 0;
+	      }
+
+	button {
+    		padding: 10px;
+	       }
+	       
     </style>
+    
+    <button onclick="toggleVisibility()">Voir plus</button>
+
+    <p id="moreText" class="hidden" style="font-size: 25px;">
+       Dans la page, "Contrôle du véhicule", vous trouverez une carte avec la localisation du véhicule et les commandes pour son 			pilotage.
+       
+       <br style="font-size: 25px;"> Dans la page, "Configuration", vous trouverez la zone de rapatriement, la détection des 			déchets...</br>
+    </p>
+
+    <script>
+        function toggleVisibility() {
+            var moreText = document.getElementById("moreText");
+            moreText.classList.toggle("hidden");
+        }
+    </script>
+    
+    <address class="bottom-left">  
+    Institut des Sciences et Techniques des Yvelines - ISTY  //  Adresse: 28 Bd Roger Salengro, 78711 Mantes-la-Ville 
+    </address>
+    
 </body>
 </html>
 <script type="text/javascript">
@@ -98,11 +155,10 @@
 		        lat: latitude,
                 lon: longitude,
                 acc: accuracy  
-		    });    
+		    }); 
             // Faites ce que vous voulez avec les coordonnées GPS ici
         });
     } else {
         console.log("La géolocalisation n'est pas prise en charge par ce navigateur.");
     }
 </script>
-
