@@ -5,14 +5,7 @@ find_package(catkin REQUIRED
 sensor_msgs
 geometry_msgs
 roscpp
-)
-include_directories(
-	include
-	${catkin_INCLUDE_DIRS}
-)
-add_executable(${PROJECT_NAME}_node src/coord_gps_node.cpp)
-target_link_libraries(${PROJECT_NAME}_node
-	${catkin_LIBRARIES}
+rospy
 )
 
 find_package(catkin REQUIRED
