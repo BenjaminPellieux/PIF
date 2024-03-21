@@ -26,8 +26,7 @@ find_package(OpenCV REQUIRED)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 	DEPENDS Boost
-	CATKIN_DEPENDS geometry_msgs roscpp std_msgs
-	INCLUDE_DIRS include)
+	CATKIN_DEPENDS geometry_msgs roscpp std_msgs)
 
 ###########
 ## Build ##
