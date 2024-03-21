@@ -1,7 +1,7 @@
 // Open this file with the VScode plugin platformIO
-
 // use commande:  rosrun rosserial_arduino make_libraries.py .
 // In lib folder to get ros.h lib
+// unable ros com with arduino  rosrun rosserial_python serial_node.py /dev/ttyACM0 
 
 #include <HUSKYLENS.h>
 #include "SoftwareSerial.h"
