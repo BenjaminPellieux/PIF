@@ -1,73 +1,62 @@
-#include "zone.hpp"
+#include <ros/ros.h>
+#include <sensor_msgs/NavSatFix.h>
+#include <geometry_msgs/PointStamped.h>
+#include <iostream>
+#include <cmath>
 
-       
-        void Zone::gpsCallback(const sensor_msgs::NavSatFix::ConstPtr& msg) {
-            // Callback appelée lors de la réception de messages GPS
+class Zone {
+public:
+    double global_latitude;
+    double global_longitude;
+    geometry_msgs::Point P1;
+    geometry_msgs::Point P2;
+    geometry_msgs::Point P3;
+    geometry_msgs::Point P4;
 
-            // Obtient les coordonnées GPS
-            global_latitude = msg->latitude;
-            global_longitude = msg->longitude;
-
-            // Utilisez les coordonnées comme nécessaire (par exemple, les stocker dans des variables globales)
-            ROS_INFO("Coordonnées GPS : Latitude = %f, Longitude = %f", global_latitude, global_longitude);
-        }
-
-
-
-        // Fonction pour calculer le produit vectoriel de deux vecteurs
-        double Zone::crossProduct(Point A, Point B, Point C) {
-            return (B.x - A.x) * (C.y - A.y) - (B.y - A.y) * (C.x - A.x);
-        }
-
-        // Fonction pour vérifier si un point est à l'intérieur d'un quadrilatère
-        bool Zone::isInsideQuadrilateral(Point A, Point B, Point C, Point D, Point P) {
-            // Calculer les produits vectoriels pour chaque côté du quadrilatère
-            double crossABP = crossProduct(A, B, P);
-            double crossBCP = crossProduct(B, C, P);
-            double crossCDP = crossProduct(C, D, P);
-            double crossDAP = crossProduct(D, A, P);
-
-            // Vérifier si le point est à l'intérieur du quadrilatère
-            if ((crossABP >= 0 && crossBCP >= 0 && crossCDP >= 0 && crossDAP >= 0) ||
-                (crossABP <= 0 && crossBCP <= 0 && crossCDP <= 0 && crossDAP <= 0)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    
-
-
-void Zone::ZoneCallback(const geometry_msgs::PointStamped & msg){
-
-    switch (Area.header.frame_id){
-
-    case "P1":
-        My_Zone.P1 = {Area.point.x, Area.point.y};
-        break;
-    case "P2":
-        My_Zone.P2 = {Area.point.x, Area.point.y};
-        break;
-    case "P3":
-        My_Zone.P3 = {Area.point.x, Area.point.y};
-        break;
-    case "P4":
-        My_Zone.P4 = {Area.point.x, Area.point.y};
-        break;
+    Zone() {
+        global_latitude = 0.0;
+        global_longitude = 0.0;
     }
 
+    void gps_callback(const sensor_msgs::NavSatFix::ConstPtr& msg) {
+        // Callback appelée lors de la réception de messages GPS
+        global_latitude = msg->latitude;
+        global_longitude = msg->longitude;
+        ROS_INFO("Coordonnées GPS : Latitude = %f, Longitude = %f", global_latitude, global_longitude);
+    }
 
-}
-int main() {
-    double tab[4][3]
-    
-    // while (1){}
-        // lire le topic /Area/Point (Les points de la zone)
-        // lire le topic /NavSat/fix (Position GPS du robot)
-        // Si data dans Area/Point  
-            // cree nouvel objet Zone 
-            // defninir P1,P2,P3
-    My_Zone();
+    bool is_inside_rectangle(const geometry_msgs::Point& A, const geometry_msgs::Point& B, const geometry_msgs::Point& C, const geometry_msgs::Point& D, const geometry_msgs::Point& P) {
+        // Vérifier si le point est à l'intérieur du rectangle ABCD
+        double min_x = std::min({A.x, B.x, C.x, D.x});
+        double max_x = std::max({A.x, B.x, C.x, D.x});
+        double min_y = std::min({A.y, B.y, C.y, D.y});
+        double max_y = std::max({A.y, B.y, C.y, D.y});
+        return (min_x <= P.x && P.x <= max_x && min_y <= P.y && P.y <= max_y);
+    }
 
-    return EXIT_SUCCES;
+    void zone_callback(const geometry_msgs::PointStamped::ConstPtr& msg) {
+        geometry_msgs::Point point = msg->point;
+        if (msg->header.frame_id == "P1") {
+            P1 = point;
+        } else if (msg->header.frame_id == "P2") {
+            P2 = point;
+        } else if (msg->header.frame_id == "P3") {
+            P3 = point;
+        } else if (msg->header.frame_id == "P4") {
+            P4 = point;
+        }
+    }
+};
+
+int main(int argc, char** argv) {
+    ros::init(argc, argv, "zone_node");
+    ros::NodeHandle nh;
+    Zone zone;
+
+    ros::Subscriber gps_sub = nh.subscribe("/NavSat/fix", 10, &Zone::gps_callback, &zone);
+    ros::Subscriber zone_sub = nh.subscribe("/Area/Point", 10, &Zone::zone_callback, &zone);
+
+    ros::spin();
+
+    return 0;
 }
