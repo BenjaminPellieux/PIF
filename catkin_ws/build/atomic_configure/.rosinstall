@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/ros/PIF/catkin_ws/devel/setup.sh

@@ -3,8 +3,8 @@ import websocket
 from threading import Thread
 from time import sleep
 # IP_RASP = "192.168.131.1"
-IP_RASP = "10.8.0.2"
-PORT = "8080"
+IP_RASP = "10.8.0.3"
+PORT = "9090"
 # PORT = "11311"
 
 
