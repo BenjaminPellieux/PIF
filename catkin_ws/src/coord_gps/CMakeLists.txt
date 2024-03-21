@@ -11,4 +11,12 @@ rospy
 find_package(catkin REQUIRED
 	COMPONENTS roslaunch
 )
+include_directories(
+	include
+	${catkin_INCLUDE_DIRS}
+)
+add_executable(${PROJECT_NAME}_node src/coord_gps_node.cpp)
+target_link_libraries(${PROJECT_NAME}_node
+	${catkin_LIBRAIRIES}
+)
 roslaunch_add_file_check(launch)
