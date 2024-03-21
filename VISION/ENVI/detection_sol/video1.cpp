@@ -15,6 +15,7 @@ struct HSVSettings {
 HSVSettings hsvSettings;
 
 // Fonctions de rappel pour ajuster les plages de valeurs HSV
+//teinte = HUE
 void Low_h(int, void*) {
     if (hsvSettings.low_h > hsvSettings.high_h) {
         hsvSettings.high_h = hsvSettings.low_h;
@@ -28,7 +29,7 @@ void High_h(int, void*) {
         setTrackbarPos("HUE low", "Reglage", hsvSettings.low_h);
     }
 }
-
+//saturation = intensité de couleur
 void Low_s(int, void*) {
     if (hsvSettings.low_s > hsvSettings.high_s) {
         hsvSettings.high_s = hsvSettings.low_s;
@@ -42,7 +43,7 @@ void High_s(int, void*) {
         setTrackbarPos("SATURATION low", "Reglage", hsvSettings.low_s);
     }
 }
-
+// value = luminausité
 void Low_v(int, void*) {
     if (hsvSettings.low_v > hsvSettings.high_v) {
         hsvSettings.high_v = hsvSettings.low_v;

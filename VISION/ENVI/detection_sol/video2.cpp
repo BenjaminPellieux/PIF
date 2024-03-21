@@ -7,12 +7,17 @@ using namespace cv;
 struct HSVSettings {
     int low_h = 0, high_h = 179;
     int low_s = 0, high_s = 255;
-    int low_v = 0, high_v = 122;  
-    int threshold_white = 5;      // Ajout du seuil
+    int low_v = 0, high_v = 122;
+    int threshold_white = 5;  // Ajout du seuil
 };
 
-// Instancier la structure de réglages HSV
+// Instancier la structure de réglages HSV avec les valeurs fixées
 HSVSettings hsvSettings;
+
+// Fonction pour ajuster la luminosité de l'image
+void adjustBrightness(Mat& image, double alpha, int beta) {
+    image.convertTo(image, -1, alpha, beta);
+}
 
 int main() {
     // Initialiser la capture vidéo depuis la webcam
@@ -25,17 +30,13 @@ int main() {
         return -1;
     }
 
-    // Création de la fenêtre de seuillage
+    // Création des fenêtres
+    namedWindow("Image", WINDOW_AUTOSIZE);
     namedWindow("Seuillage", WINDOW_AUTOSIZE);
 
-    // Paramètres HSV fixes
-    hsvSettings.low_h = 0;
-    hsvSettings.high_h = 179;
-    hsvSettings.low_s = 0;
-    hsvSettings.high_s = 255;
-    hsvSettings.low_v = 0;
-    hsvSettings.high_v = 122;  
-    hsvSettings.threshold_white = 5;
+    // Paramètres de luminosité
+    double alpha = 1.5;  // ajustez ce paramètre pour la luminosité (1 = pas de changement)
+    int beta = 20;       // ajustez ce paramètre pour la luminosité (0 = pas de changement)
 
     while (true) {
         // Capturer une image depuis la webcam
@@ -48,11 +49,14 @@ int main() {
             break;
         }
 
+        // Ajuster la luminosité de l'image
+        adjustBrightness(src, alpha, beta);
+
         // Convertir l'image en espace de couleur HSV
         Mat hsv;
         cvtColor(src, hsv, COLOR_BGR2HSV);
 
-        // Appliquer un masque en utilisant les valeurs HSV fixes
+        // Appliquer un masque en utilisant les valeurs HSV ajustées
         Mat mask;
         inRange(hsv, Scalar(hsvSettings.low_h, hsvSettings.low_s, hsvSettings.low_v),
                 Scalar(hsvSettings.high_h, hsvSettings.high_s, hsvSettings.high_v), mask);
@@ -67,7 +71,7 @@ int main() {
         GaussianBlur(erosion, result, Size(5, 5), 4);
 
         // Déterminer si le véhicule peut avancer ou non
-        Mat bottomRegion = result.rowRange(result.rows * 0.8, result.rows - 1);
+        Mat bottomRegion = result.rowRange(result.rows * 0.7, result.rows - 1);
         double whitePercentage = (countNonZero(bottomRegion) * 100.0) / bottomRegion.total();
 
         // Afficher le résultat
@@ -79,7 +83,7 @@ int main() {
             std::cout << "Obstacle détecté, ne pas avancer." << std::endl;
             // Ajouter ici le code pour arrêter le véhicule
         } else {
-            std::cout << "Aucun obstacle détecté, vous pouvez avancer." << std::endl;
+            std::cout << "Aucun obstacle détecté, avancer." << std::endl;
             // Ajouter ici le code pour commander l'avancement du véhicule
         }
 
