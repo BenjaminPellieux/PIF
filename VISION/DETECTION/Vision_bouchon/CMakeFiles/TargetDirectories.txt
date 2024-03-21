@@ -1,6 +1,0 @@
-/home/ros/Vision_bouchon/CMakeFiles/rebuild_cache.dir
-/home/ros/Vision_bouchon/CMakeFiles/edit_cache.dir
-/home/ros/Vision_bouchon/CMakeFiles/bin/Test_Opencv_exe.dir
-/home/ros/Vision_bouchon/CMakeFiles/bin/CVVidInRangeBlobHSV.dir
-/home/ros/Vision_bouchon/CMakeFiles/bin/CVVidHoughCircle.dir
-/home/ros/Vision_bouchon/CMakeFiles/bin/InRangeBlobHSV.dir

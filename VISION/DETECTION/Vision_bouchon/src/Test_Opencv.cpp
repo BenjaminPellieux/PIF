@@ -5,6 +5,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <cstdint>
+
 
 #define SURFMIN 2500
 #define SETTINGS_FILE "hsv_settings.xml"
@@ -14,14 +16,15 @@ using namespace std;
 
 // Structure pour les réglages HSV
 struct HsvSettings {
-    uint8_t low_h, high_h;
-    uint8_t low_s, high_s;
-    uint8_t low_v, high_v;
+    int8_t low_h, high_h;
+    int8_t low_s, high_s;
+    int8_t low_v, high_v;
 };
 
 HsvSettings hsvSettings;
 
 Mat src, src_hsv, select_pts;
+Mat K; // Element structurant (Kernel) pour les opérations morphologiques
 
 bool bouchonFound = false;
 
@@ -42,6 +45,7 @@ vector<vector<Point>> contours;
 vector<Vec4i> hierarchy;
 
 Mat edges;
+Mat polygones;
 
 void BlobUpgrade(int, void*);
 
@@ -64,14 +68,23 @@ int main(int argc, char** argv) {
     namedWindow("Seuillage", WINDOW_AUTOSIZE);
 
     // Création des trackbars pour les réglages des plages de couleurs
-    createTrackbar("HUE low", "Reglage", &hsvSettings.low_h, 179, Low_h);
-    createTrackbar("HUE high", "Reglage", &hsvSettings.high_h, 179, High_h);
+    createTrackbar("HUE low", "Reglage", reinterpret_cast<int*>(&hsvSettings.low_h), 179, Low_h);
+    createTrackbar("HUE high", "Reglage", reinterpret_cast<int*>(&hsvSettings.high_h), 179, High_h);
 
-    createTrackbar("SATURATION low", "Reglage", &hsvSettings.low_s, 255, Low_s);
-    createTrackbar("SATURATION high", "Reglage", &hsvSettings.high_s, 255, High_s);
+    createTrackbar("SATURATION low", "Reglage", reinterpret_cast<int*>(&hsvSettings.low_s), 255, Low_s);
+    createTrackbar("SATURATION high", "Reglage", reinterpret_cast<int*>(&hsvSettings.high_s), 255, High_s);
 
-    createTrackbar("VALUE low", "Reglage", &hsvSettings.low_v, 255, Low_v);
-    createTrackbar("VALUE high", "Reglage", &hsvSettings.high_v, 255, High_v);
+    createTrackbar("VALUE low", "Reglage", reinterpret_cast<int*>(&hsvSettings.low_v), 255, Low_v);
+    createTrackbar("VALUE high", "Reglage", reinterpret_cast<int*>(&hsvSettings.high_v), 255, High_v);
+
+    // Initialisation de l'élément structurant (Kernel) pour les opérations morphologiques
+    K = getStructuringElement(MORPH_RECT, Size(3, 3));
+
+    // Création des fenêtres pour l'affichage des contours et polygones
+    namedWindow("Edges", WINDOW_AUTOSIZE);
+    createTrackbar("Surf Min", "Edges", &area_min, SURFMIN, BlobUpgrade);
+    setTrackbarMax("Surf Min", "Edges", SURFMIN);
+    setTrackbarMin("Surf Min", "Edges", 10);
 
     // Boucle principale de capture vidéo
     for (;;) {
@@ -93,6 +106,8 @@ int main(int argc, char** argv) {
         // Création des images de bords et polygones
         edges.create(src.rows, src.cols, CV_8UC3);
         edges.setTo(0);
+        polygones.create(src.rows, src.cols, CV_8UC3);
+        polygones.setTo(0);
 
         // Mise à jour de l'affichage des contours et polygones
         BlobUpgrade(0, 0);
@@ -164,39 +179,90 @@ void High_v(int, void*) {
 void inRangeDemo(int, void*) {
     inRange(src_hsv, Scalar(hsvSettings.low_h, hsvSettings.low_s, hsvSettings.low_v),
             Scalar(hsvSettings.high_h, hsvSettings.high_s, hsvSettings.high_v), select_pts);
-    morphologyEx(select_pts, select_pts, MORPH_OPEN, Mat());
-    morphologyEx(select_pts, select_pts, MORPH_CLOSE, Mat());
+    morphologyEx(select_pts, select_pts, MORPH_OPEN, K);
+    morphologyEx(select_pts, select_pts, MORPH_CLOSE, K);
     imshow("Seuillage", select_pts);
 }
 
+/* --- Blob --- */
+
+int prevCellRow = 0;
+int prevCellCol = 0;
 // Fonction de mise à jour de l'affichage des contours et polygones
 void BlobUpgrade(int, void*) {
     vector<Moments> mu(contours.size());
     vector<Point2f> mc(contours.size());
+    vector<vector<Point>> app_poly(contours.size());
+    vector<Rect> boundRect(contours.size());
+    double area;
 
     edges.setTo(0);
-
+    polygones.setTo(0);
+    
     // Parcours de tous les contours détectés
-    for (size_t nb_ctr = 0; nb_ctr < contours.size(); nb_ctr++) {
+    for (uint16_t nb_ctr = 0; nb_ctr < contours.size(); nb_ctr++) {
         // Ignorer les contours internes
         if (hierarchy[nb_ctr][3] != -1)
             continue;
 
         // Calcul des moments du contour
         mu[nb_ctr] = moments(contours[nb_ctr], false);
+        area = mu[nb_ctr].m00;
 
         // Si la superficie du contour est supérieure à la limite minimale
         if (mu[nb_ctr].m00 >= (double)area_min) {
             mc[nb_ctr] = Point2f(mu[nb_ctr].m10 / mu[nb_ctr].m00, mu[nb_ctr].m01 / mu[nb_ctr].m00);
+            
+             // Calcul des coordonnées de la cellule correspondant à l'objet
+            int cellRow = static_cast<int>(mc[nb_ctr].y / (src.rows / 10));
+            int cellCol = static_cast<int>(mc[nb_ctr].x / (src.cols / 10));
 
-            // Affichage des images de bords et polygones
-            rectangle(edges, boundingRect(contours[nb_ctr]), Scalar(0x00, 0xFF, 0xFF), 2);
-            putText(edges, "bouchon", boundingRect(contours[nb_ctr]).tl(), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 255, 255), 2);
+            // Vérification s'il y a un changement dans les coordonnées
+            if (cellRow != prevCellRow || cellCol != prevCellCol) {
+                // Affichez les informations sur la cellule
+                std::cout << "Objet trouvé à la position : ["
+                          << cellRow << ", " << cellCol << "]" << std::endl;
+
+                // Mettez à jour les coordonnées précédentes
+                prevCellRow = cellRow;
+                prevCellCol = cellCol;
+            }
+
+            // Couleur aléatoire pour chaque contour
+            Scalar colour(rand() & 0xFF, rand() & 0xFF, rand() & 0xFF);
+            Scalar colourCenter(0x00, 0x00, 0xFF);
+
+            // Dessin des contours et du centre sur l'image de bords
+            drawContours(edges, contours, nb_ctr, colour, FILLED, 8, hierarchy);
+            circle(edges, mc[nb_ctr], 4, colourCenter, -1, 8, 0);
+
+            /* --- Approximation Polygonale --- */
+            approxPolyDP(Mat(contours[nb_ctr]), app_poly[nb_ctr], 3, true);
+
+            // Couleur aléatoire pour chaque polygone
+            Scalar colourPoly(rand() & 0xFF, rand() & 0xFF, rand() & 0xFF);
+
+            // Dessin des polygones sur l'image des polygones
+            drawContours(polygones, app_poly, nb_ctr, colourPoly, 1, 8, vector<Vec4i>(), 0, Point());
+
+            // Calcul du rectangle englobant le polygone
+            boundRect[nb_ctr] = boundingRect(app_poly[nb_ctr]);
+
+            // Couleur cyan pour les rectangles englobants
+            Scalar colourRect(0x00, 0xFF, 0xFF);
+
+            // Dessin des rectangles englobants sur l'image de bords
+            rectangle(edges, boundRect[nb_ctr].tl(), boundRect[nb_ctr].br(), colourRect, 2);
+
+            // Ajout du texte "bouchon" sur l'image à la position du rectangle
+            putText(edges, "bouchon", boundRect[nb_ctr].tl(), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 255, 255), 2);
         }
     }
-
+    // Affichage des images de bords et polygones
     imshow("Edges", edges);
+    // imshow("Polygones", polygones);
 }
+
 
 // Fonction pour sauvegarder les réglages dans un fichier XML
 void saveSettings() {
