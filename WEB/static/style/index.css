@@ -7,15 +7,15 @@ ul {
 }
 
 .menu li {
-    display: inline-block; /* Change from inline to inline-block */
+    display: inline-block; 
 }
 
 .menu li a {
     text-decoration: none;
-    padding: 15px 30px; /* Adjusted padding */
+    padding: 15px 30px;
     color: black;
     background-color: yellow;
-    font-size: 18px; /* Adjusted font size */
+    font-size: 18px;
     border-radius: 10px;
 }
 
@@ -24,23 +24,34 @@ ul {
     color: black;
 }
 
-h1 {
-    text-align: center;
-}
 
 .logo-container {
-    float: left; /* Aligner le conteneur du logo à gauche */
+    float: left;
+    margin: 0; /* Ajouter une marge selon vos besoins */
 }
 
 .logo-container img {
-    height: 60px; /* Ajuster la hauteur du logo selon vos besoins */
-    width: auto; /* Garantir que la largeur s'ajuste proportionnellement à la hauteur */
+    height: 60px; 
+    width: auto; 
+}
+
+button {
+    padding: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+#moreText {
+    text-align: center;
+    margin-top: 10px;
 }
 
 /* Media Query for adjusting styles for smaller screens */
 @media (max-width: 900px) {
     .menu li a {
-        padding: 10px 10px; /* Adjusted padding for smaller screens */
-        font-size: 15px; /* Adjusted font size for smaller screens */
+        padding: 10px 10px; 
+        font-size: 15px; 
     }
 }

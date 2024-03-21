@@ -4,20 +4,11 @@
 #include <vector>
 #include <unistd.h>
 #include <cstdlib>
-#include <ros/ros.h>
+//#include <ros/ros.h>
 
 
-// struct Waste{
-
-//     public:
-//         cv::Rect rec;
-//         int object_id;
-
-//         static bool compareY(Waste &a, Waste &b) { return a.rec.y < b.rec.y; }
-
-// } typedef Waste;
-
-
+#define SAT_RANGE 30
+#define DEBUG 0
 
 void change_origin(cv::Rect* closest_rect, int img_y, int mid_width ){
     closest_rect->y = img_y - closest_rect->y;
@@ -26,21 +17,18 @@ void change_origin(cv::Rect* closest_rect, int img_y, int mid_width ){
 
 int main() {
     // Ouvrir le flux vidéo
-    cv::VideoCapture cap("Video/Default_Video_Test.mp4");
+    cv::VideoCapture cap("../Video/Default_Video_Test.mp4");
     if(!cap.isOpened()) {
         std::cout << "Erreur: Impossible d'ouvrir la vidéo." << std::endl;
-        return -1;
+        return EXIT_FAILURE;
     }
 
     cv::Mat frame, image_blurred, hsv, mask_others, mask_majority_color, kernel;
     std::vector<std::vector<cv::Point>> contours;
 
-    cv::Scalar lower_sat, upper_sat;
-    int mid_height = 0;
-    int mid_width = 0;
-        
-    int most_frequent_sat = 0;
-    int sat_range = 30; // Vous pouvez ajuster cette plage selon vos besoins
+    u_int16_t mid_height = 0;
+    u_int16_t mid_width = 0;
+    
 
     while(true) {
         // Lire une nouvelle frame
@@ -51,11 +39,9 @@ int main() {
         }
         mid_height = frame.rows / 2;
         mid_width = frame.cols / 2;
-        // Appliquer un filtre gaussien pour lisser l'image
-        cv::GaussianBlur(frame, image_blurred, cv::Size(9, 9), 3, 3);
-
-        // Convertir l'image en espace couleur HSV
-        cv::cvtColor(image_blurred, hsv, cv::COLOR_BGR2HSV);
+        
+        cv::GaussianBlur(frame, image_blurred, cv::Size(9, 9), 3, 3); // Appliquer un filtre gaussien pour lisser l'image
+        cv::cvtColor(image_blurred, hsv, cv::COLOR_BGR2HSV); // Convertir l'image en espace couleur HSV
 
         // Calculer l'histogramme de la saturation (S)
         int histSize[] = { 256 };
@@ -71,14 +57,10 @@ int main() {
         cv::minMaxLoc(hist_sat, 0, &maxVal, 0, &maxLoc);
 
         // La saturation la plus fréquente sera l'indice de la valeur maximale
-        most_frequent_sat = maxLoc.y;
-
         // Déterminer les seuils pour isoler la couleur majoritaire basée sur la saturation
-        lower_sat = cv::Scalar(0, std::max(most_frequent_sat - sat_range, 0), 20);
-        upper_sat = cv::Scalar(180, std::min(most_frequent_sat + sat_range, 255), 255);
-
         // Créer un masque pour les couleurs qui ne sont pas dans la plage de la couleur majoritaire basée sur la saturation
-        cv::inRange(hsv, lower_sat, upper_sat, mask_majority_color);
+        cv::inRange(hsv, cv::Scalar(0, std::max(maxLoc.y - SAT_RANGE, 0), 20), 
+                         cv::Scalar(180, std::min(maxLoc.y + SAT_RANGE, 255), 255), mask_majority_color);
         mask_others = ~mask_majority_color;
 
         // Optionnel: appliquer des opérations morphologiques pour nettoyer le masque
@@ -88,7 +70,7 @@ int main() {
 
         // Trouver les contours dans le masque des autres couleurs
         cv::findContours(mask_others.clone(), contours, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
-        int count = 1;
+        u_int8_t count_area = 1;
         cv::Rect max_y_rect;
         max_y_rect.y=0;
 
@@ -96,28 +78,30 @@ int main() {
             double area = cv::contourArea(contours[i]);
             cv::Rect rect = cv::boundingRect(contours[i]);
             if ((rect.y >= mid_height) && ((area > 70) && (area < 1000))){ // Filtre basé sur la taille de l'objet
-                std::cout<<"DEBUG count" <<count<<'\n';
-                std::cout << "[LOG] Forme " << count << " area: " << area << "\n";
-                cv::rectangle(frame, rect.tl(), rect.br(), cv::Scalar(0, 255, 0), 2);
+                
                 if (rect.y > max_y_rect.y){
                     max_y_rect = rect;
                 }
-                // Afficher le numéro et l'aire sur l'image
-                std::string text = "#" + std::to_string(count) + " Area: " + std::to_string(static_cast<int>(area));
-                cv::Point textOrg(rect.x, rect.y - 10); // Position du texte au-dessus du rectangle
-                cv::putText(frame, text, textOrg, cv::FONT_HERSHEY_SIMPLEX, 0.8, cv::Scalar(0, 250, 0), 1);
-                cv::line(frame, {mid_width, 0}, {mid_width, frame.rows}, cv::Scalar(255, 0, 0));  // ligne vertical
-                cv::line(frame, {0, mid_height}, {frame.cols, mid_height}, cv::Scalar(0, 0, 255)); // ligne orizonthale
-                count++; // Incrémenter le compteur de formes
+                
+                if (DEBUG){
+                    // Affichage de debug
+                    std::cout<<"DEBUG count_area" <<count_area<<'\n';
+                    std::cout << "[LOG] Forme " << count_area << " area: " << area << "\n";
+                    cv::rectangle(frame, rect.tl(), rect.br(), cv::Scalar(0, 255, 0), 2);
+                    std::string text = "#" + std::to_string(count_area) + " Area: " + std::to_string(static_cast<int>(area));
+                    cv::Point textOrg(rect.x, rect.y - 10); 
+                    cv::putText(frame, text, textOrg, cv::FONT_HERSHEY_SIMPLEX, 0.8, cv::Scalar(0, 250, 0), 1);
+                    cv::line(frame, {mid_width, 0}, {mid_width, frame.rows}, cv::Scalar(255, 0, 0));  // ligne vertical
+                    cv::line(frame, {0, mid_height}, {frame.cols, mid_height}, cv::Scalar(0, 0, 255)); // ligne orizonthale
+                }
+                count_area++; 
             }
         }
         change_origin(&max_y_rect, frame.rows, mid_width); 
-        std::cout<<"Closest pos x: "<<max_y_rect.x<<" y: "<<max_y_rect.y<<"\n"; 
-        // std::sort(Waste_list.begin(), Waste_list.end(), Waste::compareY);
+        std::cout<<"Closest pos x: "<<max_y_rect.x<<" y: "<<max_y_rect.y<<"\n";
         cv::imshow("Detection de l'element", frame);
         cv::imshow("Masque des autres couleurs", mask_others);
 
-        // Attendre 30ms ou qu'une touche soit pressée
         if (cv::waitKey(30) >= 0) break;
     }
 
