@@ -1,6 +1,6 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
-//#include <ros.h>
+#include <ros/ros.h>
 
 using namespace cv;
 
