@@ -4,12 +4,17 @@
     <title>Contrôle_véhicule - Projet PIF (robot trieur de déchets)</title>
    	
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/style/index.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/style/index.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css"/>
-    <style>
-        body {
+    <style type="text/css">
+ body {
             background-color: lightblue;
             background-size: cover;
             background-repeat: no-repeat;
@@ -76,39 +81,29 @@
                 margin: 10px 0;
             }
         }
-
-        #map {
-            width: 50%;
-            height: 600px;
-            margin-top: 20px;
+         #config-table {
+            width: 50%; /* Largeur du tableau */
+            margin: 20px auto; /* Centrer le tableau */
+            border-collapse: collapse; /* Fusionner les bordures de cellules */
         }
 
-        table {
-            width: 50%;
-            margin: 20px auto;
-            border-collapse: collapse;
+        #config-table th, #config-table td {
+            border: 1px solid black; /* Bordures de cellules */
+            padding: 10px; /* Espacement à l'intérieur des cellules */
+            text-align: left; /* Alignement du texte */
         }
 
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-            text-align: left;
+        #config-table th {
+            background-color: #4CAF50; /* Couleur de fond pour les en-têtes */
+            color: white; /* Couleur du texte pour les en-têtes */
         }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-    </style>
-</head>
-<header>
-    </style>
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </style>
     <link rel="stylesheet" type="text/css" href="/static/style/index.css">
 </head>
 <header>
-    <h1 style="font-size: 45px;"><em>Bienvenue sur la page de Configuration de WALL-E</em></h1>
+<h1 style="font-size: 45px;"><em>Bienvenue sur la page de Configuration de WALL-E</em></h1>
     <ul class="menu"> 
         <li><a href="/">Accueil</a></li>
         <li><a href="controle">Contrôle du véhicule</a></li>
@@ -116,68 +111,85 @@
     </ul>
 </header>
 <body>
-<div id="map"></div>  
-
-<input type="button" id="sendData" value="Sauvegarder la zone de recherche">
-
-<table>
-    <tr>
-        <th>Paramètre</th>
-        <th>Valeur</th>
-    </tr>
-    <tr>
-        <td>Niveau de batterie</td>
-        <td id="batteryLevel">80%</td>
-    </tr>
-    <tr>
-        <td>Distance parcourue</td>
-        <td id="distance">10 km</td>
-    </tr>
+	<div>
+          <div id="map" style="width: 50%; height: 600px; margin-top: 40px;"></div>  
+    
+	<input type="button" id="sendData" value="Sauvegarder la zone de recherche" style="font-size: 30px; padding: 10px 20px;"> 
+	</div>
+</body>
+<table id="config-table">
+        <tr>
+            <th>Paramètres</th>
+            <th>Valeur</th>
+        </tr>
+        <tr>
+            <td>Niveau de batterie du véhicule</td>
+            <td id="battery-level">? %</td>
+        </tr>
+        <tr>
+            <td>Distance parcourue</td>
+            <td id="distance-traveled">? km</td>
+        </tr>
+        <tr>
+            <td>Statue du système d'aspiration</td>
+            <td id="distance-traveled">ON/OFF ?</td>
+        </tr>
 </table>
 
-</body>
-<script>
-    var map = L.map('map').setView([48.98479706310472, 1.7016915401253376], 18);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    var drawnItems = new L.FeatureGroup();
-    map.addLayer(drawnItems);
-
-    var drawControl = new L.Control.Draw({
-        edit: {
-            featureGroup: drawnItems
-        }
-    });
-    map.addControl(drawControl);
-
-    var lastLayer;
-
-    map.on(L.Draw.Event.CREATED, function (event) {
-        var layer = event.layer;
-        drawnItems.addLayer(layer);
-        lastLayer = layer;
-    });
-
-    document.getElementById('sendData').onclick = function() {
-        if (lastLayer) {
-            var coordinates = lastLayer.getLatLngs();
-            var readableCoordinates = coordinates.map(function(latlng) {
-                return { lat: latlng.lat, lng: latlng.lng };
-            });
-            submit_area(JSON.stringify(coordinates));
-        } else {
-            alert("Aucune forme dessinée sur la carte.");
-        }
-    };
-
-    function submit_area(coordinates) {
-        console.log("[DEBUG] Nouvelle zone : " + coordinates);
-        $.post("/area", {
-            points: coordinates
-        });
-    }
-</script>
 </html>
+<script type="text/javascript">
+
+        // Initialisation de la carte
+        var map = L.map('map').setView([48.98479706310472, 1.7016915401253376], 18);
+
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+
+        var drawnItems = new L.FeatureGroup();
+        map.addLayer(drawnItems);
+
+        var drawControl = new L.Control.Draw({
+            edit: {
+                featureGroup: drawnItems
+            }
+        });
+        map.addControl(drawControl);
+
+        var lastLayer;
+
+        map.on(L.Draw.Event.CREATED, function (event) {
+            var layer = event.layer;
+            drawnItems.addLayer(layer);
+            lastLayer = layer; // Store the reference to the layer
+        });
+
+        document.getElementById('sendData').onclick = function() {
+            if (lastLayer) {
+                var coordinates = lastLayer.getLatLngs();
+                if (coordinates[0].length != 4){
+                    alert("Saisie incorrecte selectionnez une zone CARRE !")
+                }else {
+                    var readableCoordinates = coordinates.map(function(latlng) {
+                                                            return { lat: latlng.lat, lng: latlng.lng };
+                    });
+                    
+                    submit_area(JSON.stringify(coordinates))
+                }
+            } else {
+                alert("No shape drawn on the map.");
+            }
+        };
+
+	function submit_area(coordinates) {
+		console.log("[DEBUG] new area : " + coordinates + typeof(coordinates[0]) );
+
+        	$.post( "/area", {
+		    points: coordinates
+		});
+    }
+
+        
+</script>
