@@ -207,7 +207,6 @@ def _create_mock_setup_function(setup_module, package_name, outfile):
                                      pkgs=pkgs,
                                      modules=modules,
                                      setup_module=setup_module)
-        os.makedirs(os.path.dirname(outfile), exist_ok=True)
         with open(outfile, 'w') as out:
             out.write('\n'.join(result))
 
