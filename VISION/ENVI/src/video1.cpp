@@ -3,6 +3,7 @@
 #include <ros/ros.h>
 
 using namespace cv;
+ros::Subscriber sub;
 
 // Structure pour les réglages HSV
 struct HSVSettings {
@@ -73,7 +74,9 @@ void adjustBrightness(Mat& image, double alpha, int beta) {
 int main() {
 
     //ROS
-    
+    ros::init(argc, argv, "environnement");
+    ros::NodeHandle nh;
+    ros::spin();
     // Initialiser la capture vidéo depuis la webcam
     VideoCapture cap;
     cap.open(0);  // 0 indique le premier périphérique de la webcam, changez-le si vous avez plusieurs caméras
