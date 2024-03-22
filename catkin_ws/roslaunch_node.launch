@@ -2,6 +2,9 @@
   <!-- Node for waste detection -->
   <node pkg="detect_waste" type="node" name="waste_detection_node" output="screen"/>
 
+  <!-- Node for obstacle detection -->
+  <node pkg="obstacle_detect" type="node" name="obstacle_detect_node" output="screen"/>
+  
   <!-- Node for GPS coordinates -->
   <node pkg="coord_gps" type="gps_node" name="gps_node" output="screen"/>
 

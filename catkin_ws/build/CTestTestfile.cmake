@@ -6,5 +6,6 @@
 # testing this directory and lists subdirectories to be tested as well.
 subdirs("gtest")
 subdirs("detect_waste")
+subdirs("obstacle_detect")
 subdirs("coord_gps")
 subdirs("sick_tim-melodic")

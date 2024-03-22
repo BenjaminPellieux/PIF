@@ -132,6 +132,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/ros/PIF/catkin_ws/build/gtest/cmake_install.cmake")
   include("/home/ros/PIF/catkin_ws/build/detect_waste/cmake_install.cmake")
+  include("/home/ros/PIF/catkin_ws/build/obstacle_detect/cmake_install.cmake")
   include("/home/ros/PIF/catkin_ws/build/coord_gps/cmake_install.cmake")
   include("/home/ros/PIF/catkin_ws/build/sick_tim-melodic/cmake_install.cmake")
 
