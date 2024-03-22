@@ -15,10 +15,12 @@ cv::Mat grey_img(cv::Mat img){
 }
 
 bool can_go_forward(cv::Mat img){
+    /*
     std::cout << img.rows;
     std::cout << "\n";
     std::cout << img.cols;
     std::cout << "\n";
+    */
 
     int largeur = img.cols;
     int hauteur = img.rows;
@@ -93,11 +95,11 @@ int main(int argc, char** argv) {
     std::vector<int> compression_params;
     compression_params.push_back(cv::IMWRITE_PNG_COMPRESSION);
     compression_params.push_back(9);
-    cv::Mat greyImg = grey_img(img);
+    //cv::Mat greyImg = grey_img(img);
     //cv::imshow("Grey", greyImg);
 
     bool result = false;
-    try
+    /*try
     {
         result = cv::imwrite("image_grise.png", greyImg, compression_params);
 
@@ -105,45 +107,31 @@ int main(int argc, char** argv) {
     catch (const cv::Exception& ex)
     {
         fprintf(stderr, "Exception converting image to PNG format: %s\n", ex.what());
-    }
+    }*/
 
     //std::cout<<greyImg.empty();
     //std::cout<<"\n";
     
-    image = greyImg;
+    //image = greyImg;
 
     // Convertir l'image en vecteur de pixels
     cv::Mat data = image.reshape(1, image.rows * image.cols);
-    data.convertTo(data, CV_32F);
-
-    // Spécifier le nombre de clusters (k)
-    int k = 2;
-
-    // Effectuer la segmentation par k-means
-    cv::Mat labels, centers;
-    cv::kmeans(data, k, labels, cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 100, 0.8), 3, cv::KMEANS_RANDOM_CENTERS, centers);
-
-    // Convertir les centres des clusters en entiers (niveaux de gris)
-    centers.convertTo(centers, CV_8U);
-
-    // Assigner chaque pixel à la couleur du centre du cluster auquel il appartient
-    cv::Mat segmented(image.rows, image.cols, CV_8UC3);
-    for (int i = 0; i < image.rows; ++i) {
-        for (int j = 0; j < image.cols; ++j) {
-            int clusterIndex = labels.at<int>(i * image.cols + j, 0);
-            segmented.at<cv::Vec3b>(i, j) = centers.at<cv::Vec3b>(clusterIndex, 0);
-        }
-    }
-
+    data.convertTo(data, CV_32F);	
 
     // Convertir l'image segmentée en niveaux de gris
-    cv::Mat segmentedGray;
-    cv::cvtColor(segmented, segmentedGray, cv::COLOR_BGR2GRAY);
+    cv::Mat imageHSV;
+    cv::cvtColor(image, imageHSV, cv::COLOR_BGR2HSV); //BGR2HSV
+    
+    cv::Mat finalImg;
+    cv::inRange(imageHSV, cv::Scalar(0,0,0), cv::Scalar(179,20,255), finalImg);
 
-    bool b = can_go_forward(segmentedGray);
+    bool b = can_go_forward(finalImg);
     std::cout << b;
     // Afficher l'image résultante
-    cv::imshow("Surfaces approximativement uniformes en niveaux de gris", segmentedGray);
+    cv::imshow("Image", image);
+    //cv::imshow("Image Segmentée", segmented);
+    //cv::imshow("Image Segmentée Grise", segmentedGray);
+    cv::imshow("Image Finale", finalImg);
     cv::waitKey(0);
     cv::destroyAllWindows();
 
@@ -152,4 +140,3 @@ int main(int argc, char** argv) {
 
     return EXIT_SUCCESS;
 }
-
