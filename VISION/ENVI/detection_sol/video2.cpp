@@ -3,7 +3,7 @@
 
 using namespace cv;
 
-// Structure pour les réglages HSV
+// Réglages HSV
 struct HSVSettings {
     int low_h = 0, high_h = 179;
     int low_s = 0, high_s = 255;
@@ -11,7 +11,7 @@ struct HSVSettings {
     int threshold_white = 5;  // Ajout du seuil
 };
 
-// Instancier la structure de réglages HSV avec les valeurs fixées
+// Réglages HSV avec les valeurs fixées
 HSVSettings hsvSettings;
 
 // Fonction pour ajuster la luminosité de l'image
@@ -22,8 +22,8 @@ void adjustBrightness(Mat& image, double alpha, int beta) {
 int main() {
     // Initialiser la capture vidéo depuis la webcam
     VideoCapture cap;
-    cap.open(0);  // 0 indique le premier périphérique de la webcam, changez-le si vous avez plusieurs caméras
-
+    cap.open(0);  // 0 indique le premier périphérique de la webcam
+    
     // Vérifier si la capture vidéo est ouverte
     if (!cap.isOpened()) {
         std::cerr << "Erreur lors de l'ouverture de la webcam." << std::endl;
@@ -35,8 +35,8 @@ int main() {
     namedWindow("Seuillage", WINDOW_AUTOSIZE);
 
     // Paramètres de luminosité
-    double alpha = 1.5;  // ajustez ce paramètre pour la luminosité (1 = pas de changement)
-    int beta = 20;       // ajustez ce paramètre pour la luminosité (0 = pas de changement)
+    double alpha = 1.5;  
+    int beta = 20;       
 
     while (true) {
         // Capturer une image depuis la webcam
@@ -78,7 +78,7 @@ int main() {
         imshow("Image", src);
         imshow("Seuillage", result);
 
-        // Faire quelque chose en fonction du pourcentage de pixels blancs
+        // Faire avancer ou non le véhicule PIF en fonction du pourcentage de pixels blancs
         if (whitePercentage > hsvSettings.threshold_white) {
             std::cout << "Obstacle détecté, ne pas avancer." << std::endl;
             // Ajouter ici le code pour arrêter le véhicule
