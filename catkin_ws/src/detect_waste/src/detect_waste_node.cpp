@@ -21,7 +21,6 @@ void change_origin(cv::Rect* closest_rect, int img_y, int mid_width ){
 
 geometry_msgs::QuaternionStamped calc_geometry_msgs(cv::Rect* closest_rect){
     double theta = std::atan2(closest_rect->x,closest_rect->y);
-    std::cout<<"[DEBUG] Geometry message \n" << theta <<"\n";
 
     geometry_msgs::QuaternionStamped msgs;
 
@@ -30,7 +29,7 @@ geometry_msgs::QuaternionStamped calc_geometry_msgs(cv::Rect* closest_rect){
     msgs.quaternion.x = 0.0;
     msgs.quaternion.y = 0.0;
     msgs.quaternion.z = std::sin(theta / 2.0);
-    msgs.quaternion.w = std::cos(theta / 2.0); 
+    msgs.quaternion.w = 1.0; //std::cos(theta / 2.0); 
     return msgs;
 
 }
