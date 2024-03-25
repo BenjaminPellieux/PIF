@@ -27,8 +27,8 @@ geometry_msgs::QuaternionStamped calc_geometry_msgs(cv::Rect* closest_rect){
 
     msgs.header.stamp = ros::Time::now();
     msgs.header.frame_id = "QuatWaste";
-    msgs.quaternion.x = closest_rect->x;
-    msgs.quaternion.y = closest_rect->y;
+    msgs.quaternion.x = 0.0;
+    msgs.quaternion.y = 0.0;
     msgs.quaternion.z = std::sin(theta / 2.0);
     msgs.quaternion.w = std::cos(theta / 2.0); 
     return msgs;
