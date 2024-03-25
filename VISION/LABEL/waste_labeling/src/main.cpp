@@ -9,6 +9,9 @@
 #include <std_msgs/String.h>
 
 
+#define RELAY_ALIM 2
+#define RELAY_ASPI 3
+
 HUSKYLENS huskylens;
 SoftwareSerial mySerial(10, 11); // RX, TX
 ros::NodeHandle  nh;
@@ -30,13 +33,21 @@ ros::Publisher pu_label("Label/id", &str_msg);
 
 void setup() {
   str_msg.data = "NULL";
+  
   Serial.begin(9600);
   mySerial.begin(9600);
   huskylens.begin(mySerial);
   Serial.println("HuskyLens is ready.");
   nh.initNode();
   nh.advertise(pu_label);
-  //nh.subscribe(sub);
+  // Enable PIN mode for relay
+  pinMode(RELAY_ALIM, OUTPUT);
+  pinMode(RELAY_ASPI, OUTPUT);
+
+  // Init relay a HIGH (off)
+  digitalWrite(RELAY_ALIM, HIGH);
+  digitalWrite(RELAY_ASPI, HIGH);
+
 }
 
 void loop() {
@@ -62,9 +73,16 @@ void loop() {
       else{
         str_msg.data = "NULL";
       }
-      pu_label.publish( &str_msg );
+      pu_label.publish(&str_msg);
       nh.spinOnce();
     }
+    if (str_msg.data != "NULL"){
+      digitalWrite(RELAY_ALIM, LOW);
+      digitalWrite(RELAY_ASPI, LOW);
+    }else{  
+      digitalWrite(RELAY_ALIM, HIGH);
+      digitalWrite(RELAY_ASPI, HIGH);
+    } 
 
   }
   delay(300); 
