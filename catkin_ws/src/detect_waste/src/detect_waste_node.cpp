@@ -6,7 +6,11 @@
 #include <cstdlib>
 #include <ros/ros.h>
 #include "geometry_msgs/Point.h"
+#include "geometry_msgs/QuaternionStamped.h"
 
+
+#define MIN_AREA 5
+#define MAX_AREA 1000
 #define SAT_RANGE 30
 #define DEBUG 0
 
@@ -15,11 +19,28 @@ void change_origin(cv::Rect* closest_rect, int img_y, int mid_width ){
     closest_rect->x -= mid_width;
 }
 
+geometry_msgs::QuaternionStamped calc_geometry_msgs(cv::Rect* closest_rect){
+    double theta = std::atan2(closest_rect->x,closest_rect->y);
+    std::cout<<"[DEBUG] Geometry message \n" << theta <<"\n";
+
+    geometry_msgs::QuaternionStamped msgs;
+
+    msgs.header.stamp = ros::Time::now();
+    msgs.header.frame_id = "QuatWaste";
+    msgs.quaternion.x = closest_rect->x;
+    msgs.quaternion.y = closest_rect->y;
+    msgs.quaternion.z = std::sin(theta / 2.0);
+    msgs.quaternion.w = std::cos(theta / 2.0); 
+    return msgs;
+
+}
+
 int main(int argc, char** argv) {
     // Ouvrir le flux vidéo
     ros::init(argc, argv, "detect_waste");
     ros::NodeHandle nh;
     ros::Publisher detect_pub = nh.advertise<geometry_msgs::Point>("Waste/Pos", 1000);
+    ros::Publisher vector_waste = nh.advertise<geometry_msgs::QuaternionStamped>("Waste/Geometry", 10000);
     std::cout<<"DEBUG START Detect waste" << std::endl;	
     cv::VideoCapture cap("/home/ros/PIF/VISION/DETECTION/Video/Default_Video_Test.mp4");
 
@@ -82,7 +103,7 @@ int main(int argc, char** argv) {
         for (size_t i = 0; i < contours.size(); i++) {
             double area = cv::contourArea(contours[i]);
             cv::Rect rect = cv::boundingRect(contours[i]);
-            if ((rect.y >= mid_height) && ((area > 70) && (area < 1000))){ // Filtre basé sur la taille de l'objet
+            if ((rect.y >= mid_height) && ((area > MIN_AREA) && (area < MAX_AREA))){ // Filtre basé sur la taille de l'objet
                 
                 if (rect.y > max_y_rect.y){
                     max_y_rect = rect;
@@ -104,10 +125,13 @@ int main(int argc, char** argv) {
         }
         change_origin(&max_y_rect, frame.rows, mid_width); 
         std::cout<<"Closest pos x: "<<max_y_rect.x<<" y: "<<max_y_rect.y<<"\n";
-	geometry_msgs::Point msg;
-        msg.x = max_y_rect.x;
-        msg.y = max_y_rect.y;
+	    geometry_msgs::Point msg;
+        msg.x = max_y_rect.x; msg.y = max_y_rect.y;
+    
+    
+        vector_waste.publish(calc_geometry_msgs(&max_y_rect));
         detect_pub.publish(msg);
+
 	if (DEBUG){
 		cv::imshow("Detection de l'element", frame);
         	cv::imshow("Masque des autres couleurs", mask_others);
