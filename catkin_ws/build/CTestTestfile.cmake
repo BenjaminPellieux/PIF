@@ -7,5 +7,6 @@
 subdirs("gtest")
 subdirs("detect_waste")
 subdirs("obstacle_detect")
+subdirs("path_finding")
 subdirs("coord_gps")
 subdirs("sick_tim-melodic")
