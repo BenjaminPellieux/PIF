@@ -1,0 +1,92 @@
+body {
+    background-color: white;
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+}
+
+h1 {
+    font-size: 45px;
+    margin: 20px 0;
+}
+
+h1 em {
+    color: black;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="range"] {
+    width: 200px;
+    margin: 15px;
+}
+.menu {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    margin: 0;
+}
+
+.menu li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: black; /* Change text color to black */
+}
+
+.containerup {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 10px;
+    width: 100%;
+    height: 666px;
+    margin-top: 25px;
+}
+.containerdown{
+    display: grid;
+    grid-template-columns: 45% 10% 45%;
+    gap: 10px;
+    width: 100%;
+    height: 666px;
+    margin-top: 25px;
+}
+
+h1 em {
+    color: black
+}
+button {
+    font-size: 24px; /* Ajuste la taille du texte */
+    padding: 15px 30px; /* Ajuste l'espace autour du texte */
+}
+/* Media Queries for adjusting styles for different screen sizes */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 24px;
+    }
+    
+    .menu {
+        flex-direction: column;
+    }
+    
+    .menu li {
+        display: block;
+        margin: 10px 0;
+    }
+    
+}

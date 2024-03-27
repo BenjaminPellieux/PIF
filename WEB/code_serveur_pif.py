@@ -1,6 +1,6 @@
-from flask import Flask, render_template, after_this_request, request
+from flask import Flask, render_template, jsonify, request
 import json
-#from location import *
+from handle_request import *
 app = Flask(__name__, static_folder='static')
 
 
@@ -10,40 +10,39 @@ app = Flask(__name__, static_folder='static')
 def index():
     return render_template("index.html")
 
-@app.route('/vision')
-def vision():
-    return render_template("vision.html")
-
-@app.route('/gps')
-def gps():
-    return render_template("gps.html")
-
 @app.route('/controle')
 def controle():
     return render_template("controle.html")
-
-@app.route('/aspiration')
-def aspiration():
-    return render_template("aspiration.html")
 
 @app.route('/configuration')
 def config():
     return render_template("configuration.html")
 
-
 @app.route('/command', methods=['POST'])
-def command(): 
-    com = request.form["javascript_data"] 
-    print(f"[DEBUG] Reciv command : {com=}") 
+def command():
+    handle_command(request.form["comd"])
+    return "200"
+
+@app.route('/newspeed', methods=['POST'])
+def new_speed():
+    change_speed(request.form["speed"])
     return "200"
 
 
+
+@app.route('/get_topic_value', methods=['POST'])
+def get_topic_value():
+    data = request.json
+    topic = data['topic']
+    ws_app.subscribe(topic, topic_type_dict[topic])
+    print(f"[INFO][UPDATE_TOPIC] topic: {topic} type: {topic_type_dict[topic]} Data {True if ws_app.topic_data.get(topic) else False}")
+    if ws_app.topic_data.get(topic):
+        return jsonify(ws_app.topic_data.get(topic))
+    return jsonify("ERROR")
+
 @app.route('/area', methods=['POST'])
 def area():
-    data = json.loads(request.form["points"])
-    area = {i:data[i] for i in range(len(data))}
-    mon_chaton(area)
-    print(f"[DEBUG] location : {area=}")
+    handle_zone(json.loads(request.form["points"]))
     return "200"
 
 @app.route('/locate', methods=['POST'])
@@ -56,4 +55,4 @@ def locate():
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=8080)
+    app.run(host='localhost', port=8080, ssl_context=('cert.pem', 'key.pem'))

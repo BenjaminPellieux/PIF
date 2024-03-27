@@ -7,70 +7,101 @@
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
-    <link rel="stylesheet" type="text/css" href="/static/text.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/index.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/static/text.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/index.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css"/>
+    <style type="text/css">
+ body {
+            background-color: lightblue;
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            width: 100%;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 45px;
+            margin: 20px 0;
+        }
+
+        h1 em {
+            color: black;
+        }
+
+        .menu {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+            margin: 0;
+        }
+
+        .menu li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: white;
+        }
+
+        button {
+            font-size: 24px;
+            padding: 15px 30px;
+            background-color: #4CAF50; /* Green background color */
+            color: white; /* White text color */
+            border: none; /* Remove borders */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Add a pointer cursor on hover */
+        }
+
+        /* Media Queries for adjusting styles for different screen sizes */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .menu {
+                flex-direction: column;
+            }
+
+            .menu li {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </style>
+    <link rel="stylesheet" type="text/css" href="/static/style/index.css">
 </head>
 <header>
 <h1 style="font-size: 45px;"><em>Bienvenue sur la page de Configuration de WALL-E</em></h1>
     <ul class="menu"> 
         <li><a href="/">Accueil</a></li>
-        <li><a href="vision">Vision</a></li>
-        <li><a href="gps">GPS</a></li>
-        <li><a href="aspiration">Aspiration</a></li>
         <li><a href="controle">Contrôle du véhicule</a></li>
         <li><a href="configuration">Configuration</a></li>
     </ul>
 </header>
 <body>
 	<div>
-    <div id="map" style="width: 50%; height: 600px; margin-top: 40px;"></div>  
+          <div id="map" style="width: 50%; height: 600px; margin-top: 40px;"></div>  
     
 	<input type="button" id="sendData" value="Sauvegarder la zone de recherche" style="font-size: 30px; padding: 10px 20px;"> 
 	</div>
 </body>
-<style type="text/css">
-        body {
-    		background-color: lightblue;
-    		background-size: cover;
-    		background-repeat: no-repeat;
-    		font-family: Arial, sans-serif;
-    	 	width: 100%; /* La page prendra 100% de la largeur de la fenêtre */
-    	          min-height: 100vh; /* La page occupera au minimum 100% de la hauteur de la fenêtre */
-    	          margin: 0; /* Aucune marge par défaut pour le body */
-    	          display: flex; /* Pour permettre le redimensionnement vertical */
-    	          flex-direction: column;
-        }
-        .menu {
-            list-style: none;
-            padding: 0;
-            text-align: center;
-        }
-        .menu li {
-            display: inline-block;
-            margin: 0 10px;
-        }
-        .menu a {
-            text-decoration: none;
-            color: white;
-        }
-        /* Media Queries pour ajuster les styles pour différentes tailles d'écran */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 24px;
-            }
-        }
-        h1 em {
-    	color: black
-        }
-        button {
-            font-size: 24px; /* Ajuste la taille du texte */
-            padding: 15px 30px; /* Ajuste l'espace autour du texte */
-        }
-</style>
+
 
 </html>
 <script type="text/javascript">
@@ -104,23 +135,24 @@
 
         document.getElementById('sendData').onclick = function() {
             if (lastLayer) {
-                // Get the coordinates from the last layer
                 var coordinates = lastLayer.getLatLngs();
-                // Convert coordinates to a readable format if necessary
-                var readableCoordinates = coordinates.map(function(latlng) {
-                    return { lat: latlng.lat, lng: latlng.lng };
-                });
-                
-                submit_area(JSON.stringify(coordinates))
-                // TODO: Send the data to a server using AJAX or Fetch API
+                if (coordinates[0].length != 4){
+                    alert("Saisie incorrecte selectionnez une zone CARRE !")
+                }else {
+                    var readableCoordinates = coordinates.map(function(latlng) {
+                                                            return { lat: latlng.lat, lng: latlng.lng };
+                    });
+                    
+                    submit_area(JSON.stringify(coordinates))
+                }
             } else {
                 alert("No shape drawn on the map.");
             }
         };
 
-    	
 	function submit_area(coordinates) {
-		console.log("[DEBUG] new area : " + coordinates);
+		console.log("[DEBUG] new area : " + coordinates + typeof(coordinates[0]) );
+
         	$.post( "/area", {
 		    points: coordinates
 		});
