@@ -8,6 +8,14 @@
 
 # modified environment variables
 export CMAKE_PREFIX_PATH="/home/ros/PIF/catkin_ws/devel:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/ros/PIF/catkin_ws/devel/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/home/ros/PIF/catkin_ws/devel/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD='/home/ros/PIF/catkin_ws/build'
+export PYTHONPATH="/home/ros/PIF/catkin_ws/devel/lib/python3/dist-packages:$PYTHONPATH"
 export ROSLISP_PACKAGE_DIRECTORIES="/home/ros/PIF/catkin_ws/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
-export ROS_PACKAGE_PATH="/home/ros/PIF/catkin_ws/src:$ROS_PACKAGE_PATH"
+export ROS_PACKAGE_PATH="<<<<<<< HEAD
+/home/ros/PIF/catkin_ws/src
+=======
+/home/ros/PIF/catkin_ws/src:/home/koala/Desktop/PIF/catkin_ws/src
+>>>>>>> 19b18e65ed93b5cafa6ede007511fd99c7a252e0
+:/home/ros/PIF/catkin_ws/src:$ROS_PACKAGE_PATH"
