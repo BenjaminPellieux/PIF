@@ -8,7 +8,7 @@ from std_msgs.msg import Bool
 class ZoneChecker:
     def __init__(self):
         rospy.init_node('zone_checker')
-        rospy.Subscriber('/NavSat/fix', NavSatFix, self.gps_callback)
+        rospy.Subscriber('/navsat/fix', NavSatFix, self.gps_callback)
         rospy.Subscriber('/Area/Point', PointStamped, self.zone_callback)
         self.in_zone_pub = rospy.Publisher('/in_zone', Bool, queue_size=10)
         self.global_latitude = 0.0
