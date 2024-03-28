@@ -15,24 +15,26 @@
 
 HUSKYLENS huskylens;
 SoftwareSerial mySerial(10, 11); // RX, TX
+
 ros::NodeHandle  nh;
-
-
 std_msgs::String str_msg;
 std_msgs::Bool bool_msg;
 ros::Publisher pu_label("Label/id", &str_msg);
 ros::Publisher pu_aspi("Aspi/Status", &bool_msg);
-
+bool foundRelevantObject;
 
 void setup() {
   str_msg.data = "NULL";
   bool_msg.data = false; 
+  foundRelevantObject = false;
+
   Serial.begin(9600);
   mySerial.begin(9600);
   huskylens.begin(mySerial);
-  Serial.println("HuskyLens is ready.");
+  //Serial.println("HuskyLens is ready.");
   nh.initNode();
   nh.advertise(pu_label);
+  nh.advertise(pu_aspi);
   // Enable PIN mode for relay
   pinMode(RELAY_ALIM, OUTPUT);
   pinMode(RELAY_ASPI, OUTPUT);
@@ -44,43 +46,38 @@ void setup() {
 }
 void loop() {
   if (!huskylens.request()) {
-    Serial.println("Failed to request data from HuskyLens, will retry.");
+    //Serial.println("Failed to request data from HuskyLens, will retry.");
     delay(100); 
     return;
   }
 
-  bool foundRelevantObject = false; // Indicateur pour savoir si un objet pertinent a été trouvé
+   // Indicateur pour savoir si un objet pertinent a été trouvé
 
-  while (huskylens.available()) {
+  if(huskylens.available()) {
     HUSKYLENSResult result = huskylens.read();
 
-    switch (result.command) {
-      case COMMAND_RETURN_BLOCK:
-        switch (result.ID) {
-          case 4:
-            str_msg.data = "MEG";
-            Serial.println("Megot de cigarette trouve!");
-            foundRelevantObject = true;
-            break;
-          case 3:
-            str_msg.data = "CAP";
-            Serial.println("Capsule de biere trouvee!");
-            foundRelevantObject = true;
-            break;
-          default:
-            str_msg.data = "NULL";
-            break;
+    if(result.command) {
+      if (result.ID == 4) {
+        str_msg.data = "MEG";
+        Serial.println("Megot de cigarette trouve!");
+        foundRelevantObject = true;
+      }
+      else if(result.ID == 3){
+          str_msg.data = "CAP";
+          Serial.println("Capsule de biere trouvee!");
+          foundRelevantObject = true;
+      }
+      else{
+          foundRelevantObject = false;
+          str_msg.data = "NULL";
+
         }
-        break;
-      default:
-        // Gérer les autres commandes si nécessaire
-        break;
     }
 
-    if (foundRelevantObject) {
+    if (!foundRelevantObject) {
       bool_msg.data = false;
-      digitalWrite(RELAY_ALIM, HIGH);
       digitalWrite(RELAY_ASPI, HIGH);
+      digitalWrite(RELAY_ALIM, HIGH);
     } else {
       bool_msg.data = true;
       digitalWrite(RELAY_ALIM, LOW);
@@ -90,6 +87,7 @@ void loop() {
     pu_label.publish(&str_msg);
     pu_aspi.publish(&bool_msg);
     nh.spinOnce();
+    delay(3);
   }
-  delay(300); // Peut-être ajuster ce délai en fonction des exigences de performance et de réactivité de votre application
+   // Peut-être ajuster ce délai en fonction des exigences de performance et de réactivité de votre application
 }
