@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include "sensor_msgs/NavSatFix.h"
 #include "geometry_msgs/PointStamped.h"
+#include "geometry_msgs/PolygonStamped.h"
 #include "std_msgs/Bool.h"
 #include <stdint.h>
 #include <algorithm>
@@ -29,6 +30,6 @@ class ZoneChecker {
         ros::Subscriber zone_sub;
         ros::Publisher in_zone_pub;
         Point global_pos;
-        Point Point_tab[4];
+        geometry_msgs::PolygonStamped Point_tab;
 };
 

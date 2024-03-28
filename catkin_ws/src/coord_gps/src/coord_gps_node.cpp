@@ -6,6 +6,7 @@ ZoneChecker::ZoneChecker()
     this->gps_sub = nh.subscribe("/navsat/fix", 10, &ZoneChecker::gpsCallback, this);
     this->zone_sub = nh.subscribe("/Area/Point", 10, &ZoneChecker::zoneCallback, this);
     this->in_zone_pub = nh.advertise<std_msgs::Bool>("/in_zone", 10);
+    this->polygon_pub = nh.advertise<geometry_msgs::Polygon>("/area/polygon", 10); // Ajout du publisher pour le topic "/area/polygon"
     this->global_pos = (Point) {false, 0.0, 0.0};
     for(uint8_t i ; i != 4; i++){
         this->Point_tab[i].recvd  = false; 
@@ -22,19 +23,19 @@ void ZoneChecker::zoneCallback(const geometry_msgs::PointStamped::ConstPtr &msg)
 {
     if (msg->header.frame_id == "P0")
     {
-        this->Point_tab[0] = (Point){true, msg->point.x, msg->point.y};
+        this->Point_tab.Polygon.points[0] = (Point){true, msg->point.x, msg->point.y};
     }
     else if (msg->header.frame_id == "P1")
     {
-        this->Point_tab[1] = (Point){true, msg->point.x, msg->point.y};
+        this->Point_tab.Polygon.points[1] = (Point){true, msg->point.x, msg->point.y};
     }
     else if (msg->header.frame_id == "P2")
     {
-        this->Point_tab[2] = (Point){true, msg->point.x, msg->point.y};
+        this->Point_tab.Polygon.points[2] = (Point){true, msg->point.x, msg->point.y};
     }
     else if (msg->header.frame_id == "P3")
     {
-        this->Point_tab[3] = (Point){true, msg->point.x, msg->point.y};
+        this->Point_tab.Polygon.points[3] = (Point){true, msg->point.x, msg->point.y};
     }
     checkZone();
 }
@@ -60,16 +61,25 @@ void ZoneChecker::checkZone()
     if (AllRcvd())
     {
         std_msgs::Bool msg;
+        geometry_msgs::Polygon polygon_msg; // Création du message pour le polygon
         if (isInsideRectangle())
         {   
             msg.data = true;
+            // Ajout des points au polygon
+            for(uint8_t i = 0; i < 4; i++) {
+                geometry_msgs::Point32 p;
+                p.x = this->Point_tab[i].lat;
+                p.y = this->Point_tab[i].lon;
+                polygon_msg.points.push_back(p);
         }
+        polygon_pub.publish(polygon_msg); // Publication du polygon
         else
         {
             msg.data = false;
         }
         in_zone_pub.publish(msg);
     }
+    
 }
 
 bool ZoneChecker::AllRcvd(){
