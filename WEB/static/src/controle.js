@@ -65,6 +65,22 @@ function command(e) {
     });
 }
 
+function modeDeplacement(e){
+    if (e.value){ //mode manuel
+    	console.log("[DEBUG] Name mode: Manuel");
+    }
+    else{ //mode auto
+    	console.log("[DEBUG] Name mode: Automatique");
+    }
+    
+    
+    $.post( "/mode", {
+        	comd: e.value 
+    });
+	
+}
+
+
 document.addEventListener("DOMContentLoaded", function() {
     var speedRange = document.getElementById("speedRange");
     var speedValue = document.getElementById("speedValue");

@@ -35,6 +35,23 @@ def change_speed(speed: str):
     if ws_app.topic_data:
         current_speed = int(speed)
 
+def change_mode(mode: str):
+    topic_type: str = "std_msgs/Bool"
+    if mode == "1":
+    	message: dict = {
+    		"data": True
+    		}
+    else:
+    	message: dict = {
+    		"data": False
+    		}
+    print(f"[DEBUG] message_point : {message=}")
+    try: 
+        ws_app.publish('/Area/Point', topic_type, message)
+    except:
+        print("[ERROR] WebSocket closed")
+
+
 def handle_command(cmnd: str):
 
      # Vérifiez si la clé est présente dans command_topic
