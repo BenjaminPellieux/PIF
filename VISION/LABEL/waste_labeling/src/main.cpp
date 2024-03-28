@@ -2,27 +2,16 @@
 // use commande:  rosrun rosserial_arduino make_libraries.py .
 // In lib folder to get ros.h lib
 // unable ros com with arduino  rosrun rosserial_python serial_node.py /dev/ttyACM0 
-
+#include <Arduino.h>
 #include <HUSKYLENS.h>
 #include "SoftwareSerial.h"
 #include <ros.h>
 #include <std_msgs/String.h>
 
-
+#define mySerial Serial3
 HUSKYLENS huskylens;
-SoftwareSerial mySerial(10, 11); // RX, TX
+//SoftwareSerial mySerial(10, 11); // RX, TX
 ros::NodeHandle  nh;
-
-
-/*
-void messageCb( const std_msgs::Empty& toggle_msg){
-  // message advertise
-}*/
-
-/*
-ros::Subscriber<std_msgs::Empty> sub("toggle_led", messageCb );
-*/
-
 
 std_msgs::String str_msg;
 ros::Publisher pu_label("Label/id", &str_msg);
@@ -30,43 +19,42 @@ ros::Publisher pu_label("Label/id", &str_msg);
 
 void setup() {
   str_msg.data = "NULL";
-  Serial.begin(9600);
+
   mySerial.begin(9600);
   huskylens.begin(mySerial);
-  Serial.println("HuskyLens is ready.");
   nh.initNode();
+  nh.getHardware()->setBaud(57600);
   nh.advertise(pu_label);
-  //nh.subscribe(sub);
 }
 
 void loop() {
-  Serial.println("LOOP.");
-  if (!huskylens.request()) {
-    Serial.println("Failed to request data from HuskyLens, will retry.");
-    delay(100);
-    return;
+  if(huskylens.request()){
+    str_msg.data = "REQUESTED";
+    pu_label.publish(&str_msg);
   }
-
-  while (huskylens.available()) {
+  
+  if (huskylens.available()) {
     HUSKYLENSResult result = huskylens.read();
 
     if (result.command == COMMAND_RETURN_BLOCK) {
       if (result.ID == 4) {
-       str_msg.data = "MEG"; 
-        Serial.println("Megot de cigarette trouve!");
+        str_msg.data = "Megot"; 
+        //Serial.println("Megot de cigarette trouve!");
       }
       else if (result.ID == 3) { 
-        str_msg.data = "CAP"; 
-        Serial.println("Capsule de biere trouvee!");           
+        str_msg.data = "Capsule "; 
+        //Serial.println("Capsule de biere trouvee!");           
       }
       else{
-        str_msg.data = "NULL";
+        str_msg.data = "NULLOS";
       }
-      pu_label.publish( &str_msg );
-      nh.spinOnce();
+     
     }
-
+  }else{
+    str_msg.data = "NAVABLE";
   }
+  pu_label.publish( &str_msg );
+  nh.spinOnce();
   delay(300); 
 }
 
