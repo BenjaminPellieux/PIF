@@ -58,7 +58,7 @@ bool ZoneChecker::isInsideRectangle()
 void ZoneChecker::checkZone()
 {
    
-    if (AllRcvd())
+    if ((this->global_pos.recvd) && (AllRcvd()))
     {
         std_msgs::Bool msg;
         geometry_msgs::Polygon polygon_msg; // Création du message pour le polygon
@@ -96,5 +96,5 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "zone_checker");
     ZoneChecker zone_checker;
     ros::spin();
-    return 0;
+    return EXIT_SUCCESS;
 }
