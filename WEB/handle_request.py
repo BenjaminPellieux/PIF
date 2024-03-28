@@ -7,7 +7,7 @@ current_speed: float = 0.5
 def handle_zone(data: list):
     area: dict = {i:data[0][i] for i in range(len(data[0]))}
     print(f"[DEBUG]  area: {area=} {len(area)=})")
-    topic_type: str = "geometry_msgs/PointStamped"
+    topic_type: str = "sensor_msgs/NavSatFix"
     for i, point_info in area.items():
         message: dict = {
                 "header": {
@@ -15,16 +15,18 @@ def handle_zone(data: list):
                             "stamp": datetime.timestamp(datetime.now()),  # Time stamp
                             "frame_id": f"P{i}"  # ID of the point
                           },
-                "point": {
-                    "x": point_info['lat'],  # latitude
-                    "y": point_info['lng'],  # longitude
-                    "z": 0.0,  # Unused
-
-                     }
+                "latitude": point_info['lat'], # latitude
+                "longitude": point_info['lng'] # longitude
                 }
+                #"point": {
+                #    "x": point_info['lat'],  # latitude
+                #    "y": point_info['lng'],  # longitude
+                #    "z": 0.0,  # Unused
+                #     }
+                #}
         print(f"[DEBUG] message_point :{i} {message=}")
         try: 
-            ws_app.publish('/Area/Point', 'geometry_msgs/PointStamped', message)
+            ws_app.publish('/Area/Point', 'sensor_msgs/NavSatFix', message)
         except:
             print("[ERROR] WebSocket closed")
 
