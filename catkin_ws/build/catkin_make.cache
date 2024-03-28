@@ -1,2 +1,2 @@
-detect_waste:sick_tim-melodic
+coord_gps:detect_waste:go_to:obstacle_detect:path_finding:pif_gps_convert:scan_detect_obstacle:sick_tim-melodic
 -DCATKIN_DEVEL_PREFIX=/home/ros/PIF/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ros/PIF/catkin_ws/install -G Unix Makefiles

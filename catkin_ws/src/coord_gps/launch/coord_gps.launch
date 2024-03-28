@@ -1,0 +1,4 @@
+<launch>
+<!--Start the node-->
+<node name="coord_gps_node" pkg="coord_gps" type="coord_gps_node" />
+</launch>

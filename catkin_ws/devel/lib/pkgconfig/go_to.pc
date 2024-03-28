@@ -1,0 +1,8 @@
+prefix=/home/ros/PIF/catkin_ws/devel
+
+Name: go_to
+Description: Description of go_to
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: geographic_msgs geometry_msgs nav_msgs roscpp sensor_msgs std_msgs
