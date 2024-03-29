@@ -47,15 +47,10 @@ void setup() {
 
 }
 void loop() {
-  if (!huskylens.request()) {
-    //Serial.println("Failed to request data from HuskyLens, will retry.");
-      str_msg.data = "REQUESTED";
-      pu_label.publish(&str_msg);
-  }
 
    // Indicateur pour savoir si un objet pertinent a été trouvé
 
-  if(huskylens.available()) {
+  if((huskylens.request()) && (huskylens.available())) {
     HUSKYLENSResult result = huskylens.read();
 
     if(result.command) {
@@ -73,7 +68,7 @@ void loop() {
           foundRelevantObject = false;
           str_msg.data = "NULL";
 
-        }
+      }
     }
 
     if (!foundRelevantObject) {
