@@ -1,8 +1,0 @@
-prefix=/home/ros/PIF/catkin_ws/install
-
-Name: pif_go_to
-Description: Description of pif_go_to
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
