@@ -32,6 +32,7 @@ class gps_transform():
 		self.origin_pose: Local_Pose = Local_Pose()
 		self.called: bool = False
 		self.odom: Odometry = Odometry()
+		self.__start__()
 		
 
 	def callback(self, NavSatFix)-> None:
@@ -69,7 +70,7 @@ class gps_transform():
 			self.called = False
 			self.origin_pose.lat += self.robot_pose.lat
 			self.origin_pose.lon += self.robot_pose.lon
-			print(f"[DEBUG]origin get {i}")
+			print(f"[DEBUG] origin get {i}")
 		
 		try:
 			self.origin_pose.lat /= 10
@@ -78,7 +79,7 @@ class gps_transform():
 			print("[ERROR] Divition by zero")
 			pass
 		
-		print(f"origin found : {self.origin_pose.lat} {self.origin_pose.lon}")
+		print(f"[LOG] origin found : {self.origin_pose.lat} {self.origin_pose.lon}")
 		self.__run__()
 	
 
@@ -98,7 +99,7 @@ class gps_transform():
 				# Convertir les coordonnées ECEF du robot en coordonnées ENU par rapport
 				# au point de référence
 				self.odom.pose.pose.position.x, self.odom.pose.pose.position.y, _ = self.ecef_to_enu(robot_x, robot_y, robot_z)
-				print(f"Coordonnées ENU : {self.odom.pose.pose.position.x} {self.odom.pose.pose.position.y}")
+				print(f"[LOG] Coordonnées ENU : {self.odom.pose.pose.position.x} {self.odom.pose.pose.position.y}")
 				self.pub_gsp_convert.publish(self.odom)
 				self.rate.sleep()
 
