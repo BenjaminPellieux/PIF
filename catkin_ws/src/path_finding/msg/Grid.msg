@@ -1,3 +1,3 @@
-geometry_msgs::Point32 sub_area[4]
+geometry_msgs/Point[4] sub_area
 bool done
 bool unreachable

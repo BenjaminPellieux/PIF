@@ -14,13 +14,12 @@ int main(int argc, char **argv) {
 
     ROS_INFO("Starting loop.");
     ros::spin();
-
-    return 0;
 }
 
 
 MovePath::MovePath(ros::NodeHandle nh) {
-    ros::Subscriber odometry_sub = nh.subscribe("/odometry/filtered", 100, &odometryCallback);
+    ros::Subscriber position_sub = nh.subscribe("/odometry/filtered_map", 100, &positionCallback);
+    ros::Subscriber orientation_sub = nh.subscribe("/imu/data", 100, &orientationCallback);
     ros::Subscriber detectWaste_sub = nh.subscribe("/Waste/Pos", 100, &WastePosCallback);
 
     this->cmd_vel_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
@@ -31,11 +30,11 @@ MovePath::MovePath(ros::NodeHandle nh) {
 bool MovePath::spin() {
     bool clear = true;
     geometry_msgs::Twist cmd_vel;
-    double orientation_max = pose.quaternion.z + 2.0;
+    double orientation_max = this->orientation.z + 2.0;
     ros::Rate rate(5);
     
     cmd_vel.angular.z = 0.5;
-    while(pose.quaternion.z < orientation_max) {
+    while(this->orientation.z < orientation_max) {
         if(this->detectWaste) {
             clear = false;
             break;
@@ -54,8 +53,8 @@ void MovePath::go_to_waste() {
     this->cmd_vel_pub.publish(cmd_vel);
 
     cmd_vel.linear.x = 0.5;
-    double pose_max = pose.position.x + DETECT_RANGE;
-    while(pose.position.x < pose_max) {
+    double pose_max = this->position.x + DETECT_RANGE;
+    while(this->position.x < pose_max) {
         if(this->idWaste.waste) {
             cmd_vel.linear.x = 0.1;
             cmd_vel.angular.z = std::atan((this->idWaste.center.x - WIDTH_SCREEN) / this->isWaste.center.y);
@@ -69,8 +68,12 @@ void MovePath::go_to_waste() {
     }
 }
 
-void MovePath::odometryCallback(const geometry_msgs::PoseStamped &odometry) {
-    this->pose = odometry.pose;
+void MovePath::positionCallback(const geometry_msgs::PoseStamped::ConstPtr &position_msg) {
+    this->position = position_msg;
+}
+
+void MovePath::orientationCallback(const geometry_msgs::QuaternionStamped::ConstPtr &orientation_msg) {
+    this->orientation = orientation_msg.orientation;
 }
 
 void MovePath::WastePosCallback(const geometry_msgs::QuaternionStamped::ConstPtr &pos) {

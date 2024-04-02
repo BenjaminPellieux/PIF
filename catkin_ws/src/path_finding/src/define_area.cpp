@@ -53,31 +53,36 @@ void DefineArea::create_grid() {
     nbr_subGrid_y = (max_y - min_y) * sqrt(2) / DETECT_RANGE;
 
     for(int i=0; i<nbr_subGrid_y; i++) {
+        path_finding::GridArray subGrid;
         for(int j=0; j<nbr_subGrid_x; j++) {
+            path_finding::Grid tile;
+
             first_points = min_x + j * (DETECT_RANGE / sqrt(2));
             next_points = min_x + (j + 1) * (DETECT_RANGE / sqrt(2));
-            this->grid.grid[i][j].sub_area[0].x = first_points;
-            this->grid.grid[i][j].sub_area[2].x = first_points;
+            tile.sub_area[0].x = first_points;
+            tile.sub_area[2].x = first_points;
             if(next_points < max_x) {
-                this->grid.grid[i][j].sub_area[1].x = next_points;
-                this->grid.grid[i][j].sub_area[3].x = next_points;
+                tile.sub_area[1].x = next_points;
+                tile.sub_area[3].x = next_points;
             } else {
-                this->grid.grid[i][j].sub_area[1].x = max_x;
-                this->grid.grid[i][j].sub_area[3].x = max_x;
+                tile.sub_area[1].x = max_x;
+                tile.sub_area[3].x = max_x;
             }
 
             first_points = min_y + j * (DETECT_RANGE / sqrt(2));
             next_points = min_y + (j + 1) * (DETECT_RANGE / sqrt(2));
-            this->grid.grid[i][j].sub_area[0].y = first_points;
-            this->grid.grid[i][j].sub_area[1].y = first_points;
+            tile.sub_area[0].y = first_points;
+            tile.sub_area[1].y = first_points;
             if(next_points < max_y) {
-                this->grid.grid[i][j].sub_area[2].y = next_points;
-                this->grid.grid[i][j].sub_area[3].y = next_points;
+                tile.sub_area[2].y = next_points;
+                tile.sub_area[3].y = next_points;
             } else {
-                this->grid.grid[i][j].sub_area[2].y = max_y;
-                this->grid.grid[i][j].sub_area[3].y = max_y;
+                tile.sub_area[2].y = max_y;
+                tile.sub_area[3].y = max_y;
             }
+            subGrid.grid.push_back(tile);
         }
+        this->grid.grid.push_back(subGrid);
     }
     this->grid_pub.publish(grid);
 }
@@ -121,9 +126,9 @@ void DefineArea::choose_next_tile(const geometry_msgs::PointStamped::ConstPtr &p
         perimeter = size * 2 + size * 2 - 4;
         
         for(int n=0; n<perimeter; n++) {
-            if((pos.point.x+x >= 0) && (pos.point.y+y >= 0) && (pos.point.x+x <= nbr_subGrid_x) && (pos.point.y+y <= nbr_subGrid_y) && grid.grid[pos.point.y+y][pos.point.x+x].done) {
-                next_tile.point.x = pos.point.x + x;
-                next_tile.point.y = pos.point.y + y;
+            if((pos->point.x+x >= 0) && (pos->point.y+y >= 0) && (pos->point.x+x <= nbr_subGrid_x) && (pos->point.y+y <= nbr_subGrid_y) && grid.grid[pos->point.y+y].grid[pos->point.x+x].done) {
+                next_tile.point.x = pos->point.x + x;
+                next_tile.point.y = pos->point.y + y;
                 break;
             }
             if((n < move_to_max_x) || (n >= (move_to_max_x + size * 3 - 3))) {

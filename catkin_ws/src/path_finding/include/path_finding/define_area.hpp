@@ -2,9 +2,10 @@
 #include <unistd.h>
 #include <geometry_msgs/Polygon.h>
 #include <geometry_msgs/PolygonStamped.h>
-#include <geometry_msgs/Point32.h>
+#include <geometry_msgs/Point.h>
 #include <geometry_msgs/PointStamped.h>
-#include <path_finding/GridStamped.msg>
+#include <path_finding/GridArray.h>
+#include <path_finding/GridStamped.h>
 
 using namespace std;
 
