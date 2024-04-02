@@ -23,10 +23,10 @@ def handle_zone(data: list):
                      }
                 }
         print(f"[DEBUG] message_point :{i} {message=}")
-    try: 
-        ws_app.publish('/Area/Points', 'geometry_msgs/PointStamped', command_changes)
-    except:
-        print("[ERROR] WebSocket closed")
+        try: 
+            ws_app.publish('/Area/Point', 'geometry_msgs/PointStamped', message)
+        except:
+            print("[ERROR] WebSocket closed")
 
 def change_speed(speed: str):
     global current_speed

@@ -1,138 +1,115 @@
-#include <ros/ros.h>
-#include <unistd.h>
-#include <geometry_msgs/Polygon.h>
-#include <geometry_msgs/PolygonStamped.h>
-#include <geometry_msgs/Point32.h>
-
-using namespace std;
+#include "path_finding/define_area.hpp"
 
 
-#define DETECT_RANGE 12.0
-
-struct Grid {
-    geometry_msgs::Point32 sub_area[4];
-    bool done;
-};
-
-
-// DÉCLARATION DES VARIABLES =====================================================================================
-
-
-// PROTOTYPES ====================================================================================================
-class DefineArea {
-private:
-    geometry_msgs::Polygon area;
-    float nbr_subGrid_x, nbr_subGrid_y;
-    ros::Subscriber area_sub;
-
-    void create_grid();
-    void set_origin();
-public:
-    Grid grid[1000][1000];
-    geometry_msgs::Point32 origin,
-                           next_tile;
-
-    DefineArea();
-    void choose_next_tile(int, int);
-
-    void areaCallback(const geometry_msgs::PolygonStamped::ConstPtr&);
-};
-
-
-// MAIN ==========================================================================================================
 int main(int argc, char **argv) {
     ROS_INFO("Starting PIF package...");
     ROS_INFO("Init ROS...");
-    ros::init(argc, argv, "DefineArea");                                        // Initalisation de ROS
+    ros::init(argc, argv, "path_finding");
     ROS_INFO("Complete.");
 
-    DefineArea define_area;
+    ros::NodeHandle nh;
+    DefineArea define_area(nh);
 
     ROS_INFO("Starting loop.");
-    ros::spin();                                                                // Boucle de fonctionnement du package
+    ros::spin();
 
     return 0;
 }
 
 
-// DÉFINITIONS DE FONCTIONS ======================================================================================
-DefineArea::DefineArea() {
-    ROS_INFO("Subscribers and publishers creation...");
-    ros::NodeHandle nh;                                                         // Communication ROS
-    this->area_sub = nh.subscribe("/area/polygon", 100, &DefineArea::areaCallback, this);
-    ROS_INFO("Complete.");
+DefineArea::DefineArea(ros::NodeHandle nh) {
+    ros::Subscriber area_sub = nh.subscribe("/area/polygon", 100, &DefineArea::areaCallback, this);
+    ros::Subscriber choose_tile_sub = nh.subscribe("/path_finding/pos", 100, &DefineArea::choose_next_tile, this);
+
+    this->grid_pub = nh.advertise<path_finding::GridStamped>("/area/grid", 100);
+    this->origin_pub = nh.advertise<geometry_msgs::PointStamped>("/area/origin", 100);
+    this->next_tile_pub = nh.advertise<geometry_msgs::PointStamped>("/path_finding/next_tile", 100);
+
+    ROS_INFO("define_area -> complete.");
 }
 
 void DefineArea::create_grid() {
-    float min_x = area.points[0].x,
-          min_y = area.points[0].y,
+    float min_x = this->area.points[0].x,
+          min_y = this->area.points[0].y,
           max_x, max_y,
           first_points, next_points;
 
-    // Define max and min among the selected area's points -------------------------------------------------------
-    for(int i=0; i<(sizeof(area.points)/sizeof(geometry_msgs::Point32)); i++) {
-        if(area.points[i].x < min_x) {
-            min_x = area.points[i].x;
-        } else if(area.points[i].x > max_x) {
-            max_x = area.points[i].x;
+    grid.header.frame_id = "grid";
+    grid.header.stamp = ros::Time::now();
+
+    for(int i=0; i<this->area.points.size(); i++) {
+        if(this->area.points[i].x < min_x) {
+            min_x = this->area.points[i].x;
+        } else if(this->area.points[i].x > max_x) {
+            max_x = this->area.points[i].x;
         }
-        if(area.points[i].y < min_y) {
-            min_y = area.points[i].y;
-        } else if(area.points[i].y > max_y) {
-            max_y = area.points[i].y;
+        if(this->area.points[i].y < min_y) {
+            min_y = this->area.points[i].y;
+        } else if(this->area.points[i].y > max_y) {
+            max_y = this->area.points[i].y;
         }
     }
-    // Define how many sections there will be --------------------------------------------------------------------
     nbr_subGrid_x = (max_x - min_x) * sqrt(2) / DETECT_RANGE;
     nbr_subGrid_y = (max_y - min_y) * sqrt(2) / DETECT_RANGE;
 
-    // Fill a list which content all sections informations -------------------------------------------------------
     for(int i=0; i<nbr_subGrid_y; i++) {
         for(int j=0; j<nbr_subGrid_x; j++) {
             first_points = min_x + j * (DETECT_RANGE / sqrt(2));
             next_points = min_x + (j + 1) * (DETECT_RANGE / sqrt(2));
-            grid[i][j].sub_area[0].x = first_points;
-            grid[i][j].sub_area[2].x = first_points;
+            this->grid.grid[i][j].sub_area[0].x = first_points;
+            this->grid.grid[i][j].sub_area[2].x = first_points;
             if(next_points < max_x) {
-                grid[i][j].sub_area[1].x = next_points;
-                grid[i][j].sub_area[3].x = next_points;
+                this->grid.grid[i][j].sub_area[1].x = next_points;
+                this->grid.grid[i][j].sub_area[3].x = next_points;
             } else {
-                grid[i][j].sub_area[1].x = max_x;
-                grid[i][j].sub_area[3].x = max_x;
+                this->grid.grid[i][j].sub_area[1].x = max_x;
+                this->grid.grid[i][j].sub_area[3].x = max_x;
             }
 
             first_points = min_y + j * (DETECT_RANGE / sqrt(2));
             next_points = min_y + (j + 1) * (DETECT_RANGE / sqrt(2));
-            grid[i][j].sub_area[0].y = first_points;
-            grid[i][j].sub_area[1].y = first_points;
+            this->grid.grid[i][j].sub_area[0].y = first_points;
+            this->grid.grid[i][j].sub_area[1].y = first_points;
             if(next_points < max_y) {
-                grid[i][j].sub_area[2].y = next_points;
-                grid[i][j].sub_area[3].y = next_points;
+                this->grid.grid[i][j].sub_area[2].y = next_points;
+                this->grid.grid[i][j].sub_area[3].y = next_points;
             } else {
-                grid[i][j].sub_area[2].y = max_y;
-                grid[i][j].sub_area[3].y = max_y;
+                this->grid.grid[i][j].sub_area[2].y = max_y;
+                this->grid.grid[i][j].sub_area[3].y = max_y;
             }
         }
     }
+    this->grid_pub.publish(grid);
 }
 
 void DefineArea::set_origin() {
-    origin.x = area.points[0].x;
-    origin.y = area.points[0].y;
+    geometry_msgs::PointStamped origin;
+
+    origin.header.frame_id = "origin";
+    origin.header.stamp = ros::Time::now();
+
+    origin.point.x = this->area.points[0].x;
+    origin.point.y = this->area.points[0].y;
     for(int i=1; i<4; i++) {
-        if(abs(area.points[i].x) < abs(origin.x)) {
-            origin.x = area.points[i].x;
+        if(abs(this->area.points[i].x) < abs(origin.point.x)) {
+            origin.point.x = this->area.points[i].x;
         }
-        if(abs(area.points[i].y) < abs(origin.y)) {
-            origin.y = area.points[i].y;
+        if(abs(this->area.points[i].y) < abs(origin.point.y)) {
+            origin.point.y = this->area.points[i].y;
         }
     }
+    this->origin_pub.publish(origin);
 }
 
-void DefineArea::choose_next_tile(int posX, int posY) {
+void DefineArea::choose_next_tile(const geometry_msgs::PointStamped::ConstPtr &pos) {
     int size, move_to_max_x, perimeter, x, y;
-    next_tile.x = -1;
-    next_tile.y = -1;
+    geometry_msgs::PointStamped next_tile;
+
+    next_tile.header.frame_id = "next_tile";
+    next_tile.header.stamp = ros::Time::now();
+
+    next_tile.point.x = -1;
+    next_tile.point.y = -1;
 
     for(int ring=0; (ring<=nbr_subGrid_x)&&(ring<=nbr_subGrid_y);ring++) {
         size = 3 + 2 * ring;
@@ -144,9 +121,9 @@ void DefineArea::choose_next_tile(int posX, int posY) {
         perimeter = size * 2 + size * 2 - 4;
         
         for(int n=0; n<perimeter; n++) {
-            if((posX+x >= 0) && (posY+y >= 0) && (posX+x <= nbr_subGrid_x) && (posY+y <= nbr_subGrid_y) && grid[posY+y][posX+x].done) {
-                next_tile.x = posX + x;
-                next_tile.y = posY + y;
+            if((pos.point.x+x >= 0) && (pos.point.y+y >= 0) && (pos.point.x+x <= nbr_subGrid_x) && (pos.point.y+y <= nbr_subGrid_y) && grid.grid[pos.point.y+y][pos.point.x+x].done) {
+                next_tile.point.x = pos.point.x + x;
+                next_tile.point.y = pos.point.y + y;
                 break;
             }
             if((n < move_to_max_x) || (n >= (move_to_max_x + size * 3 - 3))) {
@@ -159,13 +136,14 @@ void DefineArea::choose_next_tile(int posX, int posY) {
                 y--;
             }
         }
-        if((next_tile.x != -1) && (next_tile.y != -1))
+        if((next_tile.point.x != -1) && (next_tile.point.y != -1))
             break;
     }
+    this->next_tile_pub.publish(next_tile);
 }
 
-void DefineArea::areaCallback(const geometry_msgs::PolygonStamped::ConstPtr& msg) {
-    area = msg->polygon;
+void DefineArea::areaCallback(const geometry_msgs::PolygonStamped::ConstPtr &msg) {
+    this->area = msg->polygon;
     this->create_grid();
     this->set_origin();
 }
