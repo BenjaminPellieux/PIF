@@ -6,10 +6,10 @@
 #include <visualization_msgs/Marker.h>
 #include <tf/transform_broadcaster.h>
 #include <tf/transform_listener.h>
-#include <tf/transform_datatypes.h>
+#include <tf/transform_datatypes.h> 
 
 #define MIN_DISTANCE 0.5  // Distance minimale pour détecter un obstacle M
-#define MAX_DISTANCE 2.0  // Distance maximale pour détecter un obstacle
+#define MAX_DISTANCE 3.0  // Distance maximale pour détecter un obstacle
 #define MIN_SIZE_OBSTACLE	3	//nbr
 #define MIN_SIZE_HOLE	0.3	//M (for pathfinding)
 #define ANGLE_MIN	45	//°	
@@ -23,9 +23,6 @@ void laserCallback(const sensor_msgs::LaserScan::ConstPtr& scan)
     int min_index = -1;
     int obstacle_count = 0;
     float closest_obstacle_dist = MAX_DISTANCE;
-    
-    printf("size : %d\n", scan->ranges.size());
-    printf("angle min : %d\n", scan->angle_min);
     
     for (int i = 0; i < scan->ranges.size(); ++i)
     {
@@ -67,39 +64,9 @@ void laserCallback(const sensor_msgs::LaserScan::ConstPtr& scan)
 
     if (obstacle_count)
 {
-    float angle = ((float)scan->angle_increment * (float)min_index) + (ANGLE_MIN * 0.017453);
-    std::cout << "obstacle found ! Angle : " << angle << "\n";
-    std::cout << "Angle n : " << min_index << "\n";
-    // Créez une transformation entre le cadre de référence du LIDAR et le cadre de référence global
-    tf::Transform transform;
-    transform.setOrigin(tf::Vector3(0, 0, 0)); // Les valeurs x, y et z dépendront de votre configuration
-    tf::Quaternion q;
-    q.setRPY(0, 0, angle); // Utilisez l'angle pour définir l'orientation
-    transform.setRotation(q);
-
-    // Publiez la transformation
-    //tf_broadcaster_ptr->sendTransform(tf::StampedTransform(transform, ros::Time::now(), "base_laser_link", "global_frame"));
-
-    // Maintenant, vous pouvez utiliser cette transformation pour obtenir l'orientation dans le cadre de référence global
-    
-    tf::StampedTransform orientation_in_global;
-    try
-    {
-        tf_listener_ptr->lookupTransform("base_link", "odom", ros::Time(0), orientation_in_global);
-    }
-    catch (tf::TransformException ex)
-    {
-        ROS_ERROR("%s", ex.what());
-        return;
-    }
-
-    // Utilisez l'orientation_in_global pour définir l'orientation de votre Marker
-    tf::quaternionTFToMsg(orientation_in_global.getRotation(), marker.pose.orientation);
-}
-else
-{
-    // Aucun obstacle détecté, orientation par défaut
-    tf::quaternionTFToMsg(tf::createQuaternionFromRPY(0, 0, 0), marker.pose.orientation);
+    double angle = (((scan->angle_increment * min_index) + ((ANGLE_MIN - 10) * 0.017453)) / 3) - 1;
+    std::cout << "obstacle found ! Angle : " << angle << " dist : " << scan->ranges[min_index] << "\n";
+    marker.pose.orientation.z = angle;
 }
 
     marker_pub_ptr->publish(marker);
@@ -112,13 +79,13 @@ int main(int argc, char** argv)
     
     ros::NodeHandle nh;
     
-
-    
     tf_broadcaster_ptr = new tf::TransformBroadcaster();
     tf_listener_ptr = new tf::TransformListener();
     
     marker_pub_ptr = new ros::Publisher();
-    ros::Subscriber laser_sub = nh.subscribe("/front/scan", 1, laserCallback);
+    printf("laser is : %s\n", argv[1]);
+    ros::Subscriber laser_sub = nh.subscribe(argv[1], 1, laserCallback);
+
     *marker_pub_ptr = nh.advertise<visualization_msgs::Marker>("/obstacle_marker", 1);
     
 

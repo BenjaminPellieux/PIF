@@ -66,135 +66,178 @@ bool Go_To::in_range() {
 	}
 }
 
-int Go_To::get_cmd_from_obs(double *coef_x, double *obs_try, int *try_nb, double *size_try, double *target_ang)
+int Go_To::get_cmd_from_obs(double *coef_x,
+	double *accel_z,
+	double *obs_try,
+	int *try_nb,
+	double *target_ang,
+	uint8_t dist_at_begin)
 {
-	if (this->called_obs) {
+	int ret = 0;
+	double angle_to_add;
+
 	
-		printf("obs angle : %lf\n", this->obs_ang);
-		printf("obs dist : %lf\n", this->obs_dist);
-		this->called_obs = false;
-		double tmp_dist = sqrt(((this->cmd_pose.x - this->pose.x) * (this->cmd_pose.x - this->pose.x)) \
-							+ ((this->cmd_pose.y - this->pose.y) * (this->cmd_pose.y - this->pose.y)));
-		if (this->obs_dist == 0) {
-			//nothing
-			*coef_x = 1;
-		} else if (this->obs_dist < 1) { //if too close
-			*coef_x = 0;//stop
-		} else if (this->obs_dist < 2) {
-			//if obstacle 
+		if (called_obs) {
+		
+			called_obs = 0;
 			
-			if (*try_nb == NO_OBS) {
-				*try_nb++;
-				*size_try = tmp_dist + 10;
-				if (this->obs_ang > 0) {
-					*obs_try = TRY_RIGHT;
-				} else {
-					*obs_try = TRY_LEFT;
-				}
-			} 
+			if (obs_dist == 0) {
+				//nothing
+				*obs_try = 0;
+				*try_nb = 0;
+				*coef_x = 1;
+			} else if (obs_dist < 1) { //if too close
+				*coef_x = 0;//stop
+			} else if (obs_dist < 3) {
+				//if obstacle 
 				
-			if (*try_nb) {
-				*coef_x = this->obs_dist - 0.5;
-				if (*size_try < tmp_dist) {
-					*size_try = *size_try + 10;
-					
-					if (*try_nb == 2) 
-						return -1;
+				if (*try_nb == NO_OBS) {
 					*try_nb++;
-					*obs_try = *obs_try * (- 1);
-					*coef_x = 0;
-				}
+					if (obs_ang < 0) {
+						*obs_try = TRY_RIGHT;
+						printf("obs on right\n");
+					} else {
+						*obs_try = TRY_LEFT;
+						printf("obs on left\n");
+					}
+				} 
 				
-				*target_ang += ((1 - (this->obs_dist - 1)) * (this->obs_ang + ((- *obs_try) / 2.0))) \
-								 + ((this->obs_dist - 1) * *target_ang);
-				printf("coef dist : %lf\nnew target : %lf\n", (this->obs_dist - 1), *target_ang);
-				*coef_x = (1 - (this->obs_dist - 1)) + 0.01;
+				if (*try_nb) {
+					/*if (dist_at_begin < sqrt(((cmd_x - x) * (cmd_x - x)) + ((cmd_y - y) * (cmd_y - y)))) {
+						dist_at_begin = dist_at_begin + 5;
+						
+						if (*try_nb == 2) 
+							return -1;
+						*try_nb++;
+						*obs_try = *obs_try * (- 1);
+						*coef_x = 0;
+					}*/
+					angle_to_add = abs((obs_ang + 1) - (*target_ang + 1)) + 0.5;
+					
+					*target_ang = *target_ang + ((1 - ((obs_dist - 1) / 2)) * (-*obs_try * angle_to_add)) ;
+					if (*target_ang > 1) 
+						*target_ang - 2;
+					if (*target_ang < -1) 
+						*target_ang + 2;
+					*coef_x = ((obs_dist - 1) / 2);
+					//if (*coef_x < 0.3)
+					//	*coef_x = 0.3;
+					
+					
+					/*if ((*try_nb > 0) ? (*target_ang > 0) && (*target_ang < 0.5) : (*target_ang < 0) && (*target_ang > (- 0.5))) {
+						*coef_x = 1;
+					} else {
+						target_to_avoid_colision = obs_ang + *obs_try;
+						*target_ang = angle_to_add + (((obs_dist - 1) / 2) * *target_ang);
+						*coef_x = ((obs_dist - 1) / 2);
+					}*/
+					
+					
+				}
+			} else {
+				*obs_try = 0;
+				*try_nb = 0;
+				*coef_x = 1;
 			}
+			
+			
 		} else {
-			*obs_try = 0;
-			*try_nb = 0;
-			*coef_x = 1;
+			*coef_x = 0;
+			printf("No laser topic\n");
 		}
-			
-			
-	}
-	return 0;
+		
+	return ret;
 }
 
 void Go_To::run(){
 
     geometry_msgs::Twist msg;
     	
-    double op_adj;
-    double accel = 0;
-    double dist;
-    double obs_try = 0; //TRY_LEFT, TRY_RIGHT, NO_OBS
-    int try_nb = 0;
+    	double op_adj;
+    	double accel = 0;
+    	double dist;
+    	double obs_try = 0; //TRY_LEFT, TRY_RIGHT, NO_OBS
+    	int try_nb = 0;
     	
-    double obs_coef_x;
-    double obs_accel_z;
-    double size_try;
+    	double obs_coef_x;
+    	double obs_accel_z;
+    	double dist_to_dest;
+    	uint8_t start_move = 0;
     	
 	while (ros::ok())
 	{
 		sleep(0.5);
-		if (this->called && this->gps_called) {
-			this->gps_called = false;
-			this->called = false;
-			printf("[LOG] x : %lf\ny : %lf\nr_z : %lf\n", this->pose.x, this->pose.y, this->r_z);
-			printf("[LOG] cmd x : %lf\ncmd y : %lf\n", this->cmd_pose.x, cmd_pose.y);
-			if (this->in_range()) {
+		if (called && gps_called) {
+			gps_called = 0;
+			called = 0;
+			
+			if (in_range()) {
 				msg.linear.x = 0;
 				msg.angular.z = 0;
 				accel = 0;
+				start_move = 1;
 			} else {
-				if (((this->cmd_pose.x - this->pose.x) < 0) && ((this->cmd_pose.y - this->pose.y) > 0)) {
-					op_adj = - (atan((this->cmd_pose.x - this->pose.x) / (this->cmd_pose.y - this->pose.y)) / M_PI) + 0.5;
+				if (start_move)
+					dist_to_dest = sqrt(((cmd_x - x) * (cmd_x - x)) + ((cmd_y - y) * (cmd_y - y))) + 5;
+				start_move = 0;
+				
+				if (((cmd_x - x) < 0) && ((cmd_y - y) > 0)) {
+					op_adj = - (atan((cmd_x - x)/(cmd_y - y)) / 3.14) + 0.5;
 					//ok
-				} else if ((this->cmd_pose.x - this->pose.x) < 0) {
-					op_adj = - (atan((this->cmd_pose.x - this->pose.x) / (this->cmd_pose.y - this->pose.y)) / M_PI) + 1.5;
+				} else if ((cmd_x - x) < 0) {
+					op_adj = - (atan((cmd_x - x)/(cmd_y - y)) / 3.14) + 1.5;
 					
-				} else if (((this->cmd_pose.x - this->pose.x) > 0) && ((this->cmd_pose.y - this->pose.y) > 0)) {
-					op_adj = atan((this->cmd_pose.y - this->pose.y)/(this->cmd_pose.x - this->pose.x)) / M_PI;
+				} else if (((cmd_x - x) > 0) && ((cmd_y - y) > 0)) {
+					op_adj = atan((cmd_y - y)/(cmd_x - x)) / 3.14;
 					//ok
 				} else {
-					op_adj = (atan((this->cmd_pose.y - this->pose.y) / (this->cmd_pose.x - this->pose.x)) / M_PI) + 2;
+					op_adj = (atan((cmd_y - y)/(cmd_x - x)) / 3.14) + 2;
 					
 				}
-				if (get_cmd_from_obs(&obs_coef_x, &obs_try, &try_nb, &size_try, &op_adj) < 0) {
-					cant_go_to = true;
+				
+				if (op_adj > 1)
+					op_adj -= 2;
+				printf("point angle : %lf\n", op_adj);
+				if (get_cmd_from_obs(&obs_coef_x,
+					&obs_accel_z,
+					&obs_try,
+					&try_nb,
+					&op_adj,
+					dist_to_dest) < 0) {
+					cant_go_to = 1;
+					exit(0);
 					//stop ?
 				}
 				
-				msg.angular.z = op_adj - this->r_z;
+				
+				msg.angular.z = op_adj - r_z;
 				
 				if (msg.angular.z > 1)
 					msg.angular.z = msg.angular.z - 2;
+				if (msg.angular.z < -1)
+					msg.angular.z = msg.angular.z + 2;
 					
-				dist = sqrt(((this->cmd_pose.x - this->pose.x) * (this->cmd_pose.x - this->pose.x)) \
-						 + ((this->cmd_pose.y - this->pose.y) * (this->cmd_pose.y - this->pose.y)));
+				
+				dist = sqrt(((cmd_x - x) * (cmd_x - x)) + ((cmd_y - y) * (cmd_y - y)));
 				
 				if ((accel < 0.1) && (dist > 1))
-					accel = accel + 0.001;
+					accel = accel + 0.0005;
 				
-				msg.linear.x = ((accel * sqrt(((this->cmd_pose.x - this->pose.x) * (this->cmd_pose.x - this->pose.x)) \
-							 + ((this->cmd_pose.y - this->pose.y) * (this->cmd_pose.y - this->pose.y)))) / 2) * obs_coef_x;
 				
-				if (msg.linear.x >= 1) 
-					msg.linear.x = 1;
 				
-				msg.angular.z = msg.angular.z * 2;
 				
-				printf("[LOG] rov angular : %lf\n", this->r_z);
-				printf("[LOG] point angle : %lf\n", op_adj);
-				printf("[LOG] cmd angle : %lf\n", msg.angular.z);
-				printf("[LOG] accel : %lf\n", accel);
+				msg.linear.x = ((accel * sqrt(((cmd_x - x) * (cmd_x - x)) + ((cmd_y - y) * (cmd_y - y)))) / 2) * obs_coef_x;
+				
+				if (msg.linear.x >= 0.5) 
+					msg.linear.x = 0.5;
+					
 				
 			}
-			this->cmd_xy.publish(msg);
+			cmd_xy.publish(msg);
 		}
 		ros::spinOnce();
 	}
+
 }
 
 int main(int argc, char *argv[])
@@ -203,7 +246,6 @@ int main(int argc, char *argv[])
 		
 	ros::init(argc, argv, "pif_go_to_node");
 	printf("trying to subscribe to /odometry/filtered and /pif_cmd...\n");
-	printf("subscribed\n");
 	Go_To pif_to_to = Go_To();
 	pif_to_to.run();
 

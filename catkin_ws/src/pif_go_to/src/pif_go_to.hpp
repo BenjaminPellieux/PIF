@@ -54,7 +54,12 @@ class Go_To{
         void callback_cmd(const geometry_msgs::Pose::ConstPtr &cmd);
 
         bool in_range();
-        int get_cmd_from_obs(double *coef_x, double *obs_try, int *try_nb, double *size_try, double *target_ang);
+        int get_cmd_from_obs(double *coef_x,
+	double *accel_z,
+	double *obs_try,
+	int *try_nb,
+	double *target_ang,
+	uint8_t dist_at_begin);
         void run();
     private: 
 

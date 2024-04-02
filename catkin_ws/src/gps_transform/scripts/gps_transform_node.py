@@ -1,5 +1,6 @@
 
 #ROS lib
+import sys
 import rospy
 from std_msgs.msg import String
 from sensor_msgs.msg import NavSatFix
@@ -23,7 +24,7 @@ class gps_transform():
 
 		# ROS 
 		rospy.init_node('gps_transform', anonymous=True)
-		rospy.Subscriber("/pif/gps", NavSatFix, self.callback)
+		rospy.Subscriber(sys.argv[1], NavSatFix, self.callback)
 		self.pub_gsp_convert = rospy.Publisher('/pif/gps_converted', Odometry, queue_size=10)
 		self.rate = rospy.Rate(10) # 10hz
 
