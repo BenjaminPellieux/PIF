@@ -5,7 +5,7 @@ Go_To::Go_To(){
 	this->pose = (Local_Pose) {0.0, 0.0};
 	this->cmd_pose = (Local_Pose) {0.0, 0.0};
 	
-	this->sub_gps = this->pos_xy.subscribe("/odometry/gps", 1000, &Go_To::callback_gps, this);
+	this->sub_gps = this->pos_xy.subscribe("/pif/gps_converted", 1000, &Go_To::callback_gps, this);
 	this->sub_odom = this->pos_xy.subscribe("/odometry/filtered", 1000, &Go_To::callback_odom, this);
 	this->sub_cmd = this->pos_xy.subscribe("/pif_cmd", 1000, &Go_To::callback_cmd, this);
 	this->sub_laser = this->pos_xy.subscribe("/obstacle_marker", 1000, &Go_To::callback_obs, this);
@@ -112,9 +112,8 @@ int Go_To::get_cmd_from_obs(double *coef_x,
 						*obs_try = *obs_try * (- 1);
 						*coef_x = 0;
 					}*/
-					angle_to_add = abs((obs_ang + 1) - (*target_ang + 1)) + 0.5;
 					
-					*target_ang = *target_ang + ((1 - ((obs_dist - 1) / 2)) * (-*obs_try * angle_to_add)) ;
+					*target_ang = ((1 - ((obs_dist - 1) / 2)) * (obs_ang - 1)) ;
 					if (*target_ang > 1) 
 						*target_ang - 2;
 					if (*target_ang < -1) 
@@ -178,20 +177,20 @@ void Go_To::run(){
 				start_move = 1;
 			} else {
 				if (start_move)
-					dist_to_dest = sqrt(((cmd_x - x) * (cmd_x - x)) + ((cmd_y - y) * (cmd_y - y))) + 5;
+					dist_to_dest = sqrt(((cmd_pose.x - pose.x) * (cmd_pose.x - pose.x)) + ((cmd_pose.y - pose.y) * (cmd_pose.y - pose.y))) + 5;
 				start_move = 0;
 				
-				if (((cmd_x - x) < 0) && ((cmd_y - y) > 0)) {
-					op_adj = - (atan((cmd_x - x)/(cmd_y - y)) / 3.14) + 0.5;
+				if (((cmd_pose.x - pose.x) < 0) && ((cmd_pose.y - pose.y) > 0)) {
+					op_adj = - (atan((cmd_pose.x - pose.x)/(cmd_pose.y - pose.y)) / 3.14) + 0.5;
 					//ok
-				} else if ((cmd_x - x) < 0) {
-					op_adj = - (atan((cmd_x - x)/(cmd_y - y)) / 3.14) + 1.5;
+				} else if ((cmd_pose.x - pose.x) < 0) {
+					op_adj = - (atan((cmd_pose.x - pose.x)/(cmd_pose.y - pose.y)) / 3.14) + 1.5;
 					
-				} else if (((cmd_x - x) > 0) && ((cmd_y - y) > 0)) {
-					op_adj = atan((cmd_y - y)/(cmd_x - x)) / 3.14;
+				} else if (((cmd_pose.x - pose.x) > 0) && ((cmd_pose.y - pose.y) > 0)) {
+					op_adj = atan((cmd_pose.y - pose.y)/(cmd_pose.x - pose.x)) / 3.14;
 					//ok
 				} else {
-					op_adj = (atan((cmd_y - y)/(cmd_x - x)) / 3.14) + 2;
+					op_adj = (atan((cmd_pose.y - pose.y)/(cmd_pose.x - pose.x)) / 3.14) + 2;
 					
 				}
 				
@@ -210,7 +209,7 @@ void Go_To::run(){
 				}
 				
 				
-				msg.angular.z = op_adj - r_z;
+				msg.angular.z = op_adj - (r_z - 1);
 				
 				if (msg.angular.z > 1)
 					msg.angular.z = msg.angular.z - 2;
@@ -218,7 +217,7 @@ void Go_To::run(){
 					msg.angular.z = msg.angular.z + 2;
 					
 				
-				dist = sqrt(((cmd_x - x) * (cmd_x - x)) + ((cmd_y - y) * (cmd_y - y)));
+				dist = sqrt(((cmd_pose.x - pose.x) * (cmd_pose.x - pose.x)) + ((cmd_pose.y - pose.y) * (cmd_pose.y - pose.y)));
 				
 				if ((accel < 0.1) && (dist > 1))
 					accel = accel + 0.0005;
@@ -226,7 +225,7 @@ void Go_To::run(){
 				
 				
 				
-				msg.linear.x = ((accel * sqrt(((cmd_x - x) * (cmd_x - x)) + ((cmd_y - y) * (cmd_y - y)))) / 2) * obs_coef_x;
+				msg.linear.x = ((accel * sqrt(((cmd_pose.x - pose.x) * (cmd_pose.x - pose.x)) + ((cmd_pose.y - pose.y) * (cmd_pose.y - pose.y)))) / 2) * obs_coef_x;
 				
 				if (msg.linear.x >= 0.5) 
 					msg.linear.x = 0.5;
