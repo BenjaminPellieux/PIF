@@ -1,33 +1,17 @@
-#include "path_finding/move_path.hpp"
+#include "path_finding/detect_waste.hpp"
 
 
-int main(int argc, char **argv) {
-    ROS_INFO("Starting PIF package...");
-    ROS_INFO("Init ROS...");
-    ros::init(argc, argv, "auto_car_ctrl");
-    ROS_INFO("Complete.");
-    
-    ROS_INFO("Subscribers and publishers creation...");
-    ros::NodeHandle nh;
-
-    MovePath move_path(nh);
-
-    ROS_INFO("Starting loop.");
-    ros::spin();
-}
-
-
-MovePath::MovePath(ros::NodeHandle nh) {
-    ros::Subscriber position_sub = nh.subscribe("/odometry/filtered_map", 100, &positionCallback);
-    ros::Subscriber orientation_sub = nh.subscribe("/imu/data", 100, &orientationCallback);
-    ros::Subscriber detectWaste_sub = nh.subscribe("/Waste/Pos", 100, &WastePosCallback);
+DetectWaste::DetectWaste(ros::NodeHandle nh) {
+    ros::Subscriber position_sub = nh.subscribe("/odometry/filtered_map", 100, &DetectWaste::positionCallback, this);
+    ros::Subscriber orientation_sub = nh.subscribe("/imu/data", 100, &DetectWaste::orientationCallback, this);
+    ros::Subscriber detectWaste_sub = nh.subscribe("/Waste/Pos", 100, &DetectWaste::WastePosCallback, this);
 
     this->cmd_vel_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
 
-    ROS_INFO("move_path -> complete.");
+    ROS_INFO("detect_waste -> complete.");
 }
 
-bool MovePath::spin() {
+bool DetectWaste::spin() {
     bool clear = true;
     geometry_msgs::Twist cmd_vel;
     double orientation_max = this->orientation.z + 2.0;
@@ -41,11 +25,12 @@ bool MovePath::spin() {
         }
         this->cmd_vel_pub.publish(cmd_vel);
         rate.sleep();
+        ros::spinOnce();
     }
     return clear;
 }
 
-void MovePath::go_to_waste() {
+void DetectWaste::go_to_waste() {
     geometry_msgs::Twist cmd_vel;
     bool detected;
 
@@ -65,21 +50,22 @@ void MovePath::go_to_waste() {
             cmd_vel.angular.z = this->detectWaste;
         }
         this->cmd_vel_pub.publish(cmd_vel);
+        ros::spinOnce();
     }
 }
 
-void MovePath::positionCallback(const geometry_msgs::PoseStamped::ConstPtr &position_msg) {
-    this->position = position_msg;
+void DetectWaste::positionCallback(const geometry_msgs::PoseStamped::ConstPtr &position_msg) {
+    this->position = position_msg.pose.position;
 }
 
-void MovePath::orientationCallback(const geometry_msgs::QuaternionStamped::ConstPtr &orientation_msg) {
+void DetectWaste::orientationCallback(const geometry_msgs::QuaternionStamped::ConstPtr &orientation_msg) {
     this->orientation = orientation_msg.orientation;
 }
 
-void MovePath::WastePosCallback(const geometry_msgs::QuaternionStamped::ConstPtr &pos) {
+void DetectWaste::WastePosCallback(const geometry_msgs::QuaternionStamped::ConstPtr &pos) {
     this->detectWaste = pos.quaternion.z;
 }
 
-void MovePath::WasteIdCallback(const path_finding::PoseWasteStamped::ConstPtr &msg) {
+void DetectWaste::WasteIdCallback(const path_finding::PoseWasteStamped::ConstPtr &msg) {
     this->idWaste = ((msg.data.waste != "NABLE") && (msg.data.waste != "NULL")) ? msg.data : path_finding::PoseWaste();
 }

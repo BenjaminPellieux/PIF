@@ -1,5 +1,6 @@
 #include <ros/ros.h>
 #include <unistd.h>
+#include <geometry_msgs/Twist.h>
 #include <geometry_msgs/QuaternionStamped.h>
 #include <geometry_msgs/Quaternion.h>
 #include <geometry_msgs/PoseStamped.h>
@@ -13,7 +14,7 @@
 #define HEIGHT_SCREEN 240
 
 
-class MovePath {
+class DetectWaste {
 private:
     ros::Publisher cmd_vel_pub;
     geometry_msgs::Pose position;
@@ -21,12 +22,12 @@ private:
     float detectWaste;
     path_finding::PoseWaste idWaste;
 public:
-    MovePath(ros::NodeHandle);
+    DetectWaste(ros::NodeHandle);
     bool spin();
     void go_to_waste();
 
     void positionCallback(const geometry_msgs::PoseStamped::ConstPtr &);
-    void odometryCallback(const geometry_msgs::QuaternionStamped::ConstPtr &);
+    void orientationCallback(const geometry_msgs::QuaternionStamped::ConstPtr &);
     void WastePosCallback(const geometry_msgs::QuaternionStamped::ConstPtr &);
     void WasteIdCallback(const path_finding::PoseWasteStamped::ConstPtr &);
 };

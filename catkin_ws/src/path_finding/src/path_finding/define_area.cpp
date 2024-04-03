@@ -1,25 +1,8 @@
 #include "path_finding/define_area.hpp"
 
 
-int main(int argc, char **argv) {
-    ROS_INFO("Starting PIF package...");
-    ROS_INFO("Init ROS...");
-    ros::init(argc, argv, "path_finding");
-    ROS_INFO("Complete.");
-
-    ros::NodeHandle nh;
-    DefineArea define_area(nh);
-
-    ROS_INFO("Starting loop.");
-    ros::spin();
-
-    return 0;
-}
-
-
 DefineArea::DefineArea(ros::NodeHandle nh) {
     ros::Subscriber area_sub = nh.subscribe("/area/polygon", 100, &DefineArea::areaCallback, this);
-    ros::Subscriber choose_tile_sub = nh.subscribe("/path_finding/pos", 100, &DefineArea::choose_next_tile, this);
 
     this->grid_pub = nh.advertise<path_finding::GridStamped>("/area/grid", 100);
     this->origin_pub = nh.advertise<geometry_msgs::PointStamped>("/area/origin", 100);
@@ -28,25 +11,25 @@ DefineArea::DefineArea(ros::NodeHandle nh) {
     ROS_INFO("define_area -> complete.");
 }
 
-void DefineArea::create_grid() {
-    float min_x = this->area.points[0].x,
-          min_y = this->area.points[0].y,
+void DefineArea::create_grid(geometry_msgs::Polygon area) {
+    float min_x = area.points[0].x,
+          min_y = area.points[0].y,
           max_x, max_y,
           first_points, next_points;
 
     grid.header.frame_id = "grid";
     grid.header.stamp = ros::Time::now();
 
-    for(int i=0; i<this->area.points.size(); i++) {
-        if(this->area.points[i].x < min_x) {
-            min_x = this->area.points[i].x;
-        } else if(this->area.points[i].x > max_x) {
-            max_x = this->area.points[i].x;
+    for(int i=0; i<area.points.size(); i++) {
+        if(area.points[i].x < min_x) {
+            min_x = area.points[i].x;
+        } else if(area.points[i].x > max_x) {
+            max_x = area.points[i].x;
         }
-        if(this->area.points[i].y < min_y) {
-            min_y = this->area.points[i].y;
-        } else if(this->area.points[i].y > max_y) {
-            max_y = this->area.points[i].y;
+        if(area.points[i].y < min_y) {
+            min_y = area.points[i].y;
+        } else if(area.points[i].y > max_y) {
+            max_y = area.points[i].y;
         }
     }
     nbr_subGrid_x = (max_x - min_x) * sqrt(2) / DETECT_RANGE;
@@ -87,26 +70,26 @@ void DefineArea::create_grid() {
     this->grid_pub.publish(grid);
 }
 
-void DefineArea::set_origin() {
+void DefineArea::set_origin(geometry_msgs::Polygon area) {
     geometry_msgs::PointStamped origin;
 
     origin.header.frame_id = "origin";
     origin.header.stamp = ros::Time::now();
 
-    origin.point.x = this->area.points[0].x;
-    origin.point.y = this->area.points[0].y;
+    origin.point.x = area.points[0].x;
+    origin.point.y = area.points[0].y;
     for(int i=1; i<4; i++) {
-        if(abs(this->area.points[i].x) < abs(origin.point.x)) {
-            origin.point.x = this->area.points[i].x;
+        if(std::abs(area.points[i].x) < std::abs(origin.point.x)) {
+            origin.point.x = area.points[i].x;
         }
-        if(abs(this->area.points[i].y) < abs(origin.point.y)) {
-            origin.point.y = this->area.points[i].y;
+        if(std::abs(area.points[i].y) < std::abs(origin.point.y)) {
+            origin.point.y = area.points[i].y;
         }
     }
     this->origin_pub.publish(origin);
 }
 
-void DefineArea::choose_next_tile(const geometry_msgs::PointStamped::ConstPtr &pos) {
+geometry_msgs::Point DefineArea::choose_next_tile(geometry_msgs::Point pos) {
     int size, move_to_max_x, perimeter, x, y;
     geometry_msgs::PointStamped next_tile;
 
@@ -126,9 +109,9 @@ void DefineArea::choose_next_tile(const geometry_msgs::PointStamped::ConstPtr &p
         perimeter = size * 2 + size * 2 - 4;
         
         for(int n=0; n<perimeter; n++) {
-            if((pos->point.x+x >= 0) && (pos->point.y+y >= 0) && (pos->point.x+x <= nbr_subGrid_x) && (pos->point.y+y <= nbr_subGrid_y) && grid.grid[pos->point.y+y].grid[pos->point.x+x].done) {
-                next_tile.point.x = pos->point.x + x;
-                next_tile.point.y = pos->point.y + y;
+            if((pos.x+x >= 0) && (pos.y+y >= 0) && (pos.x+x <= nbr_subGrid_x) && (pos.y+y <= nbr_subGrid_y) && grid.grid[pos.y+y].grid[pos.x+x].done) {
+                next_tile.point.x = pos.x + x;
+                next_tile.point.y = pos.y + y;
                 break;
             }
             if((n < move_to_max_x) || (n >= (move_to_max_x + size * 3 - 3))) {
@@ -148,7 +131,7 @@ void DefineArea::choose_next_tile(const geometry_msgs::PointStamped::ConstPtr &p
 }
 
 void DefineArea::areaCallback(const geometry_msgs::PolygonStamped::ConstPtr &msg) {
-    this->area = msg->polygon;
-    this->create_grid();
-    this->set_origin();
+    this->create_grid(msg->polygon);
+    this->set_origin(msg->polygon);
+    this->area_recieved = true;
 }

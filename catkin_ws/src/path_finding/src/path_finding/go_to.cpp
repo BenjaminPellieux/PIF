@@ -1,20 +1,20 @@
-#include "pif_go_to.hpp"
+#include "path_finding/go_to.hpp"
 
 
-Go_To::Go_To(){
+Go_To::Go_To(ros::NodeHandle nh) {
 	this->pose = (Local_Pose) {0.0, 0.0};
 	this->cmd_pose = (Local_Pose) {0.0, 0.0};
 	
-	this->sub_gps = this->pos_xy.subscribe("/pif/gps_converted", 1000, &Go_To::callback_gps, this);
-	this->sub_odom = this->pos_xy.subscribe("/odometry/filtered", 1000, &Go_To::callback_odom, this);
-	this->sub_cmd = this->pos_xy.subscribe("/pif_cmd", 1000, &Go_To::callback_cmd, this);
-	this->sub_laser = this->pos_xy.subscribe("/obstacle_marker", 1000, &Go_To::callback_obs, this);
-	this->cmd_xy = this->pos_xy.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
+	ros::Subscriber sub_gps = nh.subscribe("/pif/gps_converted", 1000, &Go_To::callback_gps, this);
+	ros::Subscriber sub_odom = nh.subscribe("/odometry/filtered", 1000, &Go_To::callback_odom, this);
+	ros::Subscriber sub_laser = nh.subscribe("/obstacle_marker", 1000, &Go_To::callback_obs, this);
 
+	this->cmd_xy = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
 
+	ROS_INFO("go_to -> complete.");
 }
-void Go_To::callback_obs(const visualization_msgs::Marker::ConstPtr &mark)
-{
+
+void Go_To::callback_obs(const visualization_msgs::Marker::ConstPtr &mark) {
 	if (! this->called_obs)
 		this->called_obs = true;
 		
@@ -26,9 +26,7 @@ void Go_To::callback_obs(const visualization_msgs::Marker::ConstPtr &mark)
 	this->obs_dist = mark->scale.x;
 }
 
-
-void Go_To::callback_gps(const nav_msgs::Odometry::ConstPtr &nav)
-{
+void Go_To::callback_gps(const nav_msgs::Odometry::ConstPtr &nav) {
 	if (! this->gps_called)
 		this->gps_called = true;
 		
@@ -36,8 +34,7 @@ void Go_To::callback_gps(const nav_msgs::Odometry::ConstPtr &nav)
 	this->pose.y = nav->pose.pose.position.y;
 }
 
-void Go_To::callback_odom(const nav_msgs::Odometry::ConstPtr &odometry)
-{
+void Go_To::callback_odom(const nav_msgs::Odometry::ConstPtr &odometry) {
 	if (odometry->pose.pose.orientation.z > 0) {
 		this->r_z = odometry->pose.pose.orientation.z;
 	} else {
@@ -48,14 +45,7 @@ void Go_To::callback_odom(const nav_msgs::Odometry::ConstPtr &odometry)
 		this->called = true;
 }
 
-void Go_To::callback_cmd(const geometry_msgs::Pose::ConstPtr &cmd)
-{
-	this->cmd_pose.x = cmd->position.x;
-	this->cmd_pose.y = cmd->position.y;
-}
-
 bool Go_To::in_range() {
-	
 	if ((this->pose.x < this->cmd_pose.x + RANGE_GOOD_ENOUGH)
 		&& (this->pose.x > this->cmd_pose.x - RANGE_GOOD_ENOUGH)
 		&& (this->pose.y < this->cmd_pose.y + RANGE_GOOD_ENOUGH)
@@ -66,13 +56,12 @@ bool Go_To::in_range() {
 	}
 }
 
-int Go_To::get_cmd_from_obs(double *coef_x,
-	double *accel_z,
-	double *obs_try,
-	int *try_nb,
-	double *target_ang,
-	uint8_t dist_at_begin)
-{
+int Go_To::modify_target_from_lidar(double *coef_x,
+									double *accel_z,
+									double *obs_try,
+									int *try_nb,
+									double *target_ang,
+									uint8_t dist_at_begin) {
 	int ret = 0;
 	double angle_to_add;
 
@@ -148,24 +137,23 @@ int Go_To::get_cmd_from_obs(double *coef_x,
 	return ret;
 }
 
-void Go_To::run(){
-
+int Go_To::run() {
     geometry_msgs::Twist msg;
-    	
-    	double op_adj;
-    	double accel = 0;
-    	double dist;
-    	double obs_try = 0; //TRY_LEFT, TRY_RIGHT, NO_OBS
-    	int try_nb = 0;
-    	
-    	double obs_coef_x;
-    	double obs_accel_z;
-    	double dist_to_dest;
-    	uint8_t start_move = 0;
-    	
-	while (ros::ok())
-	{
-		sleep(0.5);
+	ros::Rate rate(5);
+
+	double op_adj;
+	double accel = 0;
+	double dist;
+	double obs_try = 0; //TRY_LEFT, TRY_RIGHT, NO_OBS
+	int try_nb = 0,
+		cant_go_to = -1;
+
+	double obs_coef_x;
+	double obs_accel_z;
+	double dist_to_dest;
+	uint8_t start_move = 0;
+
+	while ((ros::ok()) && (cant_go_to < 0)) {
 		if (called && gps_called) {
 			gps_called = 0;
 			called = 0;
@@ -197,14 +185,14 @@ void Go_To::run(){
 				if (op_adj > 1)
 					op_adj -= 2;
 				printf("point angle : %lf\n", op_adj);
-				if (get_cmd_from_obs(&obs_coef_x,
-					&obs_accel_z,
-					&obs_try,
-					&try_nb,
-					&op_adj,
-					dist_to_dest) < 0) {
+				if (modify_target_from_lidar(&obs_coef_x,
+											 &obs_accel_z,
+											 &obs_try,
+											 &try_nb,
+											 &op_adj,
+											 dist_to_dest) < 0) {
 					cant_go_to = 1;
-					exit(0);
+					return cant_go_to;
 					//stop ?
 				}
 				
@@ -229,25 +217,11 @@ void Go_To::run(){
 				
 				if (msg.linear.x >= 0.5) 
 					msg.linear.x = 0.5;
-					
-				
 			}
 			cmd_xy.publish(msg);
 		}
+		rate.sleep();
 		ros::spinOnce();
 	}
-
-}
-
-int main(int argc, char *argv[])
-{
-
-		
-	ros::init(argc, argv, "pif_go_to_node");
-	printf("trying to subscribe to /odometry/filtered and /pif_cmd...\n");
-	Go_To pif_to_to = Go_To();
-	pif_to_to.run();
-
-
-	return 0;
+	return cant_go_to;
 }
