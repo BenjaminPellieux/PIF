@@ -2,7 +2,7 @@
 
 
 DetectWaste::DetectWaste(ros::NodeHandle nh) {
-    ros::Subscriber position_sub = nh.subscribe("/odometry/filtered_map", 100, &DetectWaste::positionCallback, this);
+    ros::Subscriber position_sub = nh.subscribe("/pif/gps_converted", 100, &DetectWaste::positionCallback, this);
     ros::Subscriber orientation_sub = nh.subscribe("/imu/data", 100, &DetectWaste::orientationCallback, this);
     ros::Subscriber detectWaste_sub = nh.subscribe("/Waste/Pos", 100, &DetectWaste::WastePosCallback, this);
 
@@ -40,9 +40,9 @@ void DetectWaste::go_to_waste() {
     cmd_vel.linear.x = 0.5;
     double pose_max = this->position.x + DETECT_RANGE;
     while(this->position.x < pose_max) {
-        if(this->idWaste.waste) {
+        if(this->idWaste.waste != "") {
             cmd_vel.linear.x = 0.1;
-            cmd_vel.angular.z = std::atan((this->idWaste.center.x - WIDTH_SCREEN) / this->isWaste.center.y);
+            cmd_vel.angular.z = std::atan((this->idWaste.center.x - WIDTH_SCREEN) / this->idWaste.center.y);
             detected = true;
         } else if(detected) {
             break;
@@ -54,18 +54,18 @@ void DetectWaste::go_to_waste() {
     }
 }
 
-void DetectWaste::positionCallback(const geometry_msgs::PoseStamped::ConstPtr &position_msg) {
-    this->position = position_msg.pose.position;
+void DetectWaste::positionCallback(const nav_msgs::Odometry::ConstPtr &position_msg) {
+    this->position = position_msg->pose.pose.position;
 }
 
 void DetectWaste::orientationCallback(const geometry_msgs::QuaternionStamped::ConstPtr &orientation_msg) {
-    this->orientation = orientation_msg.orientation;
+    this->orientation = orientation_msg->quaternion;
 }
 
 void DetectWaste::WastePosCallback(const geometry_msgs::QuaternionStamped::ConstPtr &pos) {
-    this->detectWaste = pos.quaternion.z;
+    this->detectWaste = pos->quaternion.z;
 }
 
 void DetectWaste::WasteIdCallback(const path_finding::PoseWasteStamped::ConstPtr &msg) {
-    this->idWaste = ((msg.data.waste != "NABLE") && (msg.data.waste != "NULL")) ? msg.data : path_finding::PoseWaste();
+    this->idWaste = ((msg->data.waste != "NABLE") && (msg->data.waste != "NULL")) ? msg->data : path_finding::PoseWaste();
 }
