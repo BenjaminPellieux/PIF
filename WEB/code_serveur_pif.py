@@ -1,6 +1,7 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, Response
 import json
 from handle_request import *
+from client_video import *
 app = Flask(__name__, static_folder='static')
 
 
@@ -39,6 +40,15 @@ def get_topic_value():
     if ws_app.topic_data.get(topic):
         return jsonify(ws_app.topic_data.get(topic))
     return jsonify("ERROR")
+
+@app.route('/get_video', methods=["GET"])
+def get_video():
+    if video_stream.image is not None:
+        _, img_encoded = cv2.imencode('.jpg', video_stream.image)
+        return Response(img_encoded.tobytes(), mimetype='image/jpeg')
+    else:
+        return jsonify("ERROR")
+
 
 @app.route('/area', methods=['POST'])
 def area():
