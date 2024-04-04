@@ -3,6 +3,6 @@
 	args="/navsat/fix" />
 	<node pkg="scan_detect_obstacle" type="scan_detect_obstacle_node" name=""
 	args="/front/scan" />
-	<node pkg="pif_go_to" type="pif_go_to_node" name=""
+	<node pkg="path_finding" type="test_go_to_node" name=""
 	args="" output="screen" />
 </launch>

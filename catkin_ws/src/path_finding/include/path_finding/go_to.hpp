@@ -15,7 +15,7 @@
 #include <sys/types.h>
 #include <stdio.h>
 
-#define RANGE_GOOD_ENOUGH	1
+#define RANGE_GOOD_ENOUGH	2
 
 #define SPEED_FWD	1.0
 

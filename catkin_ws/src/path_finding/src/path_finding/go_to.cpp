@@ -18,7 +18,7 @@ void Go_To::callback_obs(const visualization_msgs::Marker::ConstPtr &mark) {
 	if (! this->called_obs)
 		this->called_obs = true;
 		
-	this->obs_ang = 1 - mark->pose.orientation.z;
+	this->obs_ang = mark->pose.orientation.z;
 	this->obs_dist = mark->scale.x;
 }
 
@@ -67,7 +67,7 @@ int Go_To::modify_target_from_lidar(double *coef_x,
 		*coef_x = 1;
 	} else if (obs_dist < 1) { //if too close
 		*coef_x = 0;//stop
-	} else if (obs_dist < 3) {
+	} else if (obs_dist < 4) {
 		//if obstacle 
 		ret = 1;
 		if (*try_nb == NO_OBS) {
@@ -86,29 +86,53 @@ int Go_To::modify_target_from_lidar(double *coef_x,
 			
 			if (obs_ang > 0.6)
 				obs_ang = 0.6;
-				
 			if (obs_ang < -0.6)
-				obs_ang = -0.6;
-				
-			if (obs_ang < 0) {
-				obs_ang -= 1;
+				obs_ang = - 0.6;
+			
+			if (obs_ang > 0) {
+				*target_ang = obs_ang - 0.6;
 			} else {
-				obs_ang += 1;
+				*target_ang = obs_ang + 0.6;
 			}
+			ROS_INFO("new target = %lf", *target_ang);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			/*
+			if (obs_ang > -0.5) 
+				obs_ang = - 0.5;
+			if (obs_ang < 0.5) 
+				obs_ang = 0.5;
+			
 			old_target_angle = *target_ang;
 			*target_ang = r_z + (obs_ang * (1 -((obs_dist - 1) / 2)));
-			
-			/*if (obs_dist > 2.5) {
+			if (obs_dist > 3) {
 				//old_target_angle = old_target_angle - (r_z - 1);
 				
 				if (old_target_angle > 1)
 					old_target_angle -= 2;
 				if (old_target_angle < -1)
 					old_target_angle += 2;
-				*target_ang -= ((obs_dist - 2.5) * 2) * old_target_angle;
-			}*/
+					
+				if (*obs_try > 0) 
+				{
+					*target_ang += (1 - (obs_dist - 3)) * ;
+				} else {
+					*target_ang -= (1 - (obs_dist - 3)) * ;
+				}
+			}
 			
-			
+			*/
 			
 			if (*target_ang > 1) 
 				*target_ang - 2;
@@ -193,9 +217,9 @@ int Go_To::run()
 				if (ret < 0) {
 					cant_go_to = 1;
 					//stop ?
-				} else if (ret == 0) {
+				} else if (ret == 1) {
 					
-					msg.angular.z = op_adj - r_z;
+					msg.angular.z = op_adj;
 				} else {
 					msg.angular.z = op_adj - r_z; 
 				}
