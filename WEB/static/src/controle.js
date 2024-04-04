@@ -51,9 +51,11 @@ setInterval(function() {
     }, 2000);  
 
     requestTopicValue('/navsat/fix');
+    
     // Remplacez les valeurs par vos données odom en temps réel 
     updateData(pose, clock);
-    // Remplacez les valeurs par vos données GPS en temps réel sur la MAP
+    fetchImage();
+        // Remplacez les valeurs par vos données GPS en temps réel sur la MAP
     updateMarker(NewLat - DiffLat, NewLng - DiffLng);
     
 }, 1000);
