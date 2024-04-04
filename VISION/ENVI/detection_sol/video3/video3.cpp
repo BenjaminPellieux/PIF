@@ -76,7 +76,7 @@ int main() {
         bool resultTab[result.rows-1];
         
         
-        for (int i = 0; i<result.rows-1; i++){
+        for (int i = 0; i<result.cols-1; i++){
         
         	Mat column = bottomRegion.colRange(i, i+1); //le 1er argument est inclusif, le second est exclusif, le résultat contient donc 1 colonne
         	double columnWhitePercentage = (countNonZero(column) * 100.0) / column.total();
