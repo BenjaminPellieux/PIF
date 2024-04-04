@@ -97,8 +97,3 @@ class WebSocketApp(Thread):
 # Instanciation du client WebSocket
 ws_app: WebSocketApp = WebSocketApp()
 ws_app.start()
-
-# Utilisation de l'instance
-
-# Exemple d'abonnement à plusieurs topics
-

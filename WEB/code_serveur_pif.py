@@ -55,4 +55,4 @@ def locate():
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=8080, ssl_context=('cert.pem', 'key.pem'))
+    app.run(host='localhost', port=8080, ssl_context=('key/cert.pem', 'key/key.pem'))

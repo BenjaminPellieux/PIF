@@ -34,7 +34,7 @@ def change_speed(speed: str):
         current_speed = int(speed)
 
 def handle_command(cmnd: str):
-
+    global current_speed
      # Vérifiez si la clé est présente dans command_topic
     if cmnd in command_topic:
         command_changes: dict = command_topic[cmnd]
