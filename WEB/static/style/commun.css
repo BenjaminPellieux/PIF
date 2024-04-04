@@ -1,0 +1,57 @@
+/* index.css */
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    display: inline-block; 
+}
+
+.menu li a {
+    text-decoration: none;
+    padding: 15px 30px;
+    color: black;
+    background-color: yellow;
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+.menu li a:active {
+    background-color: white;
+    color: black;
+}
+
+
+.logo-container {
+    float: left;
+    margin: 0; /* Ajouter une marge selon vos besoins */
+}
+
+.logo-container img {
+    height: 60px; 
+    width: auto; 
+}
+
+button {
+    padding: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+#moreText {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Media Query for adjusting styles for smaller screens */
+@media (max-width: 900px) {
+    .menu li a {
+        padding: 10px 10px; 
+        font-size: 15px; 
+    }
+}

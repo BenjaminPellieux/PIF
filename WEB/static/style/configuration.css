@@ -1,5 +1,5 @@
 body {
-    background-color: lightgrey;
+    background-color: lightblue;
     background-size: cover;
     background-repeat: no-repeat;
     font-family: Arial, sans-serif;
@@ -9,19 +9,18 @@ body {
     display: flex;
     flex-direction: column;
 }
-.project-image {
-    width: 900px; 
-    height: auto; 
-    margin: 20px 0; 
-}
 
-header {
+header{
     text-align: center;
 }
 
-h1 {
+h1{
     font-size: 45px;
-    margin: 65px 0;
+    margin: 20px 0;
+}
+
+h1 em {
+    color: black;
 }
 
 .menu {
@@ -41,21 +40,11 @@ h1 {
     color: white;
 }
 
-.Descriptif {
-    text-align: center; /* Centre le texte à l'intérieur du bloc Descriptif */
+button {
+    font-size: 24px;
+    padding: 15px 30px;
 }
 
- .project-description {
-    font-size: 25px; /* Nouvelle taille de texte */
-    text-align: center;
-}
-
-.bottom-left {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin: 10px;
-}
 /* Media Queries for adjusting styles for different screen sizes */
 @media (max-width: 768px) {
     h1 {
