@@ -1,0 +1,7 @@
+<launch>
+	<node pkg="gps_transform" type="gps_transform_node.py" name="" args="/navsat/fix" />
+	<node pkg="scan_detect_obstacle" type="scan_detect_obstacle_node" name="" args="/front/scan" />
+	<node pkg="path_finding" type="test_goto_node" name="" args="" output="screen" />
+	
+	<include file="$(find jackal_gazebo)/launch/jackal_world.launch" args="config:=front_laser" />
+</launch>

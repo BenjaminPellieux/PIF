@@ -12,6 +12,7 @@ find_package(catkin REQUIRED
 	message_generation
 	std_msgs
 	geometry_msgs
+	COMPONENTS roslaunch
 )
 
 ## System dependencies are found with CMake's conventions
@@ -77,6 +78,8 @@ generate_messages(
 	std_msgs
 	geometry_msgs
 )
+
+roslaunch_add_file_check(launch)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
