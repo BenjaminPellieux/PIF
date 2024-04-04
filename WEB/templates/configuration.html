@@ -8,16 +8,13 @@
     <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
-    <link rel="stylesheet" type="text/css" href="/static/style/index.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/static/style/index.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/commun.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css"/>
     
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </style>
-    <link rel="stylesheet" type="text/css" href="/static/style/index.css">
 </head>
 <header>
 <h1 style="font-size: 45px;"><em>Bienvenue sur la page de Configuration de WALL-E</em></h1>
@@ -28,92 +25,40 @@
     </ul>
 </header>
 <body>
-	<div>
-          <div id="map" style="width: 50%; height: 600px; margin-top: 40px;"></div>  
+	<div class="container">
+        <div class="map">
+            <div id="map" style="width: 150%; height: 600px; margin-top: 40px;"></div>  
     
-	<input type="button" id="sendData" value="Sauvegarder la zone de recherche" style="font-size: 30px; padding: 10px 20px;"> 
-	</div>
-</body>
-<table id="config-table">
-        <tr>
-            <th>Paramètres</th>
-            <th>Valeur</th>
-        </tr>
-        <tr>
-            <td>Niveau de batterie du véhicule</td>
-            <td id="battery-level">? %</td>
-        </tr>
-        <tr>
-            <td>Distance parcourue</td>
-            <td id="distance-traveled">? km</td>
-        </tr>
-        <tr>
-            <td>Statue du système d'aspiration</td>
-            <td id="etatAspirateur"></td>
-        </tr>
-        <script type="text/javascript" src="/static/src/aspi.js"></script>
-        <tr>
-            <td>Coordonnées du véhicule zone</td>
-            <td id="poseTable"></td>
-        </tr>
-    <script type="text/javascript" src="/static/src/zone.js"></script>
+        <div>
+
+        </div class="bouton-sauvegarde">
+	        <input type="button" id="sendData" value="Sauvegarder la zone de recherche" style="font-size: 30px; padding: 10px 20px;"> 
+        </div>
+
+        </div class="config">
+        <table id="config-table">
+            <tr>
+                <th>Paramètres</th>
+                <th>Valeurs</th>
+            </tr>
+            <tr>
+                <td>Niveau de batterie du véhicule</td>
+                <td id="battery-level">? %</td>
+            </tr>
+            <tr>
+                <td>Distance parcourue</td>
+                <td id="distance-traveled">? km</td>
+            </tr>
+            <tr>
+                <td>Statue du système d'aspiration</td>
+                <td id="etatAspirateur"></td>
+            </tr>
+            
+            <tr>
+        </table>
+        </div>
+    </div>
        
-</table>
-
+</body>
 </html>
-<script type="text/javascript">
-
-        // Initialisation de la carte
-        var map = L.map('map').setView([48.98479706310472, 1.7016915401253376], 18);
-
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-
-        var drawnItems = new L.FeatureGroup();
-        map.addLayer(drawnItems);
-
-        var drawControl = new L.Control.Draw({
-            edit: {
-                featureGroup: drawnItems
-            }
-        });
-        map.addControl(drawControl);
-
-        var lastLayer;
-
-        map.on(L.Draw.Event.CREATED, function (event) {
-            var layer = event.layer;
-            drawnItems.addLayer(layer);
-            lastLayer = layer; // Store the reference to the layer
-        });
-
-        document.getElementById('sendData').onclick = function() {
-            if (lastLayer) {
-                var coordinates = lastLayer.getLatLngs();
-                if (coordinates[0].length != 4){
-                    alert("Saisie incorrecte selectionnez une zone CARRE !")
-                }else {
-                    var readableCoordinates = coordinates.map(function(latlng) {
-                                                            return { lat: latlng.lat, lng: latlng.lng };
-                    });
-                    
-                    submit_area(JSON.stringify(coordinates))
-                }
-            } else {
-                alert("No shape drawn on the map.");
-            }
-        };
-
-	function submit_area(coordinates) {
-		console.log("[DEBUG] new area : " + coordinates + typeof(coordinates[0]) );
-
-        	$.post( "/area", {
-		    points: coordinates
-		});
-    }
-
-        
-</script>
+<script type="text/javascript" src="/static/src/configuration.js"></script>

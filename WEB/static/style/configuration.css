@@ -60,3 +60,54 @@ button {
         margin: 10px 0;
     }
 }
+
+/* Style pour l'en-tête du tableau */
+#config-table th {
+    background-color: #28a745; /* Couleur de fond vert */
+    color: white; /* Couleur du texte */
+    text-align: center; /* Centrer le texte */
+    padding: 10px; /* Espacement intérieur */
+    border: 2px solid black; 
+    width: 1000px;
+}
+
+/* Style pour les cellules du tableau */
+#config-table td {
+    text-align: center; /* Centrer le texte */
+    padding: 10px; /* Espacement intérieur */
+    border: 2px solid black; 
+    width: 1000px;
+}
+
+/* Style pour les bordures extérieures du tableau */
+#config-table {
+    border-collapse: collapse; /* Fusionner les bordures de cellules */
+    border: 2px solid black; /* Bordure de 2 pixels solide pour le tableau */
+    width: 1000px;
+}
+
+/* Style pour les bordures internes du tableau */
+#config-table tbody tr:last-child td {
+    border-bottom: 2px solid black; 
+}
+
+#config-table tbody tr td:last-child {
+    border-right: 2px solid black; 
+}
+
+.container {
+    display: flex;
+    justify-content: space-between; /* Espacement égal entre les éléments */
+    margin: 0 auto;
+}
+
+.map {
+    width: 90%;
+}
+.bouton-sauvegarde {
+    margin: 20px;
+}
+
+.config {
+    margin: 0 auto;
+}
