@@ -23,7 +23,11 @@ add_custom_target(_sick_scan_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "sick_scan" "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/SickImu.msg" "geometry_msgs/Quaternion:std_msgs/Header:sensor_msgs/Imu:geometry_msgs/Vector3"
 =======
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "sick_scan" "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/SickImu.msg" "geometry_msgs/Vector3:sensor_msgs/Imu:geometry_msgs/Quaternion:std_msgs/Header"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
 )
 
 get_filename_component(_filename "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarObject.msg" NAME_WE)
@@ -32,7 +36,11 @@ add_custom_target(_sick_scan_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "sick_scan" "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarObject.msg" "geometry_msgs/Quaternion:geometry_msgs/PoseWithCovariance:geometry_msgs/Point:geometry_msgs/TwistWithCovariance:geometry_msgs/Pose:geometry_msgs/Twist:geometry_msgs/Vector3"
 =======
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "sick_scan" "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarObject.msg" "geometry_msgs/Vector3:geometry_msgs/Point:geometry_msgs/Quaternion:geometry_msgs/Pose:geometry_msgs/TwistWithCovariance:geometry_msgs/Twist:geometry_msgs/PoseWithCovariance"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
 )
 
 get_filename_component(_filename "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg" NAME_WE)
@@ -61,7 +69,11 @@ add_custom_target(_sick_scan_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "sick_scan" "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeader.msg" "sick_scan/RadarPreHeaderMeasurementParam1Block:sick_scan/RadarPreHeaderDeviceBlock:sick_scan/RadarPreHeaderEncoderBlock:sick_scan/RadarPreHeaderStatusBlock"
 =======
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "sick_scan" "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeader.msg" "sick_scan/RadarPreHeaderMeasurementParam1Block:sick_scan/RadarPreHeaderEncoderBlock:sick_scan/RadarPreHeaderDeviceBlock:sick_scan/RadarPreHeaderStatusBlock"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
 )
 
 get_filename_component(_filename "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarScan.msg" NAME_WE)
@@ -70,7 +82,11 @@ add_custom_target(_sick_scan_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "sick_scan" "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarScan.msg" "geometry_msgs/Quaternion:geometry_msgs/PoseWithCovariance:sick_scan/RadarPreHeaderEncoderBlock:sensor_msgs/PointCloud2:sick_scan/RadarPreHeaderDeviceBlock:sick_scan/RadarObject:geometry_msgs/Point:geometry_msgs/TwistWithCovariance:geometry_msgs/Pose:std_msgs/Header:sick_scan/RadarPreHeaderStatusBlock:sick_scan/RadarPreHeaderMeasurementParam1Block:sick_scan/RadarPreHeader:sensor_msgs/PointField:geometry_msgs/Twist:geometry_msgs/Vector3"
 =======
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "sick_scan" "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarScan.msg" "geometry_msgs/Vector3:std_msgs/Header:sensor_msgs/PointCloud2:geometry_msgs/Point:sick_scan/RadarPreHeaderEncoderBlock:geometry_msgs/Quaternion:sick_scan/RadarPreHeaderMeasurementParam1Block:sick_scan/RadarPreHeaderStatusBlock:geometry_msgs/Pose:sick_scan/RadarPreHeader:sick_scan/RadarPreHeaderDeviceBlock:sensor_msgs/PointField:sick_scan/RadarObject:geometry_msgs/TwistWithCovariance:geometry_msgs/Twist:geometry_msgs/PoseWithCovariance"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
 )
 
 get_filename_component(_filename "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/Encoder.msg" NAME_WE)
@@ -89,7 +105,11 @@ add_custom_target(_sick_scan_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "sick_scan" "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/LFErecMsg.msg" "std_msgs/Header:sick_scan/LFErecFieldMsg"
 =======
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "sick_scan" "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/LFErecMsg.msg" "sick_scan/LFErecFieldMsg:std_msgs/Header"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
 )
 
 get_filename_component(_filename "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/LIDoutputstateMsg.msg" NAME_WE)
@@ -125,7 +145,11 @@ _generate_msg_cpp(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Imu.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Imu.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/sick_scan
 )
 _generate_msg_cpp(sick_scan
@@ -135,7 +159,11 @@ _generate_msg_cpp(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/sick_scan
 )
 _generate_msg_cpp(sick_scan
@@ -169,7 +197,11 @@ _generate_msg_cpp(sick_scan
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg"
 =======
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/sick_scan
 )
 _generate_msg_cpp(sick_scan
@@ -179,7 +211,11 @@ _generate_msg_cpp(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointCloud2.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarObject.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeader.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointField.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointCloud2.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeader.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointField.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarObject.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/sick_scan
 )
 _generate_msg_cpp(sick_scan
@@ -201,7 +237,11 @@ _generate_msg_cpp(sick_scan
   "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/LFErecFieldMsg.msg"
 =======
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/LFErecFieldMsg.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/sick_scan
 )
 _generate_msg_cpp(sick_scan
@@ -290,7 +330,11 @@ _generate_msg_eus(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Imu.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Imu.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/sick_scan
 )
 _generate_msg_eus(sick_scan
@@ -300,7 +344,11 @@ _generate_msg_eus(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/sick_scan
 )
 _generate_msg_eus(sick_scan
@@ -334,7 +382,11 @@ _generate_msg_eus(sick_scan
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg"
 =======
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/sick_scan
 )
 _generate_msg_eus(sick_scan
@@ -344,7 +396,11 @@ _generate_msg_eus(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointCloud2.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarObject.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeader.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointField.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointCloud2.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeader.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointField.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarObject.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/sick_scan
 )
 _generate_msg_eus(sick_scan
@@ -366,7 +422,11 @@ _generate_msg_eus(sick_scan
   "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/LFErecFieldMsg.msg"
 =======
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/LFErecFieldMsg.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/sick_scan
 )
 _generate_msg_eus(sick_scan
@@ -455,7 +515,11 @@ _generate_msg_lisp(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Imu.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Imu.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/sick_scan
 )
 _generate_msg_lisp(sick_scan
@@ -465,7 +529,11 @@ _generate_msg_lisp(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/sick_scan
 )
 _generate_msg_lisp(sick_scan
@@ -499,7 +567,11 @@ _generate_msg_lisp(sick_scan
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg"
 =======
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/sick_scan
 )
 _generate_msg_lisp(sick_scan
@@ -509,7 +581,11 @@ _generate_msg_lisp(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointCloud2.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarObject.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeader.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointField.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointCloud2.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeader.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointField.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarObject.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/sick_scan
 )
 _generate_msg_lisp(sick_scan
@@ -531,7 +607,11 @@ _generate_msg_lisp(sick_scan
   "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/LFErecFieldMsg.msg"
 =======
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/LFErecFieldMsg.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/sick_scan
 )
 _generate_msg_lisp(sick_scan
@@ -620,7 +700,11 @@ _generate_msg_nodejs(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Imu.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Imu.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/sick_scan
 )
 _generate_msg_nodejs(sick_scan
@@ -630,7 +714,11 @@ _generate_msg_nodejs(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/sick_scan
 )
 _generate_msg_nodejs(sick_scan
@@ -664,7 +752,11 @@ _generate_msg_nodejs(sick_scan
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg"
 =======
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/sick_scan
 )
 _generate_msg_nodejs(sick_scan
@@ -674,7 +766,11 @@ _generate_msg_nodejs(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointCloud2.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarObject.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeader.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointField.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointCloud2.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeader.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointField.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarObject.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/sick_scan
 )
 _generate_msg_nodejs(sick_scan
@@ -696,7 +792,11 @@ _generate_msg_nodejs(sick_scan
   "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/LFErecFieldMsg.msg"
 =======
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/LFErecFieldMsg.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/sick_scan
 )
 _generate_msg_nodejs(sick_scan
@@ -785,7 +885,11 @@ _generate_msg_py(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Imu.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Imu.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/sick_scan
 )
 _generate_msg_py(sick_scan
@@ -795,7 +899,11 @@ _generate_msg_py(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/sick_scan
 )
 _generate_msg_py(sick_scan
@@ -829,7 +937,11 @@ _generate_msg_py(sick_scan
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg"
 =======
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/sick_scan
 )
 _generate_msg_py(sick_scan
@@ -839,7 +951,11 @@ _generate_msg_py(sick_scan
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointCloud2.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarObject.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeader.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointField.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg"
 =======
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Vector3.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointCloud2.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderEncoderBlock.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderMeasurementParam1Block.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderStatusBlock.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeader.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarPreHeaderDeviceBlock.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/PointField.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/RadarObject.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/TwistWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Twist.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/sick_scan
 )
 _generate_msg_py(sick_scan
@@ -861,7 +977,11 @@ _generate_msg_py(sick_scan
   "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/LFErecFieldMsg.msg"
 =======
   "/home/ros/PIF/catkin_ws/src/sick_scan-master/msg/LFErecFieldMsg.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+<<<<<<< HEAD
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> pierre
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/sick_scan
 )
 _generate_msg_py(sick_scan

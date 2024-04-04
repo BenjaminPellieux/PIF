@@ -67,17 +67,23 @@ set(go_to_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
+<<<<<<< HEAD
 <<<<<<< HEAD:catkin_ws/devel/share/go_to/cmake/go_toConfig.cmake
+=======
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
   set(go_to_SOURCE_PREFIX /home/ros/PIF/catkin_ws/src/go_to)
   set(go_to_DEVEL_PREFIX /home/ros/PIF/catkin_ws/devel)
   set(go_to_INSTALL_PREFIX "")
   set(go_to_PREFIX ${go_to_DEVEL_PREFIX})
+<<<<<<< HEAD
 =======
   set(pif_go_to_SOURCE_PREFIX /home/ros/PIF/catkin_ws/src/pif_go_to)
   set(pif_go_to_DEVEL_PREFIX /home/ros/PIF/catkin_ws/devel)
   set(pif_go_to_INSTALL_PREFIX "")
   set(pif_go_to_PREFIX ${pif_go_to_DEVEL_PREFIX})
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959:catkin_ws/devel/share/pif_go_to/cmake/pif_go_toConfig.cmake
+=======
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
 else()
   set(go_to_SOURCE_PREFIX "")
   set(go_to_DEVEL_PREFIX "")
@@ -117,11 +123,15 @@ if(NOT " " STREQUAL " ")
         message(FATAL_ERROR "Project 'go_to' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
+<<<<<<< HEAD
 <<<<<<< HEAD:catkin_ws/devel/share/go_to/cmake/go_toConfig.cmake
       message(FATAL_ERROR "Project 'go_to' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/ros/PIF/catkin_ws/src/go_to/${idir}'.  ${_report}")
 =======
       message(FATAL_ERROR "Project 'pif_go_to' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/ros/PIF/catkin_ws/src/pif_go_to/${idir}'.  ${_report}")
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959:catkin_ws/devel/share/pif_go_to/cmake/pif_go_toConfig.cmake
+=======
+      message(FATAL_ERROR "Project 'go_to' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/ros/PIF/catkin_ws/src/go_to/${idir}'.  ${_report}")
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
     endif()
     _list_append_unique(go_to_INCLUDE_DIRS ${include})
   endforeach()

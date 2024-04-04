@@ -81,6 +81,7 @@ else()
   set(pif_gps_convert_INSTALL_PREFIX /home/ros/PIF/catkin_ws/install)
   set(pif_gps_convert_PREFIX ${pif_gps_convert_INSTALL_PREFIX})
 <<<<<<< HEAD
+<<<<<<< HEAD
 ========
   set(pif_go_to_SOURCE_PREFIX /home/ros/PIF/catkin_ws/src/pif_go_to)
   set(pif_go_to_DEVEL_PREFIX /home/ros/PIF/catkin_ws/build/devel)
@@ -94,6 +95,8 @@ else()
 >>>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959:catkin_ws/build/devel/share/pif_go_to/cmake/pif_go_toConfig.cmake
 =======
 >>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
 endif()
 
 # warn when using a deprecated package
