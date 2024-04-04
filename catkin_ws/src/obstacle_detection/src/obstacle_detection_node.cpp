@@ -8,7 +8,7 @@
 typedef struct{
     int low_h = 0, high_h = 179;
     int low_s = 0, high_s = 255;
-    int low_v = 0, high_v = 255;
+    int low_v = 0, high_v = 122;
     int threshold_white = 5;  // Ajout du seuil
 }HSVSettings;
 
@@ -24,14 +24,20 @@ int main(int argc, char** argv) {
     ros::init(argc, argv, "environnement");
     ros::NodeHandle nh;
     ros::Publisher pub_obstacle = nh.advertise<std_msgs::UInt16>("/Obstacle", 10);
-    cv::VideoCapture cap("/home/ros/PIF/VISION/DETECTION/Video/Default_Video_Test.mp4");
-     // 0 indique le premier périphérique de la webcam, changez-le si vous avez plusieurs caméras
+    cv::VideoCapture cap;
+    cap.open("/home/ros/PIF/catkin_ws/src/obstacle_detection/Videos/VID_20240404_142451.mp4");
+    // 0 indique le premier périphérique de la webcam, changez-le si vous avez plusieurs caméras
 
     // Vérifier si la capture vidéo est ouverte
     if (!cap.isOpened()) {
         std::cerr << "Erreur lors de l'ouverture de la webcam." << std::endl;
         return -1;
     }
+    
+    // Création des fenêtres
+    cv::namedWindow("Image", cv::WINDOW_AUTOSIZE);
+    cv::namedWindow("Seuillage", cv::WINDOW_AUTOSIZE);
+    
     // Paramètres de luminosité
     double alpha = 1.5;  // ajustez ce paramètre pour la luminosité (1 = pas de changement)
     int beta = 20;       // ajustez ce paramètre pour la luminosité (0 = pas de changement)
