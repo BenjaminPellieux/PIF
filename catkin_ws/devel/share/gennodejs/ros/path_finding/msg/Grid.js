@@ -99,7 +99,6 @@ class Grid {
     geometry_msgs/Point[4] sub_area
     bool done
     bool unreachable
-    
     ================================================================================
     MSG: geometry_msgs/Point
     # This contains the position of a point in free space

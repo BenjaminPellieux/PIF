@@ -135,6 +135,9 @@ add_library(detect_waste
 add_library(go_to
 	src/${PROJECT_NAME}/go_to.cpp
 )
+add_library(odometry
+	src/${PROJECT_NAME}/odometry.cpp
+)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -162,10 +165,12 @@ target_link_libraries(${PROJECT_NAME}_node
 	define_area
 	detect_waste
 	go_to
+	odometry
 	${catkin_LIBRARIES}
 )
 target_link_libraries(test_go_to_node
    	go_to
+	odometry
 	${catkin_LIBRARIES}
 )
 
@@ -202,6 +207,11 @@ install(TARGETS detect_waste
 	RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
 )
 install(TARGETS go_to
+	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+)
+install(TARGETS odometry
 	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}

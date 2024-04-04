@@ -83,7 +83,6 @@
 (setf (get path_finding::GridStamped :definition-)
       "Header header
 path_finding/GridArray[] grid
-
 ================================================================================
 MSG: std_msgs/Header
 # Standard metadata for higher-level stamped data types.
@@ -108,7 +107,6 @@ MSG: path_finding/Grid
 geometry_msgs/Point[4] sub_area
 bool done
 bool unreachable
-
 ================================================================================
 MSG: geometry_msgs/Point
 # This contains the position of a point in free space
