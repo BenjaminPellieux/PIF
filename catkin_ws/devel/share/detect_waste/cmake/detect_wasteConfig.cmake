@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(detect_waste_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/ros/PIF/catkin_ws/src/detect_waste/include;/usr/include " STREQUAL " ")
+if(NOT "/usr/include " STREQUAL " ")
   set(detect_waste_INCLUDE_DIRS "")
-  set(_include_dirs "/home/ros/PIF/catkin_ws/src/detect_waste/include;/usr/include")
+  set(_include_dirs "/usr/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")

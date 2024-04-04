@@ -13,3 +13,6 @@
 [submodule "Integration/flexbe_behavior_engine"]
 	path = Integration/flexbe_behavior_engine
 	url = git@github.com:FlexBE/flexbe_behavior_engine.git
+[submodule "catkin_ws/src/YDLidar-SDK"]
+	path = catkin_ws/src/YDLidar-SDK
+	url = git@github.com:YDLIDAR/YDLidar-SDK.git
