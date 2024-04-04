@@ -65,6 +65,13 @@ function command(e) {
     });
 }
 
+function commandStatus(auto) {
+    console.log("[DEBUG] Name command: "  +auto.checked);
+    $.post( "/command", {
+        comd: auto.checked 
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     var speedRange = document.getElementById("speedRange");
     var speedValue = document.getElementById("speedValue");
@@ -168,3 +175,4 @@ function addRows(tbody, parentKey, dataObject) {
 }
 // Ajoutez le tableau à la div avec l'ID 'poseTable'
 updateData(pose, clock)
+

@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(path_finding_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT " " STREQUAL " ")
+if(NOT "/home/ros/PIF/catkin_ws/devel/include " STREQUAL " ")
   set(path_finding_INCLUDE_DIRS "")
-  set(_include_dirs "")
+  set(_include_dirs "/home/ros/PIF/catkin_ws/devel/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/ros/PIF/catkin_ws/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/ros/PIF/catkin_ws/devel/lib;/home/ros/PIF/catkin_ws/devel/lib;/home/ros/catkin_ws/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -177,7 +177,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(path_finding_EXPORTED_TARGETS "")
+set(path_finding_EXPORTED_TARGETS "path_finding_generate_messages_cpp;path_finding_generate_messages_eus;path_finding_generate_messages_lisp;path_finding_generate_messages_nodejs;path_finding_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${path_finding_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -185,7 +185,7 @@ foreach(t ${path_finding_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "geometry_msgs;roscpp;std_msgs")
+set(depends "")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls
@@ -214,7 +214,7 @@ foreach(depend ${depends})
   _list_append_deduplicate(path_finding_EXPORTED_TARGETS ${${path_finding_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "path_finding-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${path_finding_DIR}/${extra})

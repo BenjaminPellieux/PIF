@@ -1,2 +1,10 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+coord_gps:detect_waste:go_to:obstacle_detect:path_finding:pif_gps_convert:scan_detect_obstacle:sick_tim-melodic
+=======
+coord_gps:detect_waste:gps_transform:obstacle_detect:path_finding:pif_gps_convert:sick_tim-melodic
+>>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
+=======
 coord_gps:detect_waste:go_to:gps_transform:obstacle_detect:path_finding:pif_gps_convert:scan_detect_obstacle:sick_tim-melodic
+>>>>>>> a7df9af3ca3b6525ffbfbf139f7888459836844e
 -DCATKIN_DEVEL_PREFIX=/home/ros/PIF/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ros/PIF/catkin_ws/install -G Unix Makefiles

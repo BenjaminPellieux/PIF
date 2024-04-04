@@ -28,6 +28,19 @@ def command():
 def new_speed():
     change_speed(request.form["speed"])
     return "200"
+    
+@app.route('/mode', methods=['POST'])
+def mode():
+    change_mode(request.form["mode"])
+    return "200"
+
+@app.route('/commandstatus', methods=['POST'])
+def commandStatus():
+    try: 
+        ws_app.publish('/Controle/Status', 'std_msgs/Bool', request.form["comd"])
+    except:
+            print("[ERROR] WebSocket closed")
+    return "200"
 
 
 

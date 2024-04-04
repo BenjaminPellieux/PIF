@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.0.2)
+<<<<<<<< HEAD:catkin_ws/src/go_to/CMakeLists.txt
+project(go_to LANGUAGES CXX)
+========
 project(gps_transform)
+>>>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959:catkin_ws/src/gps_transform/CMakeLists.txt
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -101,23 +105,30 @@ find_package(catkin REQUIRED COMPONENTS
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+<<<<<<<< HEAD:catkin_ws/src/go_to/CMakeLists.txt
+
+catkin_package(CATKIN_DEPENDS geographic_msgs geometry_msgs nav_msgs roscpp sensor_msgs std_msgs)
+========
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES gps_transform
 #  CATKIN_DEPENDS rospy std_msgs
 #  DEPENDS system_lib
 )
+>>>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959:catkin_ws/src/gps_transform/CMakeLists.txt
 
 ###########
 ## Build ##
 ###########
 
+
+message( "found catkin: ${catkin_FOUND}" ) # shows '1'
+message( "roscpp include_dir: ${roscpp_INCLUDE_DIRS}" ) # shows *nothing*
+
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(
-# include
-  ${catkin_INCLUDE_DIRS}
-)
+
+include_directories( ${catkin_INCLUDE_DIRS} )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
@@ -132,22 +143,30 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
+<<<<<<<< HEAD:catkin_ws/src/go_to/CMakeLists.txt
+add_executable(${PROJECT_NAME}_node src/go_to_node.cpp)
+========
 # add_executable(${PROJECT_NAME}_node src/gps_transform_node.cpp)
+>>>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959:catkin_ws/src/gps_transform/CMakeLists.txt
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
 ## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
-# set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
+set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
+<<<<<<<< HEAD:catkin_ws/src/go_to/CMakeLists.txt
+target_link_libraries(${PROJECT_NAME}_node ${catkin_LIBRARIES})
+========
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
+>>>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959:catkin_ws/src/gps_transform/CMakeLists.txt
 
 #############
 ## Install ##
