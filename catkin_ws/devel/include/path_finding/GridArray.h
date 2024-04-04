@@ -153,7 +153,6 @@ struct Definition< ::path_finding::GridArray_<ContainerAllocator> >
 "geometry_msgs/Point[4] sub_area\n"
 "bool done\n"
 "bool unreachable\n"
-"\n"
 "================================================================================\n"
 "MSG: geometry_msgs/Point\n"
 "# This contains the position of a point in free space\n"
