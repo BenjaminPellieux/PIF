@@ -6,7 +6,7 @@ Go_To::Go_To(ros::NodeHandle nh) {
 	this->cmd_pose = (Local_Pose) {0.0, 0.0};
 	
 	this->sub_gps = nh.subscribe("/pif/gps_converted", 1000, &Go_To::callback_gps, this);
-	this->sub_odom = nh.subscribe("/odometry/filtered", 1000, &Go_To::callback_odom, this);
+	this->sub_odom = nh.subscribe("/imu/data", 1000, &Go_To::callback_odom, this);
 	this->sub_laser = nh.subscribe("/obstacle_marker", 1000, &Go_To::callback_obs, this);
 
 	this->cmd_xy = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
@@ -30,10 +30,10 @@ void Go_To::callback_gps(const nav_msgs::Odometry::ConstPtr &nav) {
 	this->pose.y = nav->pose.pose.position.y;
 }
 
-void Go_To::callback_odom(const nav_msgs::Odometry::ConstPtr &odometry) {
+void Go_To::callback_odom(const geometry_msgs::QuaternionStamped::ConstPtr &odometry) {
 
-	this->r_z = odometry->pose.pose.orientation.z;
-	
+	this->r_z = odometry->quaternion.z;
+	ROS_INFO("odom");	
 	if (!this->called)
 		this->called = true;
 }

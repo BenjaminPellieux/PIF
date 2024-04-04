@@ -10,6 +10,9 @@
 #include <sensor_msgs/NavSatStatus.h>
 #include <sensor_msgs/NavSatFix.h>
 #include <geometry_msgs/Pose.h>
+#include <geometry_msgs/QuaternionStamped.h>
+#include <geometry_msgs/Quaternion.h>
+#include <geometry_msgs/Point.h>
 #include <visualization_msgs/Marker.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -46,7 +49,7 @@ class Go_To{
         Go_To(ros::NodeHandle);
         void callback_obs(const visualization_msgs::Marker::ConstPtr &mark);
         void callback_gps(const nav_msgs::Odometry::ConstPtr &nav);
-        void callback_odom(const nav_msgs::Odometry::ConstPtr &odometry);
+        void callback_odom(const geometry_msgs::QuaternionStamped::ConstPtr &odometry);
 
         bool in_range();
         int modify_target_from_lidar(double *coef_x,

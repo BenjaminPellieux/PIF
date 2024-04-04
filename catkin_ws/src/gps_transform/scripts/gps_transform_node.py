@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # ROS lib
 import sys
 import rospy
