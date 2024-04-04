@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
     ros::NodeHandle nh;
     ros::Publisher pub_obstacle = nh.advertise<std_msgs::UInt16>("/Obstacle", 10);
     cv::VideoCapture cap;
-    cap.open("/home/ros/PIF/catkin_ws/src/obstacle_detection/Videos/VID_20240404_142451.mp4");
+    cap.open("/home/ros/PIF/PIF/VISION/DETECTION/Video/test5.mp4");
     // 0 indique le premier périphérique de la webcam, changez-le si vous avez plusieurs caméras
 
     // Vérifier si la capture vidéo est ouverte
@@ -39,17 +39,22 @@ int main(int argc, char** argv) {
     cv::namedWindow("Seuillage", cv::WINDOW_AUTOSIZE);
     
     // Paramètres de luminosité
-    double alpha = 1.5;  // ajustez ce paramètre pour la luminosité (1 = pas de changement)
+    double alpha = 1.0;  // ajustez ce paramètre pour la luminosité (1 = pas de changement)
     int beta = 20;       // ajustez ce paramètre pour la luminosité (0 = pas de changement)
 
+    int frame  =0;
     while (ros::ok()) {
         // Capturer une image depuis la webcam
         cv::Mat src;
         cap >> src;
-
+	std::cout << src.empty() << std::endl;
         // Vérifier si l'image est correctement capturée
-        if (src.empty()) {
+        if (src.empty() && frame == 0) {
             std::cerr << "Erreur lors de la capture de l'image depuis la webcam." << std::endl;
+            break;
+        }
+        else if (src.empty()){
+        	  std::cout << "Fin de la video" << std::endl;
             break;
         }
 
@@ -86,6 +91,8 @@ int main(int argc, char** argv) {
                 if(RegionWhitePercentage < hsvSettings.threshold_white)
                         msg.data = msg.data | (0x0001 << i);
         }
+        
+        frame++;
         
         pub_obstacle.publish(msg);
         ros::spinOnce();
