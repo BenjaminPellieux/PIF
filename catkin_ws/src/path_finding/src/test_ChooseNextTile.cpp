@@ -23,12 +23,15 @@ int main(int argc, char** argv) {
         for(int j=0; j<X; j++) {
             if(grid[i][j]) {
                 printf("[X]");
+            } else if((j == x) && (i == y)) {
+                printf("< >");
             } else {
                 printf("[ ]");
             }
         }
         printf("\n");            
     }
+    sleep(3);
     
     choose_next_tile(x, y);
 }
@@ -70,7 +73,7 @@ void choose_next_tile(int posX, int posY) {
                 if((ans_x >= 0) && (ans_y >= 0) && (y_inc == (ans_y-posY)) && (x_inc == (ans_x-posX))) {
                     printf("[X]");
                 } else if((y_inc == 0) && (x_inc == 0)) {
-                    printf("   ");
+                    printf("< >");
                 } else if((posY+y_inc > Y) || (posX+x_inc > X) || (posY+y_inc < 0) || (posX+x_inc < 0)) {
                     printf("[-]");
                 } else {

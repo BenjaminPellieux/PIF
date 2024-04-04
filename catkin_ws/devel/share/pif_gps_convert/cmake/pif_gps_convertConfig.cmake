@@ -67,6 +67,10 @@ set(pif_gps_convert_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
+<<<<<<< HEAD
+<<<<<<<< HEAD:catkin_ws/devel/share/pif_gps_convert/cmake/pif_gps_convertConfig.cmake
+=======
+>>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
   set(pif_gps_convert_SOURCE_PREFIX /home/ros/PIF/catkin_ws/src/pif_gps_convert)
   set(pif_gps_convert_DEVEL_PREFIX /home/ros/PIF/catkin_ws/devel)
   set(pif_gps_convert_INSTALL_PREFIX "")
@@ -76,6 +80,20 @@ else()
   set(pif_gps_convert_DEVEL_PREFIX "")
   set(pif_gps_convert_INSTALL_PREFIX /home/ros/PIF/catkin_ws/install)
   set(pif_gps_convert_PREFIX ${pif_gps_convert_INSTALL_PREFIX})
+<<<<<<< HEAD
+========
+  set(pif_go_to_SOURCE_PREFIX /home/ros/PIF/catkin_ws/src/pif_go_to)
+  set(pif_go_to_DEVEL_PREFIX /home/ros/PIF/catkin_ws/build/devel)
+  set(pif_go_to_INSTALL_PREFIX "")
+  set(pif_go_to_PREFIX ${pif_go_to_DEVEL_PREFIX})
+else()
+  set(pif_go_to_SOURCE_PREFIX "")
+  set(pif_go_to_DEVEL_PREFIX "")
+  set(pif_go_to_INSTALL_PREFIX /usr/local)
+  set(pif_go_to_PREFIX ${pif_go_to_INSTALL_PREFIX})
+>>>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959:catkin_ws/build/devel/share/pif_go_to/cmake/pif_go_toConfig.cmake
+=======
+>>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
 endif()
 
 # warn when using a deprecated package
@@ -110,7 +128,15 @@ if(NOT " " STREQUAL " ")
         message(FATAL_ERROR "Project 'pif_gps_convert' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
+<<<<<<< HEAD
+<<<<<<<< HEAD:catkin_ws/devel/share/pif_gps_convert/cmake/pif_gps_convertConfig.cmake
       message(FATAL_ERROR "Project 'pif_gps_convert' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/ros/PIF/catkin_ws/src/pif_gps_convert/${idir}'.  ${_report}")
+========
+      message(FATAL_ERROR "Project 'pif_go_to' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/ros/PIF/catkin_ws/src/pif_go_to/${idir}'.  ${_report}")
+>>>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959:catkin_ws/build/devel/share/pif_go_to/cmake/pif_go_toConfig.cmake
+=======
+      message(FATAL_ERROR "Project 'pif_gps_convert' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/ros/PIF/catkin_ws/src/pif_gps_convert/${idir}'.  ${_report}")
+>>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
     endif()
     _list_append_unique(pif_gps_convert_INCLUDE_DIRS ${include})
   endforeach()
@@ -154,7 +180,15 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
+<<<<<<< HEAD
+<<<<<<<< HEAD:catkin_ws/devel/share/pif_gps_convert/cmake/pif_gps_convertConfig.cmake
     foreach(path /home/ros/PIF/catkin_ws/devel/lib;/opt/ros/noetic/lib)
+========
+    foreach(path /home/ros/PIF/catkin_ws/build/devel/lib;/home/ros/catkin_ws/devel/lib;/opt/ros/noetic/lib)
+>>>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959:catkin_ws/build/devel/share/pif_go_to/cmake/pif_go_toConfig.cmake
+=======
+    foreach(path /home/ros/PIF/catkin_ws/devel/lib;/home/ros/catkin_ws/devel/lib;/opt/ros/noetic/lib)
+>>>>>>> 44c0777718c1b2c16bd00a9027721863f0c53959
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
