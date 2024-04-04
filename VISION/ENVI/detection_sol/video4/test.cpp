@@ -17,7 +17,7 @@ void adjustBrightness(cv::Mat& image, double alpha, int beta) {
 int main() {
     // Initialiser la capture vidéo depuis un fichier
     cv::VideoCapture cap;
-    cap.open("/home/ros/PIF/PIF/VISION/DETECTION/Video/test.mp4");
+    cap.open("/home/ros/PIF/PIF/VISION/DETECTION/Video/test5.mp4");
 
     // Vérifier si la capture vidéo est ouverte
     if (!cap.isOpened()) {
@@ -28,9 +28,8 @@ int main() {
     // Création des fenêtres
     cv::namedWindow("Image", cv::WINDOW_AUTOSIZE);
     cv::namedWindow("Seuillage", cv::WINDOW_AUTOSIZE);
-
     // Paramètres de luminosité
-    double alpha = 0.65;  
+    double alpha = 0.6;  
     int beta = 20;       
 
     while (true) {
@@ -50,6 +49,16 @@ int main() {
         // Convertir la frame en espace de couleur HSV
         cv::Mat hsv;
         cv::cvtColor(src, hsv, cv::COLOR_BGR2HSV);
+        
+        /*
+        Calculer la luminosité moyenne de l'image en niveaux de gris
+        Scalar meanLuminance = mean(hsv);
+        int averageBrightness = meanLuminance.val[0]; // Valeur de luminosité moyenne
+
+        // Ajuster dynamiquement les valeurs des seuils HSV en fonction de la luminosité moyenne
+        hsvSettings.low_v = 0;
+        hsvSettings.high_v = averageBrightness * 0.5; // Ajustement basé sur la luminosité moyenne
+        */
 
         // Appliquer un masque en utilisant les valeurs HSV ajustées
         cv::Mat mask;
@@ -66,7 +75,7 @@ int main() {
         cv::GaussianBlur(erosion, result, cv::Size(5, 5), 4);
 
         // Déterminer si le véhicule peut avancer ou non
-        cv::Mat bottomRegion = result.rowRange(result.rows * 0.5, result.rows - 1);
+        cv::Mat bottomRegion = result.rowRange(result.rows * 0.70, result.rows - 1);
         double whitePercentage = (cv::countNonZero(bottomRegion) * 100.0) / bottomRegion.total();
 
         // Diviser la frame en deux parties gauche et droite
@@ -87,7 +96,7 @@ int main() {
                 double RegionWhitePercentage = (cv::countNonZero(Region) * 100.0) / Region.total();
                 //std::cout << RegionWhitePercentage << std::endl;
                 
-                if(RegionWhitePercentage < hsvSettings.threshold_white){ //on peut avancer
+                if(RegionWhitePercentage <= hsvSettings.threshold_white){ //on peut avancer
                         //result.data = result.data | (0x0001 << i);
                         r = r | (0x0001 << i);
                         
@@ -95,7 +104,7 @@ int main() {
         }
         
         //std::cout << r << std::endl;
-        //printf("r : %x\n",r);
+        printf("r : %x\n",r);
         /*uint16_t var =0x0000;
         var = var | (0x0001 << i)
         //var => 0x0001
@@ -103,8 +112,8 @@ int main() {
         //var => 0x0011 */
 	
         // Afficher le résultat
-        //cv::imshow("Image", src);
-        //cv::imshow("Seuillage", result);
+        cv::imshow("Image", src);
+        cv::imshow("Seuillage", result);
 
         // Faire avancer ou non le véhicule PIF en fonction du pourcentage de pixels blancs
         /*if (whitePercentage > hsvSettings.threshold_white) {
