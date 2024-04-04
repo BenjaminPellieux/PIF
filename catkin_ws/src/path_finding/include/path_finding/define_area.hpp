@@ -13,10 +13,12 @@
 
 class DefineArea {
 private:
-    float nbr_subGrid_x, nbr_subGrid_y;
     ros::Publisher grid_pub,
                    origin_pub,
                    next_tile_pub;
+    ros::Subscriber area_sub;
+
+    float nbr_subGrid_x, nbr_subGrid_y;
 
     void create_grid(geometry_msgs::Polygon);
     void set_origin(geometry_msgs::Polygon);

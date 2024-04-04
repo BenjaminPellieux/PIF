@@ -15,9 +15,6 @@
 #include <sys/types.h>
 #include <stdio.h>
 
-#define TEST_POS_ORIGIN_LAT	49.98487
-#define TEST_POS_ORIGIN_LON	1.70135
-
 #define RANGE_GOOD_ENOUGH	1
 
 #define SPEED_FWD	1.0
@@ -60,5 +57,8 @@ class Go_To{
                                      uint8_t dist_at_begin);
         int run();
     private:
-        ros::Publisher cmd_xy;
+	ros::Subscriber sub_gps;
+	ros::Subscriber sub_odom;
+	ros::Subscriber sub_laser;
+	ros::Publisher cmd_xy;
 };

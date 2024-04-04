@@ -17,6 +17,10 @@
 class DetectWaste {
 private:
     ros::Publisher cmd_vel_pub;
+    ros::Subscriber position_sub,
+                    orientation_sub,
+                    detectWaste_sub;
+
     geometry_msgs::Point position;
     geometry_msgs::Quaternion orientation;
     float detectWaste;

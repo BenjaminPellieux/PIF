@@ -145,6 +145,7 @@ add_library(go_to
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME}_node src/path_finding_node.cpp)
+add_executable(test_go_to_node src/test_programs/test_goto_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -158,6 +159,13 @@ add_executable(${PROJECT_NAME}_node src/path_finding_node.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}_node
+	define_area
+	detect_waste
+	go_to
+	${catkin_LIBRARIES}
+)
+target_link_libraries(test_go_to_node
+   	go_to
 	${catkin_LIBRARIES}
 )
 

@@ -2,7 +2,7 @@
 
 
 DefineArea::DefineArea(ros::NodeHandle nh) {
-    ros::Subscriber area_sub = nh.subscribe("/area/polygon", 100, &DefineArea::areaCallback, this);
+    this->area_sub = nh.subscribe("/area/polygon", 100, &DefineArea::areaCallback, this);
 
     this->grid_pub = nh.advertise<path_finding::GridStamped>("/area/grid", 100);
     this->origin_pub = nh.advertise<geometry_msgs::PointStamped>("/area/origin", 100);
@@ -128,6 +128,7 @@ geometry_msgs::Point DefineArea::choose_next_tile(geometry_msgs::Point pos) {
             break;
     }
     this->next_tile_pub.publish(next_tile);
+    return next_tile.point;
 }
 
 void DefineArea::areaCallback(const geometry_msgs::PolygonStamped::ConstPtr &msg) {

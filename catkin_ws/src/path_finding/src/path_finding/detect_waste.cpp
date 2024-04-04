@@ -2,9 +2,9 @@
 
 
 DetectWaste::DetectWaste(ros::NodeHandle nh) {
-    ros::Subscriber position_sub = nh.subscribe("/pif/gps_converted", 100, &DetectWaste::positionCallback, this);
-    ros::Subscriber orientation_sub = nh.subscribe("/imu/data", 100, &DetectWaste::orientationCallback, this);
-    ros::Subscriber detectWaste_sub = nh.subscribe("/Waste/Pos", 100, &DetectWaste::WastePosCallback, this);
+    this->position_sub = nh.subscribe("/pif/gps_converted", 100, &DetectWaste::positionCallback, this);
+    this->orientation_sub = nh.subscribe("/imu/data", 100, &DetectWaste::orientationCallback, this);
+    this->detectWaste_sub = nh.subscribe("/Waste/Pos", 100, &DetectWaste::WastePosCallback, this);
 
     this->cmd_vel_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
 
