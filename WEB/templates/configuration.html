@@ -34,7 +34,31 @@
 	<input type="button" id="sendData" value="Sauvegarder la zone de recherche" style="font-size: 30px; padding: 10px 20px;"> 
 	</div>
 </body>
-
+<table id="config-table">
+        <tr>
+            <th>Paramètres</th>
+            <th>Valeur</th>
+        </tr>
+        <tr>
+            <td>Niveau de batterie du véhicule</td>
+            <td id="battery-level">? %</td>
+        </tr>
+        <tr>
+            <td>Distance parcourue</td>
+            <td id="distance-traveled">? km</td>
+        </tr>
+        <tr>
+            <td>Statue du système d'aspiration</td>
+            <td id="etatAspirateur"></td>
+        </tr>
+        <script type="text/javascript" src="/static/src/aspi.js"></script>
+        <tr>
+            <td>Coordonnées du véhicule zone</td>
+            <td id="poseTable"></td>
+        </tr>
+    <script type="text/javascript" src="/static/src/zone.js"></script>
+       
+</table>
 
 </html>
 <script type="text/javascript">
@@ -93,5 +117,3 @@
 
         
 </script>
-
-
