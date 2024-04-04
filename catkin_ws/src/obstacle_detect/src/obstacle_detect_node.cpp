@@ -1,5 +1,5 @@
 #include <iostream>
-#include "std_msgs/Bool.h"
+#include <std_msgs/UInt16.h>
 #include <opencv2/opencv.hpp>
 #include <ros/ros.h>
 
@@ -23,8 +23,7 @@ int main(int argc, char** argv) {
     HSVSettings hsvSettings;
     ros::init(argc, argv, "environnement");
     ros::NodeHandle nh;
-    ros::Publisher pub_obstacle = nh.advertise<std_msgs::Bool>("/Obstacle", 10);
-    std_msgs::Bool msg;
+    ros::Publisher pub_obstacle = nh.advertise<std_msgs::UInt16>("/Obstacle", 10);
     cv::VideoCapture cap("/home/ros/PIF/VISION/DETECTION/Video/Default_Video_Test.mp4");
      // 0 indique le premier périphérique de la webcam, changez-le si vous avez plusieurs caméras
 
@@ -73,13 +72,17 @@ int main(int argc, char** argv) {
         cv::Mat bottomRegion = result.rowRange(result.rows * 0.6, result.rows - 1);
         double whitePercentage = (countNonZero(bottomRegion) * 100.0) / bottomRegion.total();
 
-        msg.data = whitePercentage > hsvSettings.threshold_white; 
+        std_msgs::UInt16 msg;
+        for(int i=0; i < 16; i++) {
+                cv::Mat Region = result.colRange(result.cols * (i/16.0), result.cols * ((i+1.0)/16.0));
+                double RegionWhitePercentage = (cv::countNonZero(Region) * 100.0) / Region.total();
+                
+                if(RegionWhitePercentage < hsvSettings.threshold_white)
+                        msg.data = msg.data | (0x0001 << i);
+        }
+        
         pub_obstacle.publish(msg);
         ros::spinOnce();
-
-        // Attendre une petite période et vérifier si une touche est pressée
-        if (cv::waitKey(30) >= 0)
-            break;
     }
 
     // Fermer la fenêtre et libérer la capture vidéo
