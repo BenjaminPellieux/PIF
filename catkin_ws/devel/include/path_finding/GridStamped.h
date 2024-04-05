@@ -156,7 +156,6 @@ struct Definition< ::path_finding::GridStamped_<ContainerAllocator> >
   {
     return "Header header\n"
 "path_finding/GridArray[] grid\n"
-"\n"
 "================================================================================\n"
 "MSG: std_msgs/Header\n"
 "# Standard metadata for higher-level stamped data types.\n"
@@ -181,7 +180,6 @@ struct Definition< ::path_finding::GridStamped_<ContainerAllocator> >
 "geometry_msgs/Point[4] sub_area\n"
 "bool done\n"
 "bool unreachable\n"
-"\n"
 "================================================================================\n"
 "MSG: geometry_msgs/Point\n"
 "# This contains the position of a point in free space\n"

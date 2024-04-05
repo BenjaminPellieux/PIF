@@ -10,10 +10,6 @@ project(scan_detect_obstacle)
 find_package(catkin REQUIRED COMPONENTS
 roscpp
 sensor_msgs
-<<<<<<< HEAD
-=======
-ydlidar
->>>>>>> 31c0f71c4f02f7e770fa7dc27f72abdefd707cc6
 std_msgs
 tf
 )

@@ -23,7 +23,6 @@ class WebVideoApp(Thread):
             image = imdecode(frombuffer(data, uint8), IMREAD_COLOR)
             self.image = image
             imwrite('tmp/PIF.jpg', self.image)
-            sleep(0.1)
 
 video_stream = WebVideoApp()
 video_stream.start()

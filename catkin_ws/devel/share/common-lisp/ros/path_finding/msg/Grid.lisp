@@ -78,10 +78,10 @@
   "8477af00e98f03fd36c0b55bb90bc58b")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<Grid>)))
   "Returns full string definition for message of type '<Grid>"
-  (cl:format cl:nil "geometry_msgs/Point[4] sub_area~%bool done~%bool unreachable~%~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
+  (cl:format cl:nil "geometry_msgs/Point[4] sub_area~%bool done~%bool unreachable~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'Grid)))
   "Returns full string definition for message of type 'Grid"
-  (cl:format cl:nil "geometry_msgs/Point[4] sub_area~%bool done~%bool unreachable~%~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
+  (cl:format cl:nil "geometry_msgs/Point[4] sub_area~%bool done~%bool unreachable~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <Grid>))
   (cl:+ 0
      0 (cl:reduce #'cl:+ (cl:slot-value msg 'sub_area) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ (roslisp-msg-protocol:serialization-length ele))))

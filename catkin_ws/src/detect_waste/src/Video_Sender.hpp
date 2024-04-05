@@ -16,7 +16,7 @@ public:
 
     void send(const cv::Mat& image) {
         std::vector<uchar> buf;
-        std::vector<int> compression_params = {cv::IMWRITE_JPEG_QUALITY, 50};
+        std::vector<int> compression_params = {cv::IMWRITE_JPEG_QUALITY, 75};
         cv::imencode(".jpg", image, buf, compression_params);
         std::string serialized(buf.begin(), buf.end());
         socket_.send_to(asio::buffer(serialized), server_endpoint_);

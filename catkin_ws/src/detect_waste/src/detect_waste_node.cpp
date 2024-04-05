@@ -80,32 +80,28 @@ void WasteDetection::run(){
                 
                 if (DEBUG){
                     // Affichage de debug
-                    std::cout<<"DEBUG count_area" <<this->count_area<<'\n';
-                    std::cout << "[LOG] Forme " << this->count_area << " area: " << area << "\n";
+                    //std::cout<<"DEBUG count_area" <<this->count_area<<'\n';
+                    //std::cout << "[LOG] Forme " << this->count_area << " area: " << area << "\n";
                     cv::rectangle(this->frame, rect.tl(), rect.br(), cv::Scalar(0, 255, 0), 2);
                     std::string text = "#" + std::to_string( this->count_area) + " Area: " + std::to_string(static_cast<int>(area));
                     cv::Point textOrg(rect.x, rect.y - 10); 
                     cv::putText(this->frame, text, textOrg, cv::FONT_HERSHEY_SIMPLEX, 0.8, cv::Scalar(0, 250, 0), 1);
                     cv::line(this->frame, {this->mid_width, 0}, {this->mid_width, frame.rows}, cv::Scalar(255, 0, 0));  // ligne vertical
                     cv::line(this->frame, {0, this->mid_height}, {frame.cols, this->mid_height}, cv::Scalar(0, 0, 255)); // ligne orizonthale
+                    cv::line(this->frame, {this->mid_width, this->frame.rows}, {this->closest_rect.x, this->closest_rect.y}, cv::Scalar(0, 250, 0)); // ligne orizonthale
                 }
                 this->count_area++; 
             }
         }
         change_origin(); 
-        std::cout<<"Closest pos x: "<<closest_rect.x<<" y: "<<closest_rect.y<<"\n";
+        //std::cout<<"Closest pos x: "<<closest_rect.x<<" y: "<<closest_rect.y<<"\n";
 	    geometry_msgs::Point msg;
         msg.x = this->closest_rect.x; msg.y = this->closest_rect.y;
-    
     
         this->vector_waste.publish(calc_geometry_msgs());
         this->detect_pub.publish(msg);
         videoSender_.send(this->frame);
 
-        if (DEBUG){
-            cv::imshow("Detection de l'element", this->frame);
-                cv::imshow("Masque des autres couleurs", mask_others);
-        }
         ros::spinOnce();
 
     }

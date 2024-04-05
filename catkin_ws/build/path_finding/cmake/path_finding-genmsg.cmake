@@ -24,16 +24,12 @@ add_custom_target(_path_finding_generate_messages_check_deps_${_filename}
 
 get_filename_component(_filename "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg" NAME_WE)
 add_custom_target(_path_finding_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "path_finding" "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg" "path_finding/Grid:geometry_msgs/Point"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "path_finding" "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg" "geometry_msgs/Point:path_finding/Grid"
 )
 
 get_filename_component(_filename "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridStamped.msg" NAME_WE)
 add_custom_target(_path_finding_generate_messages_check_deps_${_filename}
-<<<<<<< HEAD
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "path_finding" "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridStamped.msg" "geometry_msgs/Point:std_msgs/Header:path_finding/GridArray:path_finding/Grid"
-=======
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "path_finding" "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridStamped.msg" "std_msgs/Header:geometry_msgs/Point:path_finding/Grid:path_finding/GridArray"
->>>>>>> 31c0f71c4f02f7e770fa7dc27f72abdefd707cc6
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "path_finding" "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridStamped.msg" "std_msgs/Header:geometry_msgs/Point:path_finding/GridArray:path_finding/Grid"
 )
 
 get_filename_component(_filename "/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg" NAME_WE)
@@ -43,11 +39,7 @@ add_custom_target(_path_finding_generate_messages_check_deps_${_filename}
 
 get_filename_component(_filename "/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWasteStamped.msg" NAME_WE)
 add_custom_target(_path_finding_generate_messages_check_deps_${_filename}
-<<<<<<< HEAD
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "path_finding" "/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWasteStamped.msg" "std_msgs/Header:path_finding/PoseWaste:geometry_msgs/Point"
-=======
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "path_finding" "/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWasteStamped.msg" "std_msgs/Header:geometry_msgs/Point:path_finding/PoseWaste"
->>>>>>> 31c0f71c4f02f7e770fa7dc27f72abdefd707cc6
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "path_finding" "/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWasteStamped.msg" "geometry_msgs/Point:std_msgs/Header:path_finding/PoseWaste"
 )
 
 #
@@ -65,17 +57,13 @@ _generate_msg_cpp(path_finding
 _generate_msg_cpp(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/path_finding
 )
 _generate_msg_cpp(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridStamped.msg"
   "${MSG_I_FLAGS}"
-<<<<<<< HEAD
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
-=======
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg"
->>>>>>> 31c0f71c4f02f7e770fa7dc27f72abdefd707cc6
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/path_finding
 )
 _generate_msg_cpp(path_finding
@@ -87,11 +75,7 @@ _generate_msg_cpp(path_finding
 _generate_msg_cpp(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWasteStamped.msg"
   "${MSG_I_FLAGS}"
-<<<<<<< HEAD
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
-=======
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg"
->>>>>>> 31c0f71c4f02f7e770fa7dc27f72abdefd707cc6
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/path_finding
 )
 
@@ -138,17 +122,13 @@ _generate_msg_eus(path_finding
 _generate_msg_eus(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/path_finding
 )
 _generate_msg_eus(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridStamped.msg"
   "${MSG_I_FLAGS}"
-<<<<<<< HEAD
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
-=======
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg"
->>>>>>> 31c0f71c4f02f7e770fa7dc27f72abdefd707cc6
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/path_finding
 )
 _generate_msg_eus(path_finding
@@ -160,11 +140,7 @@ _generate_msg_eus(path_finding
 _generate_msg_eus(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWasteStamped.msg"
   "${MSG_I_FLAGS}"
-<<<<<<< HEAD
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
-=======
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg"
->>>>>>> 31c0f71c4f02f7e770fa7dc27f72abdefd707cc6
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/path_finding
 )
 
@@ -211,17 +187,13 @@ _generate_msg_lisp(path_finding
 _generate_msg_lisp(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/path_finding
 )
 _generate_msg_lisp(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridStamped.msg"
   "${MSG_I_FLAGS}"
-<<<<<<< HEAD
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
-=======
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg"
->>>>>>> 31c0f71c4f02f7e770fa7dc27f72abdefd707cc6
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/path_finding
 )
 _generate_msg_lisp(path_finding
@@ -233,11 +205,7 @@ _generate_msg_lisp(path_finding
 _generate_msg_lisp(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWasteStamped.msg"
   "${MSG_I_FLAGS}"
-<<<<<<< HEAD
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
-=======
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg"
->>>>>>> 31c0f71c4f02f7e770fa7dc27f72abdefd707cc6
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/path_finding
 )
 
@@ -284,17 +252,13 @@ _generate_msg_nodejs(path_finding
 _generate_msg_nodejs(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/path_finding
 )
 _generate_msg_nodejs(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridStamped.msg"
   "${MSG_I_FLAGS}"
-<<<<<<< HEAD
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
-=======
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg"
->>>>>>> 31c0f71c4f02f7e770fa7dc27f72abdefd707cc6
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/path_finding
 )
 _generate_msg_nodejs(path_finding
@@ -306,11 +270,7 @@ _generate_msg_nodejs(path_finding
 _generate_msg_nodejs(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWasteStamped.msg"
   "${MSG_I_FLAGS}"
-<<<<<<< HEAD
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
-=======
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg"
->>>>>>> 31c0f71c4f02f7e770fa7dc27f72abdefd707cc6
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/path_finding
 )
 
@@ -357,17 +317,13 @@ _generate_msg_py(path_finding
 _generate_msg_py(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg"
   "${MSG_I_FLAGS}"
-  "/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/path_finding
 )
 _generate_msg_py(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/GridStamped.msg"
   "${MSG_I_FLAGS}"
-<<<<<<< HEAD
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
-=======
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg"
->>>>>>> 31c0f71c4f02f7e770fa7dc27f72abdefd707cc6
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/GridArray.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/Grid.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/path_finding
 )
 _generate_msg_py(path_finding
@@ -379,11 +335,7 @@ _generate_msg_py(path_finding
 _generate_msg_py(path_finding
   "/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWasteStamped.msg"
   "${MSG_I_FLAGS}"
-<<<<<<< HEAD
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
-=======
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg"
->>>>>>> 31c0f71c4f02f7e770fa7dc27f72abdefd707cc6
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/home/ros/PIF/catkin_ws/src/path_finding/msg/PoseWaste.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/path_finding
 )
 

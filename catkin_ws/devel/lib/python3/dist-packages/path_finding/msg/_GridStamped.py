@@ -16,7 +16,6 @@ class GridStamped(genpy.Message):
   _has_header = True  # flag to mark the presence of a Header object
   _full_text = """Header header
 path_finding/GridArray[] grid
-
 ================================================================================
 MSG: std_msgs/Header
 # Standard metadata for higher-level stamped data types.
@@ -41,7 +40,6 @@ MSG: path_finding/Grid
 geometry_msgs/Point[4] sub_area
 bool done
 bool unreachable
-
 ================================================================================
 MSG: geometry_msgs/Point
 # This contains the position of a point in free space

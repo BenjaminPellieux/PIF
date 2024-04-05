@@ -5,4 +5,4 @@ Description: Description of go_to
 Version: 0.0.0
 Cflags: 
 Libs: -L${prefix}/lib 
-Requires: geographic_msgs geometry_msgs nav_msgs roscpp sensor_msgs std_msgs
+Requires: 

@@ -37,7 +37,9 @@ class ZoneChecker {
         ros::Subscriber gps_sub;
         ros::Subscriber zone_sub;
         ros::Publisher in_zone_pub;
+        ros::Publisher polygon_pub;
         Point global_pos;
-        geometry_msgs::PolygonStamped Point_tab;
+        //geometry_msgs::PolygonStamped Point_tab;
+        Point Point_tab[4];
 };
 
