@@ -7,25 +7,26 @@
 #include <path_finding/GridArray.h>
 #include <path_finding/GridStamped.h>
 
-using namespace std;
-
 
 #define DETECT_RANGE 12.0
 
 
 class DefineArea {
 private:
-    geometry_msgs::Polygon area;
-    path_finding::GridStamped grid;
     float nbr_subGrid_x, nbr_subGrid_y;
     ros::Publisher grid_pub,
                    origin_pub,
                    next_tile_pub;
 
-    void create_grid();
-    void set_origin();
+    void create_grid(geometry_msgs::Polygon);
+    void set_origin(geometry_msgs::Polygon);
 public:
+    bool area_recieved;
+    path_finding::GridStamped grid;
+    geometry_msgs::Point origin,
+                         next_tile;
+
     DefineArea(ros::NodeHandle);
-    void choose_next_tile(const geometry_msgs::PointStamped::ConstPtr &);
+    geometry_msgs::Point choose_next_tile(geometry_msgs::Point);
     void areaCallback(const geometry_msgs::PolygonStamped::ConstPtr &);
 };

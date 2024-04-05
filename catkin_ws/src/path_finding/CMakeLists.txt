@@ -108,9 +108,9 @@ generate_messages(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES path_finding
-#  CATKIN_DEPENDS other_catkin_pkg
+	INCLUDE_DIRS include
+	LIBRARIES ${PROJECT_NAME}
+	CATKIN_DEPENDS roscpp
 #  DEPENDS system_lib
 )
 
@@ -126,9 +126,15 @@ include_directories(
 )
 
 ## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/path_finding.cpp
-# )
+add_library(define_area
+	src/${PROJECT_NAME}/define_area.cpp
+)
+add_library(detect_waste
+	src/${PROJECT_NAME}/detect_waste.cpp
+)
+add_library(go_to
+	src/${PROJECT_NAME}/go_to.cpp
+)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -139,7 +145,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME}_node src/path_finding_node.cpp)
-add_executable(define_area src/define_area.cpp)
+add_executable(test_go_to_node src/test_programs/test_goto_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -155,7 +161,8 @@ add_executable(define_area src/define_area.cpp)
 target_link_libraries(${PROJECT_NAME}_node
 	${catkin_LIBRARIES}
 )
-target_link_libraries(define_area
+target_link_libraries(test_go_to_node 
+   	go_to
 	${catkin_LIBRARIES}
 )
 
@@ -181,11 +188,21 @@ target_link_libraries(define_area
 
 ## Mark libraries for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html
-# install(TARGETS ${PROJECT_NAME}
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
-# )
+install(TARGETS define_area
+	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+)
+install(TARGETS detect_waste
+	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+)
+install(TARGETS go_to
+	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+)
 
 ## Mark cpp header files for installation
 install(DIRECTORY include/${PROJECT_NAME}/

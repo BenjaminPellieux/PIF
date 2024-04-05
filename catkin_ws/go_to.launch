@@ -19,7 +19,15 @@
     
     
 	<node pkg="pif_gps_convert" type="pif_gps_convert_node" name=""
-	args="" />
-    
+	args="192.168.131.81" />
+	
+	<node pkg="gps_transform" type="gps_transform_node.py" name=""
+	args="/pif/gps_converted" />
+	
+	<node pkg="scan_detect_obstacle" type="scan_detect_obstacle_node" name=""
+	args="/scan" />
+	
+	<node pkg="path_finding" type="test_go_to_node" name=""
+	args="" output="screen" />
 </launch>
 
