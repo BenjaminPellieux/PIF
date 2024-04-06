@@ -1,1 +1,1 @@
-path_finding/Grid[] grid
+path_finding/Grid[] gridX

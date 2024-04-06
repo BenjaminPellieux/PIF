@@ -10,6 +10,8 @@
 // ROS TOPIC 
 #include "sensor_msgs/NavSatFix.h"
 #include "geometry_msgs/PointStamped.h"
+#include "geometry_msgs/PolygonStamped.h"
+#include "geometry_msgs/Point32.h"
 #include "std_msgs/Bool.h"
 
 // Definition du type Point
@@ -35,8 +37,10 @@ class ZoneChecker {
     private:
         ros::Subscriber gps_sub;
         ros::Subscriber zone_sub;
-        ros::Publisher in_zone_pub;
+        ros::Publisher in_zone_pub,
+                       area_pub;
         Point global_pos;
         Point Point_tab[4];
+        geometry_msgs::PolygonStamped area;
 };
 

@@ -1,0 +1,6 @@
+<launch>
+    <arg name="nb_it" default="2" />
+
+	<node pkg="path_finding" type="test_define_area" name="test_define_area" output="screen" args="$(arg nb_it)" />
+  <node pkg="coord_gps" type="coord_gps_node" name="coord_gps_node" output="screen" />
+</launch>

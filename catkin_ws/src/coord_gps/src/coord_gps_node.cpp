@@ -6,6 +6,7 @@ ZoneChecker::ZoneChecker()
     this->gps_sub = nh.subscribe("/navsat/fix", 10, &ZoneChecker::gpsCallback, this);
     this->zone_sub = nh.subscribe("/Area/Point", 10, &ZoneChecker::zoneCallback, this);
     this->in_zone_pub = nh.advertise<std_msgs::Bool>("/in_zone", 10);
+    this->area_pub = nh.advertise<geometry_msgs::PolygonStamped>("/area/polygon", 10);
     this->global_pos = (Point) {false, 0.0, 0.0};
     for(uint8_t i ; i != 4; i++){
         this->Point_tab[i].recvd  = false; 
@@ -20,21 +21,42 @@ void ZoneChecker::gpsCallback(const sensor_msgs::NavSatFix::ConstPtr &msg)
 
 void ZoneChecker::zoneCallback(const geometry_msgs::PointStamped::ConstPtr &msg)
 {
+    geometry_msgs::Point32 point;
+
     if (msg->header.frame_id == "P0")
     {
         this->Point_tab[0] = (Point){true, msg->point.x, msg->point.y};
+        point.x = msg->point.x;
+        point.y = msg->point.y;
+        area.polygon.points.push_back(point);
     }
     else if (msg->header.frame_id == "P1")
     {
         this->Point_tab[1] = (Point){true, msg->point.x, msg->point.y};
+        point.x = msg->point.x;
+        point.y = msg->point.y;
+        area.polygon.points.push_back(point);
     }
     else if (msg->header.frame_id == "P2")
     {
         this->Point_tab[2] = (Point){true, msg->point.x, msg->point.y};
+        point.x = msg->point.x;
+        point.y = msg->point.y;
+        area.polygon.points.push_back(point);
     }
     else if (msg->header.frame_id == "P3")
     {
         this->Point_tab[3] = (Point){true, msg->point.x, msg->point.y};
+
+        area.header.frame_id = "area";
+        area.header.stamp = ros::Time::now();
+
+        point.x = msg->point.x;
+        point.y = msg->point.y;
+        area.polygon.points.push_back(point);
+        
+        area_pub.publish(area);
+        area.polygon.points.clear();
     }
     checkZone();
 }
@@ -56,7 +78,6 @@ bool ZoneChecker::isInsideRectangle()
 
 void ZoneChecker::checkZone()
 {
-   
     if (AllRcvd())
     {
         std_msgs::Bool msg;

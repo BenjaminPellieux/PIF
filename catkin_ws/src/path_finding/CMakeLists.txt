@@ -152,6 +152,7 @@ add_library(odometry
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME}_node src/path_finding_node.cpp)
 add_executable(test_go_to_node src/test_programs/test_goto_node.cpp)
+add_executable(test_define_area src/test_programs/test_define_area.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -173,6 +174,11 @@ target_link_libraries(${PROJECT_NAME}_node
 )
 target_link_libraries(test_go_to_node
    	go_to
+	odometry
+	${catkin_LIBRARIES}
+)
+target_link_libraries(test_define_area
+   	define_area
 	odometry
 	${catkin_LIBRARIES}
 )

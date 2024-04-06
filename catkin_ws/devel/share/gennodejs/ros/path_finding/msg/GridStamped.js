@@ -21,7 +21,7 @@ class GridStamped {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.header = null;
-      this.grid = null;
+      this.gridY = null;
     }
     else {
       if (initObj.hasOwnProperty('header')) {
@@ -30,11 +30,11 @@ class GridStamped {
       else {
         this.header = new std_msgs.msg.Header();
       }
-      if (initObj.hasOwnProperty('grid')) {
-        this.grid = initObj.grid
+      if (initObj.hasOwnProperty('gridY')) {
+        this.gridY = initObj.gridY
       }
       else {
-        this.grid = [];
+        this.gridY = [];
       }
     }
   }
@@ -43,10 +43,10 @@ class GridStamped {
     // Serializes a message object of type GridStamped
     // Serialize message field [header]
     bufferOffset = std_msgs.msg.Header.serialize(obj.header, buffer, bufferOffset);
-    // Serialize message field [grid]
-    // Serialize the length for message field [grid]
-    bufferOffset = _serializer.uint32(obj.grid.length, buffer, bufferOffset);
-    obj.grid.forEach((val) => {
+    // Serialize message field [gridY]
+    // Serialize the length for message field [gridY]
+    bufferOffset = _serializer.uint32(obj.gridY.length, buffer, bufferOffset);
+    obj.gridY.forEach((val) => {
       bufferOffset = GridArray.serialize(val, buffer, bufferOffset);
     });
     return bufferOffset;
@@ -58,12 +58,12 @@ class GridStamped {
     let data = new GridStamped(null);
     // Deserialize message field [header]
     data.header = std_msgs.msg.Header.deserialize(buffer, bufferOffset);
-    // Deserialize message field [grid]
-    // Deserialize array length for message field [grid]
+    // Deserialize message field [gridY]
+    // Deserialize array length for message field [gridY]
     len = _deserializer.uint32(buffer, bufferOffset);
-    data.grid = new Array(len);
+    data.gridY = new Array(len);
     for (let i = 0; i < len; ++i) {
-      data.grid[i] = GridArray.deserialize(buffer, bufferOffset)
+      data.gridY[i] = GridArray.deserialize(buffer, bufferOffset)
     }
     return data;
   }
@@ -71,7 +71,7 @@ class GridStamped {
   static getMessageSize(object) {
     let length = 0;
     length += std_msgs.msg.Header.getMessageSize(object.header);
-    object.grid.forEach((val) => {
+    object.gridY.forEach((val) => {
       length += GridArray.getMessageSize(val);
     });
     return length + 4;
@@ -84,14 +84,14 @@ class GridStamped {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'bb89431ea13652c1ae0d876e69593b78';
+    return 'b2cce48243258197a47cce7c1b23af50';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     Header header
-    path_finding/GridArray[] grid
+    path_finding/GridArray[] gridY
     ================================================================================
     MSG: std_msgs/Header
     # Standard metadata for higher-level stamped data types.
@@ -110,10 +110,11 @@ class GridStamped {
     
     ================================================================================
     MSG: path_finding/GridArray
-    path_finding/Grid[] grid
+    path_finding/Grid[] gridX
     ================================================================================
     MSG: path_finding/Grid
-    geometry_msgs/Point[4] sub_area
+    geometry_msgs/Point top_left
+    geometry_msgs/Point bottom_right
     bool done
     bool unreachable
     ================================================================================
@@ -139,14 +140,14 @@ class GridStamped {
       resolved.header = new std_msgs.msg.Header()
     }
 
-    if (msg.grid !== undefined) {
-      resolved.grid = new Array(msg.grid.length);
-      for (let i = 0; i < resolved.grid.length; ++i) {
-        resolved.grid[i] = GridArray.Resolve(msg.grid[i]);
+    if (msg.gridY !== undefined) {
+      resolved.gridY = new Array(msg.gridY.length);
+      for (let i = 0; i < resolved.gridY.length; ++i) {
+        resolved.gridY[i] = GridArray.Resolve(msg.gridY[i]);
       }
     }
     else {
-      resolved.grid = []
+      resolved.gridY = []
     }
 
     return resolved;

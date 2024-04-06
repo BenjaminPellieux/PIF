@@ -16,6 +16,7 @@
 #include <ros/message_operations.h>
 
 #include <geometry_msgs/Point.h>
+#include <geometry_msgs/Point.h>
 
 namespace path_finding
 {
@@ -25,22 +26,26 @@ struct Grid_
   typedef Grid_<ContainerAllocator> Type;
 
   Grid_()
-    : sub_area()
+    : top_left()
+    , bottom_right()
     , done(false)
     , unreachable(false)  {
     }
   Grid_(const ContainerAllocator& _alloc)
-    : sub_area()
+    : top_left(_alloc)
+    , bottom_right(_alloc)
     , done(false)
     , unreachable(false)  {
   (void)_alloc;
-      sub_area.assign( ::geometry_msgs::Point_<ContainerAllocator> (_alloc));
-  }
+    }
 
 
 
-   typedef boost::array< ::geometry_msgs::Point_<ContainerAllocator> , 4>  _sub_area_type;
-  _sub_area_type sub_area;
+   typedef  ::geometry_msgs::Point_<ContainerAllocator>  _top_left_type;
+  _top_left_type top_left;
+
+   typedef  ::geometry_msgs::Point_<ContainerAllocator>  _bottom_right_type;
+  _bottom_right_type bottom_right;
 
    typedef uint8_t _done_type;
   _done_type done;
@@ -77,7 +82,8 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::path_finding::Grid_<ContainerAllocator1> & lhs, const ::path_finding::Grid_<ContainerAllocator2> & rhs)
 {
-  return lhs.sub_area == rhs.sub_area &&
+  return lhs.top_left == rhs.top_left &&
+    lhs.bottom_right == rhs.bottom_right &&
     lhs.done == rhs.done &&
     lhs.unreachable == rhs.unreachable;
 }
@@ -136,12 +142,12 @@ struct MD5Sum< ::path_finding::Grid_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "8477af00e98f03fd36c0b55bb90bc58b";
+    return "326792e8c45913b0ed6b6b020c9acb4b";
   }
 
   static const char* value(const ::path_finding::Grid_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x8477af00e98f03fdULL;
-  static const uint64_t static_value2 = 0x36c0b55bb90bc58bULL;
+  static const uint64_t static_value1 = 0x326792e8c45913b0ULL;
+  static const uint64_t static_value2 = 0xed6b6b020c9acb4bULL;
 };
 
 template<class ContainerAllocator>
@@ -160,7 +166,8 @@ struct Definition< ::path_finding::Grid_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "geometry_msgs/Point[4] sub_area\n"
+    return "geometry_msgs/Point top_left\n"
+"geometry_msgs/Point bottom_right\n"
 "bool done\n"
 "bool unreachable\n"
 "================================================================================\n"
@@ -187,7 +194,8 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.sub_area);
+      stream.next(m.top_left);
+      stream.next(m.bottom_right);
       stream.next(m.done);
       stream.next(m.unreachable);
     }
@@ -208,14 +216,12 @@ struct Printer< ::path_finding::Grid_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::path_finding::Grid_<ContainerAllocator>& v)
   {
-    s << indent << "sub_area[]" << std::endl;
-    for (size_t i = 0; i < v.sub_area.size(); ++i)
-    {
-      s << indent << "  sub_area[" << i << "]: ";
-      s << std::endl;
-      s << indent;
-      Printer< ::geometry_msgs::Point_<ContainerAllocator> >::stream(s, indent + "    ", v.sub_area[i]);
-    }
+    s << indent << "top_left: ";
+    s << std::endl;
+    Printer< ::geometry_msgs::Point_<ContainerAllocator> >::stream(s, indent + "  ", v.top_left);
+    s << indent << "bottom_right: ";
+    s << std::endl;
+    Printer< ::geometry_msgs::Point_<ContainerAllocator> >::stream(s, indent + "  ", v.bottom_right);
     s << indent << "done: ";
     Printer<uint8_t>::stream(s, indent + "  ", v.done);
     s << indent << "unreachable: ";
