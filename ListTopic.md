@@ -19,7 +19,7 @@ Envoi de commande de deplacement
 [Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
 
 Controle manuel ou automatique
-- Topic Name : /pif/web/mode/status  
+- Topic Name : /pif/web/controle 
 - Topic Type : std_msgs/Bool
 [Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
@@ -33,7 +33,7 @@ Position Odometrique de Wall-E
 
 
 Position GPS de Wall-E
-- Topic Name : /navsat/fix
+- Topic Name : /pif/gps
 - Topic Type : sensor_msgs/NavSatFix
 [Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
 

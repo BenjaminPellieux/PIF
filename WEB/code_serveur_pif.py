@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, Response, send_file
+from flask import Flask, render_template, jsonify, request, send_file
 import json
 from handle_request import *
 from client_video import *
@@ -43,11 +43,12 @@ def mode():
 
 @app.route('/commandstatus', methods=['POST'])
 def commandStatus():
-     
-    ros_client.publish('pif/controle/status', 'std_msgs/Bool', {"data":request.form["comd"]})
-    
-    #    print("[ERROR] WebSocket closed")
-    return "400"
+    try:
+        ros_client.publish('/pif/web/controle', 'std_msgs/Bool', {"data":request.form["comd"]})
+    except:
+        print("[ERROR] WebSocket closed")
+        return "400"
+    return "200"
 
 
 

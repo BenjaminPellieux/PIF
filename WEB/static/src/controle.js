@@ -46,7 +46,7 @@ function updateMarker(lat, lng) {
 setInterval(function() {
     // Recuperation des donnée du topic
     requestTopicValue('/odometry/filtered');
-    requestTopicValue('/navsat/fix');
+    requestTopicValue('/pif/gps');
     setTimeout(500);
     updateData(pose, clock);
     console.log("INFO SLEEPING");
