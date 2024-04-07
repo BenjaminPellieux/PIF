@@ -28,49 +28,46 @@ def config():
 
 @app.route('/command', methods=['POST'])
 def command():
-    handle_command(request.form["comd"])
+    handle_command(request.form["comd"], ros_client)
     return "200"
 
 @app.route('/newspeed', methods=['POST'])
 def new_speed():
-    change_speed(request.form["speed"])
+    change_speed(request.form["speed"], ros_client)
     return "200"
     
 @app.route('/mode', methods=['POST'])
 def mode():
-    change_mode(request.form["mode"])
+    change_mode(request.form["mode"], ros_client)
     return "200"
 
 @app.route('/commandstatus', methods=['POST'])
 def commandStatus():
-    try: 
-        ws_app.publish('/Controle/Status', 'std_msgs/Bool', request.form["comd"])
-    except:
-            print("[ERROR] WebSocket closed")
-    return "200"
+     
+    ros_client.publish('pif/controle/status', 'std_msgs/Bool', {"data":request.form["comd"]})
+    
+    #    print("[ERROR] WebSocket closed")
+    return "400"
 
 
 
-@app.route('/get_topic_value', methods=['GET'])
+@app.route('/post_topic_value', methods=['POST'])
 def get_topic_value():
     data = request.json
     topic = data['topic']
-    ws_app.subscribe(topic, topic_type_dict[topic])
-    print(f"[INFO][UPDATE_TOPIC] topic: {topic} type: {topic_type_dict[topic]} Data {True if ws_app.topic_data.get(topic) else False}")
-    if ws_app.topic_data.get(topic):
-        return jsonify(ws_app.topic_data.get(topic))
+    print(f"[INFO][UPDATE_TOPIC] topic: {topic} type: {topic_type_dict[topic]} Data {True if ros_client.topic_data.get(topic) else False}")
+    if ros_client.topic_data.get(topic):
+        return jsonify(ros_client.topic_data.get(topic))
     return jsonify("ERROR")
 
 @app.route('/current_image')
 def current_image():
-
-    print(f"[DEBUG] /current_image ")
     return send_file('tmp/PIF.jpg', mimetype='image/jpeg')
 
 
 @app.route('/area', methods=['POST'])
 def area():
-    handle_zone(json.loads(request.form["points"]))
+    handle_zone(json.loads(request.form["points"]), ros_client)
     return "200"
 
 @app.route('/locate', methods=['POST'])
@@ -83,16 +80,15 @@ def locate():
 
 
 if __name__ == '__main__':
-    
     try:
         config = json.load(open("config/config.json"))
         video_stream: WebVideoApp = WebVideoApp(config["ip_rasp"])
-        ws_app: WebSocketApp = WebSocketApp(config["ip_rasp"])
+        ros_client: WebSocketApp = WebSocketApp(config["ip_rasp"])
     except:
         video_stream: WebVideoApp = WebVideoApp()
-        ws_app: WebSocketApp = WebSocketApp()
+        ros_client: WebSocketApp = WebSocketApp()
 
-    ws_app.start()
+    ros_client.start()
     video_stream.start()
-    app.run(host='localhost', port=8080, ssl_context=('key/cert.pem', 'key/key.pem'))
+    app.run(host='localhost', port=8080, ssl_context=('key/cert.pem', 'key/key.pem'), debug=False)
     

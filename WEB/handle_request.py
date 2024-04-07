@@ -4,10 +4,9 @@ from datetime import datetime
 current_speed: float = 0.5
 
 
-def handle_zone(data: list):
+def handle_zone(data: list, ros_client: WebSocketApp):
     area: dict = {i:data[0][i] for i in range(len(data[0]))}
-    print(f"[DEBUG]  area: {area=} {len(area)=})")
-    topic_type: str = "sensor_msgs/NavSatFix"
+    print(f"[DEBUG]  area: {area=} {len(area)=}")
     for i, point_info in area.items():
         message: dict = {
                 "header": {
@@ -21,32 +20,32 @@ def handle_zone(data: list):
 
         print(f"[DEBUG] message_point :{i} {message=}")
         try: 
-            ws_app.publish('/Area/Point', 'sensor_msgs/NavSatFix', message)
+            ros_client.publish('/Area/Point', 'sensor_msgs/NavSatFix', message)
         except:
             print("[ERROR] WebSocket closed")
 
-def change_speed(speed: str):
+def change_speed(speed: str, ros_client: WebSocketApp):
     global current_speed
-    if ws_app.topic_data:
+    if ros_client.topic_data:
         current_speed = int(speed)
 
-def change_mode(mode: str):
+def change_mode(mode: str, ros_client: websocket):
     if mode == "1":
-    	message: dict = {
-    		"data": True
-    		}
+        message: dict = {
+            "data": True
+        }
     else:
-    	message: dict = {
-    		"data": False
-    		}
+        message: dict = {
+            "data": False
+            }
     print(f"[DEBUG] message_point : {message=}")
     try: 
-        ws_app.publish('/Mode/Status', "std_msgs/Bool" , message)
+        ros_client.publish('/pif/web/mode/status', "std_msgs/Bool" , message)
     except:
         print("[ERROR] WebSocket closed")
 
 
-def handle_command(cmnd: str):
+def handle_command(cmnd: str, ros_client: WebSocketApp):
     global current_speed
      # Vérifiez si la clé est présente dans command_topic
     if cmnd in command_topic:
@@ -56,10 +55,10 @@ def handle_command(cmnd: str):
         for command_type, values in command_changes.items():
             for axis, value in values.items():
                 commande_move[command_type][axis] = value * current_speed
-            if ws_app.orient and command_type != "angular":
-                commande_move["angular"]["z"] +=  ws_app.orient["z"]
+            if ros_client.orient and command_type != "angular":
+                commande_move["angular"]["z"] +=  ros_client.orient["z"]
     try: 
-        ws_app.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', command_changes)
+        ros_client.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', command_changes)
     except:
         print("[ERROR] WebSocket closed")
 

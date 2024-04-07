@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <cstdlib>
 #include <ros/ros.h>
+#include "std_msgs/Bool.h"
 #include "geometry_msgs/Point.h"
 #include "geometry_msgs/QuaternionStamped.h"
 
@@ -29,8 +30,10 @@ class WasteDetection{
         ros::NodeHandle nh;
         ros::Publisher detect_pub;
         ros::Publisher vector_waste;
+        ros::Subscriber moving_status;
         
 
+        bool obstacle_app;
         bool send_img = false;
         u_int8_t count_area = 1;
         u_int16_t mid_height = 0;
@@ -43,6 +46,9 @@ class WasteDetection{
     public:
         WasteDetection(VideoSender& videoSender);
         void change_origin();
+        void detect_waste();
+        void detect_obstacle();
         void run();
+        void obstacleCallback(const std_msgs::Bool &msg);
         geometry_msgs::QuaternionStamped calc_geometry_msgs();
 };

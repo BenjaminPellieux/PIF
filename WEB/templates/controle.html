@@ -74,15 +74,6 @@
         </div>
     </div>
     <script type="text/javascript" src="/static/src/controle.js"></script>
-    <script type="text/javascript">
-
-        function fetchImage(){
-            const liveImage = document.getElementById('live-image');
-            liveImage.src = "/current_image?time=" + new Date().getTime();
-        }
-        setInterval(fetchImage, 500);
-
-    </script>
 </body>
 </html>
 

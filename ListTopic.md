@@ -19,7 +19,7 @@ Envoi de commande de deplacement
 [Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
 
 Controle manuel ou automatique
-- Topic Name : /Mode/Status  
+- Topic Name : /pif/web/mode/status  
 - Topic Type : std_msgs/Bool
 [Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
@@ -68,11 +68,11 @@ Position GPS de Wall-E
 
 ### Publish
 
-- Topic Name : Waste/Pos 
+- Topic Name : /pif/waste/pos 
 - Topic Type : geometry_msgs/Point 
 [Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Point.html)
 
-- Topic Name : Waste/Geometry
+- Topic Name : /pif/waste/geometry
 - Topic Type : geometry_msgs/QuaternionStamped 
 [Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/QuaternionStamped.html)
 
