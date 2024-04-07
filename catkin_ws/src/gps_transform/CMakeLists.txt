@@ -10,6 +10,7 @@ project(gps_transform)
 find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
+  roslaunch
 )
 
 ## System dependencies are found with CMake's conventions
@@ -71,6 +72,8 @@ find_package(catkin REQUIRED COMPONENTS
 #   DEPENDENCIES
 #   std_msgs
 # )
+
+roslaunch_add_file_check(launch)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -160,6 +163,10 @@ include_directories(
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
   scripts/gps_transform_node.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+catkin_install_python(PROGRAMS
+  scripts/gps_reset_origin_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
