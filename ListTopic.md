@@ -1,6 +1,6 @@
 # Introcution 
 
-Ce document a  pour but de presenter l'ensemble des topic utiliser par notre solution
+Ce document à pour but de présenter l'ensemble des topics utilisés par notre solution
 
 
 ## Serveur WEB
@@ -40,13 +40,28 @@ Position GPS de Wall-E
 
 - Topic Name : 
 - Topic Type : 
-[Documentation]()
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
-### Coord GPS node 
+## Coord GPS node 
 
 
 
 ## Go To 
+
+
+
+## Waste Labeling
+
+### Publish
+
+- Topic Name : Label/id
+- Topic Type : std_msgs/String
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/String.html)
+
+
+- Topic Name : Aspi/Status
+- Topic Type : std_msgs::Bool 
+[Documentation]()
 
 
 ## Detect 
