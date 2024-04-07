@@ -1,2 +1,2 @@
 Header header
-path_finding/GridArray[] grid
+path_finding/GridArray[] gridY

@@ -25,17 +25,17 @@ struct GridArray_
   typedef GridArray_<ContainerAllocator> Type;
 
   GridArray_()
-    : grid()  {
+    : gridX()  {
     }
   GridArray_(const ContainerAllocator& _alloc)
-    : grid(_alloc)  {
+    : gridX(_alloc)  {
   (void)_alloc;
     }
 
 
 
-   typedef std::vector< ::path_finding::Grid_<ContainerAllocator> , typename std::allocator_traits<ContainerAllocator>::template rebind_alloc< ::path_finding::Grid_<ContainerAllocator> >> _grid_type;
-  _grid_type grid;
+   typedef std::vector< ::path_finding::Grid_<ContainerAllocator> , typename std::allocator_traits<ContainerAllocator>::template rebind_alloc< ::path_finding::Grid_<ContainerAllocator> >> _gridX_type;
+  _gridX_type gridX;
 
 
 
@@ -66,7 +66,7 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::path_finding::GridArray_<ContainerAllocator1> & lhs, const ::path_finding::GridArray_<ContainerAllocator2> & rhs)
 {
-  return lhs.grid == rhs.grid;
+  return lhs.gridX == rhs.gridX;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -123,12 +123,12 @@ struct MD5Sum< ::path_finding::GridArray_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "3dc66829f5cad491c9d9128ab16fff09";
+    return "c9bfbf14df9229b96f8d392a4058d7ed";
   }
 
   static const char* value(const ::path_finding::GridArray_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x3dc66829f5cad491ULL;
-  static const uint64_t static_value2 = 0xc9d9128ab16fff09ULL;
+  static const uint64_t static_value1 = 0xc9bfbf14df9229b9ULL;
+  static const uint64_t static_value2 = 0x6f8d392a4058d7edULL;
 };
 
 template<class ContainerAllocator>
@@ -147,10 +147,11 @@ struct Definition< ::path_finding::GridArray_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "path_finding/Grid[] grid\n"
+    return "path_finding/Grid[] gridX\n"
 "================================================================================\n"
 "MSG: path_finding/Grid\n"
-"geometry_msgs/Point[4] sub_area\n"
+"geometry_msgs/Point top_left\n"
+"geometry_msgs/Point bottom_right\n"
 "bool done\n"
 "bool unreachable\n"
 "================================================================================\n"
@@ -177,7 +178,7 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.grid);
+      stream.next(m.gridX);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -196,13 +197,13 @@ struct Printer< ::path_finding::GridArray_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::path_finding::GridArray_<ContainerAllocator>& v)
   {
-    s << indent << "grid[]" << std::endl;
-    for (size_t i = 0; i < v.grid.size(); ++i)
+    s << indent << "gridX[]" << std::endl;
+    for (size_t i = 0; i < v.gridX.size(); ++i)
     {
-      s << indent << "  grid[" << i << "]: ";
+      s << indent << "  gridX[" << i << "]: ";
       s << std::endl;
       s << indent;
-      Printer< ::path_finding::Grid_<ContainerAllocator> >::stream(s, indent + "    ", v.grid[i]);
+      Printer< ::path_finding::Grid_<ContainerAllocator> >::stream(s, indent + "    ", v.gridX[i]);
     }
   }
 };

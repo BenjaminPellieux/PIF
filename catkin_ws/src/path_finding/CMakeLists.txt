@@ -12,6 +12,7 @@ find_package(catkin REQUIRED
 	message_generation
 	std_msgs
 	geometry_msgs
+	COMPONENTS roslaunch
 )
 
 ## System dependencies are found with CMake's conventions
@@ -78,6 +79,8 @@ generate_messages(
 	geometry_msgs
 )
 
+roslaunch_add_file_check(launch)
+
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
 ################################################
@@ -135,6 +138,9 @@ add_library(detect_waste
 add_library(go_to
 	src/${PROJECT_NAME}/go_to.cpp
 )
+add_library(odometry
+	src/${PROJECT_NAME}/odometry.cpp
+)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -146,6 +152,10 @@ add_library(go_to
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME}_node src/path_finding_node.cpp)
 add_executable(test_go_to_node src/test_programs/test_goto_node.cpp)
+<<<<<<< HEAD
+=======
+add_executable(test_define_area src/test_programs/test_define_area.cpp)
+>>>>>>> 0b949d28773dff8622021b58d2a2983cc2a15580
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -159,6 +169,20 @@ add_executable(test_go_to_node src/test_programs/test_goto_node.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}_node
+	define_area
+	detect_waste
+	go_to
+	odometry
+	${catkin_LIBRARIES}
+)
+target_link_libraries(test_go_to_node
+   	go_to
+	odometry
+	${catkin_LIBRARIES}
+)
+target_link_libraries(test_define_area
+   	define_area
+	odometry
 	${catkin_LIBRARIES}
 )
 target_link_libraries(test_go_to_node 
@@ -199,6 +223,11 @@ install(TARGETS detect_waste
 	RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
 )
 install(TARGETS go_to
+	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+)
+install(TARGETS odometry
 	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}

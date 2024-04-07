@@ -11,6 +11,7 @@
 #include "sensor_msgs/NavSatFix.h"
 #include "geometry_msgs/PointStamped.h"
 #include "geometry_msgs/PolygonStamped.h"
+#include "geometry_msgs/Point32.h"
 #include "std_msgs/Bool.h"
 
 // Définition du type Point
@@ -41,5 +42,6 @@ class ZoneChecker {
         Point global_pos;
         //geometry_msgs::PolygonStamped Point_tab;
         Point Point_tab[4];
+        geometry_msgs::PolygonStamped area;
 };
 

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0b949d28773dff8622021b58d2a2983cc2a15580
 #include <stdio.h>
 #include "path_finding/go_to.hpp"
 

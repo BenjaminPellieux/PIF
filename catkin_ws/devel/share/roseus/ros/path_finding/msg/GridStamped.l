@@ -16,17 +16,17 @@
 
 (defclass path_finding::GridStamped
   :super ros::object
-  :slots (_header _grid ))
+  :slots (_header _gridY ))
 
 (defmethod path_finding::GridStamped
   (:init
    (&key
     ((:header __header) (instance std_msgs::Header :init))
-    ((:grid __grid) ())
+    ((:gridY __gridY) ())
     )
    (send-super :init)
    (setq _header __header)
-   (setq _grid __grid)
+   (setq _gridY __gridY)
    self)
   (:header
    (&rest __header)
@@ -35,20 +35,20 @@
      (progn
        (if __header (setq _header (car __header)))
        _header)))
-  (:grid
-   (&rest __grid)
-   (if (keywordp (car __grid))
-       (send* _grid __grid)
+  (:gridY
+   (&rest __gridY)
+   (if (keywordp (car __gridY))
+       (send* _gridY __gridY)
      (progn
-       (if __grid (setq _grid (car __grid)))
-       _grid)))
+       (if __gridY (setq _gridY (car __gridY)))
+       _gridY)))
   (:serialization-length
    ()
    (+
     ;; std_msgs/Header _header
     (send _header :serialization-length)
-    ;; path_finding/GridArray[] _grid
-    (apply #'+ (send-all _grid :serialization-length)) 4
+    ;; path_finding/GridArray[] _gridY
+    (apply #'+ (send-all _gridY :serialization-length)) 4
     ))
   (:serialize
    (&optional strm)
@@ -56,9 +56,9 @@
               (make-string-output-stream (send self :serialization-length)))))
      ;; std_msgs/Header _header
        (send _header :serialize s)
-     ;; path_finding/GridArray[] _grid
-     (write-long (length _grid) s)
-     (dolist (elem _grid)
+     ;; path_finding/GridArray[] _gridY
+     (write-long (length _gridY) s)
+     (dolist (elem _gridY)
        (send elem :serialize s)
        )
      ;;
@@ -67,22 +67,26 @@
    (buf &optional (ptr- 0))
    ;; std_msgs/Header _header
      (send _header :deserialize buf ptr-) (incf ptr- (send _header :serialization-length))
-   ;; path_finding/GridArray[] _grid
+   ;; path_finding/GridArray[] _gridY
    (let (n)
      (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4)
-     (setq _grid (let (r) (dotimes (i n) (push (instance path_finding::GridArray :init) r)) r))
-     (dolist (elem- _grid)
+     (setq _gridY (let (r) (dotimes (i n) (push (instance path_finding::GridArray :init) r)) r))
+     (dolist (elem- _gridY)
      (send elem- :deserialize buf ptr-) (incf ptr- (send elem- :serialization-length))
      ))
    ;;
    self)
   )
 
-(setf (get path_finding::GridStamped :md5sum-) "bb89431ea13652c1ae0d876e69593b78")
+(setf (get path_finding::GridStamped :md5sum-) "b2cce48243258197a47cce7c1b23af50")
 (setf (get path_finding::GridStamped :datatype-) "path_finding/GridStamped")
 (setf (get path_finding::GridStamped :definition-)
       "Header header
+<<<<<<< HEAD
 path_finding/GridArray[] grid
+=======
+path_finding/GridArray[] gridY
+>>>>>>> 0b949d28773dff8622021b58d2a2983cc2a15580
 ================================================================================
 MSG: std_msgs/Header
 # Standard metadata for higher-level stamped data types.
@@ -101,10 +105,11 @@ string frame_id
 
 ================================================================================
 MSG: path_finding/GridArray
-path_finding/Grid[] grid
+path_finding/Grid[] gridX
 ================================================================================
 MSG: path_finding/Grid
-geometry_msgs/Point[4] sub_area
+geometry_msgs/Point top_left
+geometry_msgs/Point bottom_right
 bool done
 bool unreachable
 ================================================================================
@@ -118,6 +123,6 @@ float64 z
 
 
 
-(provide :path_finding/GridStamped "bb89431ea13652c1ae0d876e69593b78")
+(provide :path_finding/GridStamped "b2cce48243258197a47cce7c1b23af50")
 
 

@@ -11,11 +11,15 @@ import path_finding.msg
 import std_msgs.msg
 
 class GridStamped(genpy.Message):
-  _md5sum = "bb89431ea13652c1ae0d876e69593b78"
+  _md5sum = "b2cce48243258197a47cce7c1b23af50"
   _type = "path_finding/GridStamped"
   _has_header = True  # flag to mark the presence of a Header object
   _full_text = """Header header
+<<<<<<< HEAD
 path_finding/GridArray[] grid
+=======
+path_finding/GridArray[] gridY
+>>>>>>> 0b949d28773dff8622021b58d2a2983cc2a15580
 ================================================================================
 MSG: std_msgs/Header
 # Standard metadata for higher-level stamped data types.
@@ -34,10 +38,11 @@ string frame_id
 
 ================================================================================
 MSG: path_finding/GridArray
-path_finding/Grid[] grid
+path_finding/Grid[] gridX
 ================================================================================
 MSG: path_finding/Grid
-geometry_msgs/Point[4] sub_area
+geometry_msgs/Point top_left
+geometry_msgs/Point bottom_right
 bool done
 bool unreachable
 ================================================================================
@@ -47,7 +52,7 @@ float64 x
 float64 y
 float64 z
 """
-  __slots__ = ['header','grid']
+  __slots__ = ['header','gridY']
   _slot_types = ['std_msgs/Header','path_finding/GridArray[]']
 
   def __init__(self, *args, **kwds):
@@ -58,7 +63,7 @@ float64 z
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       header,grid
+       header,gridY
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -69,11 +74,11 @@ float64 z
       # message fields cannot be None, assign default values for those that are
       if self.header is None:
         self.header = std_msgs.msg.Header()
-      if self.grid is None:
-        self.grid = []
+      if self.gridY is None:
+        self.gridY = []
     else:
       self.header = std_msgs.msg.Header()
-      self.grid = []
+      self.gridY = []
 
   def _get_types(self):
     """
@@ -95,17 +100,18 @@ float64 z
         _x = _x.encode('utf-8')
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
-      length = len(self.grid)
+      length = len(self.gridY)
       buff.write(_struct_I.pack(length))
-      for val1 in self.grid:
-        length = len(val1.grid)
+      for val1 in self.gridY:
+        length = len(val1.gridX)
         buff.write(_struct_I.pack(length))
-        for val2 in val1.grid:
-          if len(val2.sub_area) != 4:
-            self._check_types(ValueError("Expecting %s items but found %s when writing '%s'" % (4, len(val2.sub_area), 'val2.sub_area')))
-          for val3 in val2.sub_area:
-            _x = val3
-            buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
+        for val2 in val1.gridX:
+          _v1 = val2.top_left
+          _x = _v1
+          buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
+          _v2 = val2.bottom_right
+          _x = _v2
+          buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
           _x = val2
           buff.write(_get_struct_2B().pack(_x.done, _x.unreachable))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
@@ -121,8 +127,8 @@ float64 z
     try:
       if self.header is None:
         self.header = std_msgs.msg.Header()
-      if self.grid is None:
-        self.grid = None
+      if self.gridY is None:
+        self.gridY = None
       end = 0
       _x = self
       start = end
@@ -140,31 +146,33 @@ float64 z
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
-      self.grid = []
+      self.gridY = []
       for i in range(0, length):
         val1 = path_finding.msg.GridArray()
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        val1.grid = []
+        val1.gridX = []
         for i in range(0, length):
           val2 = path_finding.msg.Grid()
-          val2.sub_area = []
-          for i in range(0, 4):
-            val3 = geometry_msgs.msg.Point()
-            _x = val3
-            start = end
-            end += 24
-            (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
-            val2.sub_area.append(val3)
+          _v3 = val2.top_left
+          _x = _v3
+          start = end
+          end += 24
+          (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
+          _v4 = val2.bottom_right
+          _x = _v4
+          start = end
+          end += 24
+          (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
           _x = val2
           start = end
           end += 2
           (_x.done, _x.unreachable,) = _get_struct_2B().unpack(str[start:end])
           val2.done = bool(val2.done)
           val2.unreachable = bool(val2.unreachable)
-          val1.grid.append(val2)
-        self.grid.append(val1)
+          val1.gridX.append(val2)
+        self.gridY.append(val1)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -185,17 +193,18 @@ float64 z
         _x = _x.encode('utf-8')
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
-      length = len(self.grid)
+      length = len(self.gridY)
       buff.write(_struct_I.pack(length))
-      for val1 in self.grid:
-        length = len(val1.grid)
+      for val1 in self.gridY:
+        length = len(val1.gridX)
         buff.write(_struct_I.pack(length))
-        for val2 in val1.grid:
-          if len(val2.sub_area) != 4:
-            self._check_types(ValueError("Expecting %s items but found %s when writing '%s'" % (4, len(val2.sub_area), 'val2.sub_area')))
-          for val3 in val2.sub_area:
-            _x = val3
-            buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
+        for val2 in val1.gridX:
+          _v5 = val2.top_left
+          _x = _v5
+          buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
+          _v6 = val2.bottom_right
+          _x = _v6
+          buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
           _x = val2
           buff.write(_get_struct_2B().pack(_x.done, _x.unreachable))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
@@ -212,8 +221,8 @@ float64 z
     try:
       if self.header is None:
         self.header = std_msgs.msg.Header()
-      if self.grid is None:
-        self.grid = None
+      if self.gridY is None:
+        self.gridY = None
       end = 0
       _x = self
       start = end
@@ -231,31 +240,33 @@ float64 z
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
-      self.grid = []
+      self.gridY = []
       for i in range(0, length):
         val1 = path_finding.msg.GridArray()
         start = end
         end += 4
         (length,) = _struct_I.unpack(str[start:end])
-        val1.grid = []
+        val1.gridX = []
         for i in range(0, length):
           val2 = path_finding.msg.Grid()
-          val2.sub_area = []
-          for i in range(0, 4):
-            val3 = geometry_msgs.msg.Point()
-            _x = val3
-            start = end
-            end += 24
-            (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
-            val2.sub_area.append(val3)
+          _v7 = val2.top_left
+          _x = _v7
+          start = end
+          end += 24
+          (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
+          _v8 = val2.bottom_right
+          _x = _v8
+          start = end
+          end += 24
+          (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
           _x = val2
           start = end
           end += 2
           (_x.done, _x.unreachable,) = _get_struct_2B().unpack(str[start:end])
           val2.done = bool(val2.done)
           val2.unreachable = bool(val2.unreachable)
-          val1.grid.append(val2)
-        self.grid.append(val1)
+          val1.gridX.append(val2)
+        self.gridY.append(val1)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
