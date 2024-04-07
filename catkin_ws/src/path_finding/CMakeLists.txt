@@ -7,12 +7,11 @@ project(path_finding)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED
-	roscpp
+find_package(catkin REQUIRED COMPONENTS roscpp
 	message_generation
 	std_msgs
 	geometry_msgs
-	COMPONENTS roslaunch
+	roslaunch
 )
 
 ## System dependencies are found with CMake's conventions
@@ -112,8 +111,8 @@ roslaunch_add_file_check(launch)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 	INCLUDE_DIRS include
-	LIBRARIES ${PROJECT_NAME}
-	CATKIN_DEPENDS roscpp
+	LIBRARIES define_area check_waste go_to odometry
+	CATKIN_DEPENDS roscpp std_msgs geometry_msgs
 #  DEPENDS system_lib
 )
 
