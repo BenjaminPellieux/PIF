@@ -8,12 +8,12 @@ Odometry::Odometry(ros::NodeHandle nh) {
 	this->sub_odom = nh.subscribe("/imu/data", 1000, &Odometry::callback_odom, this);
 }
 
-void Odometry::callback_gps(const nav_msgs::Odometry::ConstPtr &nav) {
+void Odometry::callback_gps(const geometry_msgs::Point::ConstPtr &nav) {
 	if(!this->pose_called)
 		this->pose_called = true;
 
-	this->pose.x = nav->pose.pose.position.x;
-	this->pose.y = nav->pose.pose.position.y;
+	this->pose.x = nav->x;
+	this->pose.y = nav->y;
 }
 
 void Odometry::callback_odom(const sensor_msgs::Imu::ConstPtr &odometry) {

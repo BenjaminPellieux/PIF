@@ -21,6 +21,6 @@ class Odometry {
         bool rot_called;
 
         Odometry(ros::NodeHandle);
-        void callback_gps(const nav_msgs::Odometry::ConstPtr &nav);
+        void callback_gps(const geometry_msgs::Point::ConstPtr &nav);
         void callback_odom(const sensor_msgs::Imu::ConstPtr &odometry);
 };

@@ -11,6 +11,7 @@
 #include <sensor_msgs/NavSatFix.h>
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Point.h>
+#include <std_msgs/Bool.h>
 #include <visualization_msgs/Marker.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -49,4 +50,5 @@ class Go_To : public Odometry {
     private:
         ros::Subscriber sub_laser;
         ros::Publisher cmd_xy;
+        ros::Publisher moving;
 };
