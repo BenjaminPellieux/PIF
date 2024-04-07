@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
     ros::NodeHandle nh;
     ros::Publisher pub_obstacle = nh.advertise<std_msgs::UInt16>("/Obstacle", 10);
     cv::VideoCapture cap;
-    cap.open("/home/ros/PIF/PIF/VISION/DETECTION/Video/test5.mp4");
+    cap.open("/home/ros/PIF/PIF/VISION/DETECTION/Video/test.mp4");
     // 0 indique le premier périphérique de la webcam, changez-le si vous avez plusieurs caméras
 
     // Vérifier si la capture vidéo est ouverte
@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
     cv::namedWindow("Seuillage", cv::WINDOW_AUTOSIZE);
     
     // Paramètres de luminosité
-    double alpha = 1.0;  // ajustez ce paramètre pour la luminosité (1 = pas de changement)
+    double alpha = 0.65;  // ajustez ce paramètre pour la luminosité (1 = pas de changement)
     int beta = 20;       // ajustez ce paramètre pour la luminosité (0 = pas de changement)
 
     int frame  =0;
