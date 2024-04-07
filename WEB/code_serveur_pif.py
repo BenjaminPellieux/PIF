@@ -3,6 +3,12 @@ import json
 from handle_request import *
 from client_video import *
 
+# IP_RASP = "192.168.131.1"
+IP_RASP = "10.8.0.3"
+PORT = "9090"
+# PORT = "11311"
+
+
 app = Flask(__name__, static_folder='static')
 
 
@@ -77,4 +83,9 @@ def locate():
 
 
 if __name__ == '__main__':
+    video_stream: WebVideoApp = WebVideoApp()
+    ws_app: WebSocketApp = WebSocketApp()
+    ws_app.start()
+    video_stream.start()
     app.run(host='localhost', port=8080, ssl_context=('key/cert.pem', 'key/key.pem'))
+    

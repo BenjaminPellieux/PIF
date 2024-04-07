@@ -2,16 +2,14 @@ import json
 import websocket
 from threading import Thread
 from time import sleep
-# IP_RASP = "192.168.131.1"
-IP_RASP = "10.8.0.3"
-PORT = "9090"
-# PORT = "11311"
 
 
 
 class WebSocketApp(Thread):
-    def __init__(self):
+    def __init__(self, ip_rasp: str = "0.0.0.0", port_rasp: int = 9090):
         Thread.__init__(self)
+        self.ip_server = ip_rasp
+        self.port_server = port_rasp
         self.ws: websocket = None
         self.topic_data: dict = {}
         self.topic_to_subscribe: str = None
@@ -21,7 +19,7 @@ class WebSocketApp(Thread):
         self.connect()
 
     def connect(self):
-        self.ws: websocket = websocket.WebSocketApp(f"ws://{IP_RASP}:{PORT}",
+        self.ws: websocket = websocket.WebSocketApp(f"ws://{self.ip_server}:{self.port_server}",
                                          on_message=self.on_message,
                                          on_error=self.on_error,
                                          on_close=self.on_close)
@@ -95,5 +93,4 @@ class WebSocketApp(Thread):
         self.topic_to_subscribe = None
 
 # Instanciation du client WebSocket
-ws_app: WebSocketApp = WebSocketApp()
-ws_app.start()
+
