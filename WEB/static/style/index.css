@@ -1,57 +1,73 @@
-/* index.css */
-
-ul {
-    list-style-type: none;
+body {
+    background-color: lightgrey;
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    min-height: 100vh;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+.project-image {
+    width: 900px; 
+    height: auto; 
+    margin: 20px 0; 
+}
+
+header {
+    text-align: center;
+}
+
+h1 {
+    font-size: 45px;
+    margin: 65px 0;
+}
+
+.menu {
+    list-style: none;
     padding: 0;
+    text-align: center;
+    margin: 0;
 }
 
 .menu li {
-    display: inline-block; 
+    display: inline-block;
+    margin: 0 10px;
 }
 
-.menu li a {
+.menu a {
     text-decoration: none;
-    padding: 15px 30px;
-    color: black;
-    background-color: yellow;
-    font-size: 18px;
-    border-radius: 10px;
+    color: white;
 }
 
-.menu li a:active {
-    background-color: white;
-    color: black;
+.Descriptif {
+    text-align: center; /* Centre le texte à l'intérieur du bloc Descriptif */
 }
 
-
-.logo-container {
-    float: left;
-    margin: 0; /* Ajouter une marge selon vos besoins */
-}
-
-.logo-container img {
-    height: 60px; 
-    width: auto; 
-}
-
-button {
-    padding: 10px;
-}
-
-.hidden {
-    display: none;
-}
-
-#moreText {
+ .project-description {
+    font-size: 25px; /* Nouvelle taille de texte */
     text-align: center;
-    margin-top: 10px;
 }
 
-/* Media Query for adjusting styles for smaller screens */
-@media (max-width: 900px) {
-    .menu li a {
-        padding: 10px 10px; 
-        font-size: 15px; 
+.bottom-left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 10px;
+}
+/* Media Queries for adjusting styles for different screen sizes */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    .menu {
+        flex-direction: column;
+    }
+
+    .menu li {
+        display: block;
+        margin: 10px 0;
     }
 }

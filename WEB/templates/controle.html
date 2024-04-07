@@ -6,80 +6,11 @@
     <link rel="stylesheet" type="text/css" href="/static/style/index.css">
     <link rel="stylesheet" type="text/css" href="/static/style/controle.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <style>
-     body {
-            background-color: white;
-            background-size: cover;
-            background-repeat: no-repeat;
-            font-family: Arial, sans-serif;
-            width: 100%;
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-        }
 
-        header {
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 45px;
-            margin: 20px 0;
-        }
-
-        h1 em {
-            color: black;
-        }
-
-        .menu {
-            list-style: none;
-            padding: 0;
-            text-align: center;
-            margin: 0;
-        }
-
-        .menu li {
-            display: inline-block;
-            margin: 0 10px;
-        }
-
-        .menu a {
-            text-decoration: none;
-            color: white;
-        }
-
-        button {
-            font-size: 24px;
-            padding: 15px 30px;
-            background-color: #4CAF50; /* Green background color */
-            color: white; /* White text color */
-            border: none; /* Remove borders */
-            border-radius: 5px; /* Rounded corners */
-            cursor: pointer; /* Add a pointer cursor on hover */
-        }
-
-        /* Media Queries for adjusting styles for different screen sizes */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 24px;
-            }
-
-            .menu {
-                flex-direction: column;
-            }
-
-            .menu li {
-                display: block;
-                margin: 10px 0;
-            }
-        }
-</style>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </style>
-    <link rel="stylesheet" type="text/css" href="/static/style/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/style/commun.css">
 </head>
 
 <body>
@@ -92,7 +23,9 @@
         </ul>
     </header> 
     <div class="containerup">
-        <div id="video" style="height: 100%; background-color: black;"></div>
+        <div id="video" style="height: 100%; background-color: none;">
+            <img id="live-image" src="/static/images/NDF.png" alt="Image en direct" >
+        </div>
         <div id="map" style="height: 100%; "></div>
     </div>
     
@@ -121,10 +54,18 @@
             </table>
             
         </div>
-        <div class="slider-container" style="width: 15%;">
-            <h3 id="speedValue">Vitesse: 5</h3>
-            <input type="range" id="speedRange" orient="vertical" min="1" max="10" value="5">
+        <div class="control_container">
+            <div class="slider_container">
+                <div class="slider"></div>
+                <h3 id="speedValue">Vitesse: 5</h3>
+                <input type="range" id="speedRange" orient="vertical" min="1" max="10" value="5">
+            </div>
+            <div class="auto_manu_container">
+                <input type="checkbox" id="mode-switch" onclick="commandStatus(this)">
+                <label for="mode-switch">Contrôle manuel</label>
+            </div>
         </div>
+        
 
         <div class="topic-value" style="width: 40%;">
             <h2>Topic value</h2>
@@ -133,6 +74,15 @@
         </div>
     </div>
     <script type="text/javascript" src="/static/src/controle.js"></script>
+    <script type="text/javascript">
+
+        function fetchImage(){
+            const liveImage = document.getElementById('live-image');
+            liveImage.src = "/current_image?time=" + new Date().getTime();
+        }
+        setInterval(fetchImage, 500);
+
+    </script>
 </body>
 </html>
 

@@ -51,9 +51,11 @@ setInterval(function() {
     }, 2000);  
 
     requestTopicValue('/navsat/fix');
+    
     // Remplacez les valeurs par vos données odom en temps réel 
     updateData(pose, clock);
-    // Remplacez les valeurs par vos données GPS en temps réel sur la MAP
+    fetchImage();
+        // Remplacez les valeurs par vos données GPS en temps réel sur la MAP
     updateMarker(NewLat - DiffLat, NewLng - DiffLng);
     
 }, 1000);
@@ -62,6 +64,13 @@ function command(e) {
     console.log("[DEBUG] Name command: "  +e.name);
     $.post( "/command", {
         comd: e.name 
+    });
+}
+
+function commandStatus(auto) {
+    console.log("[DEBUG] Name command: "  +auto.checked);
+    $.post( "/command", {
+        comd: auto.checked 
     });
 }
 
@@ -168,3 +177,4 @@ function addRows(tbody, parentKey, dataObject) {
 }
 // Ajoutez le tableau à la div avec l'ID 'poseTable'
 updateData(pose, clock)
+

@@ -9,13 +9,13 @@ import struct
 import geometry_msgs.msg
 
 class Grid(genpy.Message):
-  _md5sum = "8477af00e98f03fd36c0b55bb90bc58b"
+  _md5sum = "326792e8c45913b0ed6b6b020c9acb4b"
   _type = "path_finding/Grid"
   _has_header = False  # flag to mark the presence of a Header object
-  _full_text = """geometry_msgs/Point[4] sub_area
+  _full_text = """geometry_msgs/Point top_left
+geometry_msgs/Point bottom_right
 bool done
 bool unreachable
-
 ================================================================================
 MSG: geometry_msgs/Point
 # This contains the position of a point in free space
@@ -23,8 +23,8 @@ float64 x
 float64 y
 float64 z
 """
-  __slots__ = ['sub_area','done','unreachable']
-  _slot_types = ['geometry_msgs/Point[4]','bool','bool']
+  __slots__ = ['top_left','bottom_right','done','unreachable']
+  _slot_types = ['geometry_msgs/Point','geometry_msgs/Point','bool','bool']
 
   def __init__(self, *args, **kwds):
     """
@@ -34,7 +34,7 @@ float64 z
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       sub_area,done,unreachable
+       top_left,bottom_right,done,unreachable
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -43,14 +43,17 @@ float64 z
     if args or kwds:
       super(Grid, self).__init__(*args, **kwds)
       # message fields cannot be None, assign default values for those that are
-      if self.sub_area is None:
-        self.sub_area = [geometry_msgs.msg.Point() for _ in range(4)]
+      if self.top_left is None:
+        self.top_left = geometry_msgs.msg.Point()
+      if self.bottom_right is None:
+        self.bottom_right = geometry_msgs.msg.Point()
       if self.done is None:
         self.done = False
       if self.unreachable is None:
         self.unreachable = False
     else:
-      self.sub_area = [geometry_msgs.msg.Point() for _ in range(4)]
+      self.top_left = geometry_msgs.msg.Point()
+      self.bottom_right = geometry_msgs.msg.Point()
       self.done = False
       self.unreachable = False
 
@@ -66,13 +69,8 @@ float64 z
     :param buff: buffer, ``StringIO``
     """
     try:
-      if len(self.sub_area) != 4:
-        self._check_types(ValueError("Expecting %s items but found %s when writing '%s'" % (4, len(self.sub_area), 'self.sub_area')))
-      for val1 in self.sub_area:
-        _x = val1
-        buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
       _x = self
-      buff.write(_get_struct_2B().pack(_x.done, _x.unreachable))
+      buff.write(_get_struct_6d2B().pack(_x.top_left.x, _x.top_left.y, _x.top_left.z, _x.bottom_right.x, _x.bottom_right.y, _x.bottom_right.z, _x.done, _x.unreachable))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -84,21 +82,15 @@ float64 z
     if python3:
       codecs.lookup_error("rosmsg").msg_type = self._type
     try:
-      if self.sub_area is None:
-        self.sub_area = None
+      if self.top_left is None:
+        self.top_left = geometry_msgs.msg.Point()
+      if self.bottom_right is None:
+        self.bottom_right = geometry_msgs.msg.Point()
       end = 0
-      self.sub_area = []
-      for i in range(0, 4):
-        val1 = geometry_msgs.msg.Point()
-        _x = val1
-        start = end
-        end += 24
-        (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
-        self.sub_area.append(val1)
       _x = self
       start = end
-      end += 2
-      (_x.done, _x.unreachable,) = _get_struct_2B().unpack(str[start:end])
+      end += 50
+      (_x.top_left.x, _x.top_left.y, _x.top_left.z, _x.bottom_right.x, _x.bottom_right.y, _x.bottom_right.z, _x.done, _x.unreachable,) = _get_struct_6d2B().unpack(str[start:end])
       self.done = bool(self.done)
       self.unreachable = bool(self.unreachable)
       return self
@@ -113,13 +105,8 @@ float64 z
     :param numpy: numpy python module
     """
     try:
-      if len(self.sub_area) != 4:
-        self._check_types(ValueError("Expecting %s items but found %s when writing '%s'" % (4, len(self.sub_area), 'self.sub_area')))
-      for val1 in self.sub_area:
-        _x = val1
-        buff.write(_get_struct_3d().pack(_x.x, _x.y, _x.z))
       _x = self
-      buff.write(_get_struct_2B().pack(_x.done, _x.unreachable))
+      buff.write(_get_struct_6d2B().pack(_x.top_left.x, _x.top_left.y, _x.top_left.z, _x.bottom_right.x, _x.bottom_right.y, _x.bottom_right.z, _x.done, _x.unreachable))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -132,21 +119,15 @@ float64 z
     if python3:
       codecs.lookup_error("rosmsg").msg_type = self._type
     try:
-      if self.sub_area is None:
-        self.sub_area = None
+      if self.top_left is None:
+        self.top_left = geometry_msgs.msg.Point()
+      if self.bottom_right is None:
+        self.bottom_right = geometry_msgs.msg.Point()
       end = 0
-      self.sub_area = []
-      for i in range(0, 4):
-        val1 = geometry_msgs.msg.Point()
-        _x = val1
-        start = end
-        end += 24
-        (_x.x, _x.y, _x.z,) = _get_struct_3d().unpack(str[start:end])
-        self.sub_area.append(val1)
       _x = self
       start = end
-      end += 2
-      (_x.done, _x.unreachable,) = _get_struct_2B().unpack(str[start:end])
+      end += 50
+      (_x.top_left.x, _x.top_left.y, _x.top_left.z, _x.bottom_right.x, _x.bottom_right.y, _x.bottom_right.z, _x.done, _x.unreachable,) = _get_struct_6d2B().unpack(str[start:end])
       self.done = bool(self.done)
       self.unreachable = bool(self.unreachable)
       return self
@@ -157,15 +138,9 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_2B = None
-def _get_struct_2B():
-    global _struct_2B
-    if _struct_2B is None:
-        _struct_2B = struct.Struct("<2B")
-    return _struct_2B
-_struct_3d = None
-def _get_struct_3d():
-    global _struct_3d
-    if _struct_3d is None:
-        _struct_3d = struct.Struct("<3d")
-    return _struct_3d
+_struct_6d2B = None
+def _get_struct_6d2B():
+    global _struct_6d2B
+    if _struct_6d2B is None:
+        _struct_6d2B = struct.Struct("<6d2B")
+    return _struct_6d2B

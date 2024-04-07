@@ -1,6 +1,8 @@
 (cl:in-package path_finding-msg)
-(cl:export '(SUB_AREA-VAL
-          SUB_AREA
+(cl:export '(TOP_LEFT-VAL
+          TOP_LEFT
+          BOTTOM_RIGHT-VAL
+          BOTTOM_RIGHT
           DONE-VAL
           DONE
           UNREACHABLE-VAL

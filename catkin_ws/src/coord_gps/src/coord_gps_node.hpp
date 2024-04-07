@@ -10,9 +10,11 @@
 // ROS TOPIC 
 #include "sensor_msgs/NavSatFix.h"
 #include "geometry_msgs/PointStamped.h"
+#include "geometry_msgs/PolygonStamped.h"
+#include "geometry_msgs/Point32.h"
 #include "std_msgs/Bool.h"
 
-// Definition du type Point
+// Définition du type Point
 typedef struct {
     bool recvd; 
     double lon;
@@ -20,9 +22,9 @@ typedef struct {
 
 }Point;
 
-// Definition de la Class ZoneCheker 
+// Définition de la Class ZoneCheker 
 class ZoneChecker {
-    // Definition en Public des methodes de la classe ZoneCheker
+    // Definition en Public des méthodes de la classe ZoneCheker
     public:
         ZoneChecker(); // Constructor
         void gpsCallback(const sensor_msgs::NavSatFix::ConstPtr& msg);
@@ -31,12 +33,16 @@ class ZoneChecker {
         void checkZone();
         bool AllRcvd();
 
-    // Definition des propriéte de la classe ZoneCheker 
+    // Definition des propriétés de la classe ZoneCheker 
     private:
         ros::Subscriber gps_sub;
         ros::Subscriber zone_sub;
         ros::Publisher in_zone_pub;
+        ros::Publisher polygon_pub;
+        ros::Publisher area_pub;
         Point global_pos;
+        //geometry_msgs::PolygonStamped Point_tab;
         Point Point_tab[4];
+        geometry_msgs::PolygonStamped area;
 };
 

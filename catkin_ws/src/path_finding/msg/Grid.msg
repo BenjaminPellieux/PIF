@@ -1,3 +1,4 @@
-geometry_msgs/Point[4] sub_area
+geometry_msgs/Point top_left
+geometry_msgs/Point bottom_right
 bool done
 bool unreachable

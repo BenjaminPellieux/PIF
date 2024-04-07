@@ -1,0 +1,113 @@
+body {
+    background-color: lightblue;
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+header{
+    text-align: center;
+}
+
+h1{
+    font-size: 45px;
+    margin: 20px 0;
+}
+
+h1 em {
+    color: black;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    margin: 0;
+}
+
+.menu li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+}
+
+button {
+    font-size: 24px;
+    padding: 15px 30px;
+}
+
+/* Media Queries for adjusting styles for different screen sizes */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    .menu {
+        flex-direction: column;
+    }
+
+    .menu li {
+        display: block;
+        margin: 10px 0;
+    }
+}
+
+/* Style pour l'en-tête du tableau */
+#config-table th {
+    background-color: #28a745; /* Couleur de fond vert */
+    color: white; /* Couleur du texte */
+    text-align: center; /* Centrer le texte */
+    padding: 10px; /* Espacement intérieur */
+    border: 2px solid black; 
+    width: 1000px;
+}
+
+/* Style pour les cellules du tableau */
+#config-table td {
+    text-align: center; /* Centrer le texte */
+    padding: 10px; /* Espacement intérieur */
+    border: 2px solid black; 
+    width: 1000px;
+}
+
+/* Style pour les bordures extérieures du tableau */
+#config-table {
+    border-collapse: collapse; /* Fusionner les bordures de cellules */
+    border: 2px solid black; /* Bordure de 2 pixels solide pour le tableau */
+    width: 1000px;
+}
+
+/* Style pour les bordures internes du tableau */
+#config-table tbody tr:last-child td {
+    border-bottom: 2px solid black; 
+}
+
+#config-table tbody tr td:last-child {
+    border-right: 2px solid black; 
+}
+
+.container {
+    display: flex;
+    justify-content: space-between; /* Espacement égal entre les éléments */
+    margin: 0 auto;
+}
+
+.map {
+    width: 90%;
+}
+.bouton-sauvegarde {
+    margin: 20px;
+}
+
+.config {
+    margin: 0 auto;
+}

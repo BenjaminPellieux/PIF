@@ -1,0 +1,71 @@
+# Introcution 
+
+Ce document a  pour but de presenter l'ensemble des topic utiliser par notre solution
+
+
+## Serveur WEB
+
+### Publish
+
+Envoi les point de la zone GPS 
+- Topic Name : /Area/Point
+- Topic Type : sensor_msgs/NavSatFix
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+
+
+Envoi de commande de deplacement
+- Topic Name : /jackal_velocity_controller/cmd_vel
+- Topic Type : geometry_msgs/Twist
+[Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
+
+Controle manuel ou automatique
+- Topic Name : /Mode/Status  
+- Topic Type : std_msgs/Bool
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
+
+
+### Subscribe
+
+Position Odometrique de Wall-E
+- Topic Name : /odometry/filtered
+- Topic Type : nav_msgs/Odometry Message
+[Documentation](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Odometry.html)
+
+
+Position GPS de Wall-E
+- Topic Name : /navsat/fix
+- Topic Type : sensor_msgs/NavSatFix
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+
+
+- Topic Name : 
+- Topic Type : 
+[Documentation]()
+
+### Coord GPS node 
+
+
+
+## Go To 
+
+
+## Detect 
+
+### Publish
+
+- Topic Name : Waste/Pos 
+- Topic Type : geometry_msgs/Point 
+[Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Point.html)
+
+- Topic Name : Waste/Geometry
+- Topic Type : geometry_msgs/QuaternionStamped 
+[Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/QuaternionStamped.html)
+
+### Subscribe 
+
+- Topic Name :  /pif/moving
+- Topic Type :  std_msgs/Bool
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
+
+
+

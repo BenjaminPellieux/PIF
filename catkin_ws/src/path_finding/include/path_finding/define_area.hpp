@@ -1,3 +1,5 @@
+#include "path_finding/odometry.hpp"
+
 #include <ros/ros.h>
 #include <unistd.h>
 #include <geometry_msgs/Polygon.h>
@@ -7,25 +9,31 @@
 #include <path_finding/GridArray.h>
 #include <path_finding/GridStamped.h>
 
-using namespace std;
-
 
 #define DETECT_RANGE 12.0
 
 
-class DefineArea {
+class DefineArea : public Odometry {
 private:
-    geometry_msgs::Polygon area;
-    path_finding::GridStamped grid;
     float nbr_subGrid_x, nbr_subGrid_y;
+    ros::Subscriber area_sub;
     ros::Publisher grid_pub,
                    origin_pub,
-                   next_tile_pub;
+                   pose_grid_pub;
 
-    void create_grid();
-    void set_origin();
+    void create_grid(geometry_msgs::Polygon);
+    void set_origin(geometry_msgs::Polygon);
+    void pos_in_grid();
 public:
+    bool area_recieved;
+    Local_Pose next_tile;
+    path_finding::GridStamped grid;
+    geometry_msgs::PointStamped pose_grid,
+                                origin;
+
     DefineArea(ros::NodeHandle);
-    void choose_next_tile(const geometry_msgs::PointStamped::ConstPtr &);
+    void choose_next_tile();
+    Local_Pose get_next_tile_pose();
+
     void areaCallback(const geometry_msgs::PolygonStamped::ConstPtr &);
 };

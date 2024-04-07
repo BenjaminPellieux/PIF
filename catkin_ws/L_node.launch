@@ -4,14 +4,21 @@
 
   <!-- Node for obstacle detection -->
   <node pkg="obstacle_detect" type="node" name="obstacle_detect_node" output="screen"/>
+  <node pkg="scan_detect_obstacle" type="node" name="scan_detect_obstacle_node" output="screen"/>
   
   <!-- Node for GPS coordinates -->
   <node pkg="coord_gps" type="gps_node" name="gps_node" output="screen"/>
+  <node pkg="pif_gps_convert_node" type="node" name="pif_gps_convert_node" output="screen"/>
+  <node pkg="go_to" type="node" name="go_to_node" output="screen"/>
 
   <!-- Node for serial communication with rosserial -->
   <node pkg="rosserial_python" type="serial_node.py" name="serial_node" output="screen">
     <param name="port" value="/dev/ttyACM0"/>
     <param name="baud" value="9600"/>
   </node>
+  <!-- <include file="robot_localization navsat_transform_template.laun">
+  </include> -->
+
 </launch>
+<!-- roslaunch robot_localization navsat_transform_template.launch -->
 

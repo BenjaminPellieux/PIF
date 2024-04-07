@@ -19,24 +19,24 @@ class GridArray {
   constructor(initObj={}) {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
-      this.grid = null;
+      this.gridX = null;
     }
     else {
-      if (initObj.hasOwnProperty('grid')) {
-        this.grid = initObj.grid
+      if (initObj.hasOwnProperty('gridX')) {
+        this.gridX = initObj.gridX
       }
       else {
-        this.grid = [];
+        this.gridX = [];
       }
     }
   }
 
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type GridArray
-    // Serialize message field [grid]
-    // Serialize the length for message field [grid]
-    bufferOffset = _serializer.uint32(obj.grid.length, buffer, bufferOffset);
-    obj.grid.forEach((val) => {
+    // Serialize message field [gridX]
+    // Serialize the length for message field [gridX]
+    bufferOffset = _serializer.uint32(obj.gridX.length, buffer, bufferOffset);
+    obj.gridX.forEach((val) => {
       bufferOffset = Grid.serialize(val, buffer, bufferOffset);
     });
     return bufferOffset;
@@ -46,19 +46,19 @@ class GridArray {
     //deserializes a message object of type GridArray
     let len;
     let data = new GridArray(null);
-    // Deserialize message field [grid]
-    // Deserialize array length for message field [grid]
+    // Deserialize message field [gridX]
+    // Deserialize array length for message field [gridX]
     len = _deserializer.uint32(buffer, bufferOffset);
-    data.grid = new Array(len);
+    data.gridX = new Array(len);
     for (let i = 0; i < len; ++i) {
-      data.grid[i] = Grid.deserialize(buffer, bufferOffset)
+      data.gridX[i] = Grid.deserialize(buffer, bufferOffset)
     }
     return data;
   }
 
   static getMessageSize(object) {
     let length = 0;
-    length += 26 * object.grid.length;
+    length += 50 * object.gridX.length;
     return length + 4;
   }
 
@@ -69,19 +69,19 @@ class GridArray {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '3dc66829f5cad491c9d9128ab16fff09';
+    return 'c9bfbf14df9229b96f8d392a4058d7ed';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    path_finding/Grid[] grid
+    path_finding/Grid[] gridX
     ================================================================================
     MSG: path_finding/Grid
-    geometry_msgs/Point[4] sub_area
+    geometry_msgs/Point top_left
+    geometry_msgs/Point bottom_right
     bool done
     bool unreachable
-    
     ================================================================================
     MSG: geometry_msgs/Point
     # This contains the position of a point in free space
@@ -98,14 +98,14 @@ class GridArray {
       msg = {};
     }
     const resolved = new GridArray(null);
-    if (msg.grid !== undefined) {
-      resolved.grid = new Array(msg.grid.length);
-      for (let i = 0; i < resolved.grid.length; ++i) {
-        resolved.grid[i] = Grid.Resolve(msg.grid[i]);
+    if (msg.gridX !== undefined) {
+      resolved.gridX = new Array(msg.gridX.length);
+      for (let i = 0; i < resolved.gridX.length; ++i) {
+        resolved.gridX[i] = Grid.Resolve(msg.gridX[i]);
       }
     }
     else {
-      resolved.grid = []
+      resolved.gridX = []
     }
 
     return resolved;
