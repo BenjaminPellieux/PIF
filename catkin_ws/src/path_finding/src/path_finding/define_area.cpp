@@ -6,10 +6,6 @@ DefineArea::DefineArea(ros::NodeHandle nh) : Odometry(nh) {
 
     this->area_sub = nh.subscribe("/area/polygon", 100, &DefineArea::areaCallback, this);
 
-    this->grid_pub = nh.advertise<path_finding::GridStamped>("/area/grid", 100);
-    this->origin_pub = nh.advertise<geometry_msgs::PointStamped>("/area/origin", 100);
-    this->pose_grid_pub = nh.advertise<geometry_msgs::PointStamped>("/area/pose_grid", 100);
-
     ROS_INFO("define_area -> complete.");
 }
 
@@ -63,43 +59,34 @@ void DefineArea::create_grid(geometry_msgs::Polygon area) {
         }
         this->grid.gridY.push_back(subGrid);
     }
-    this->grid_pub.publish(grid);
 }
 
 void DefineArea::set_origin(geometry_msgs::Polygon area) {
-    this->origin.header.frame_id = "origin";
-    this->origin.header.stamp = ros::Time::now();
-
-    this->origin.point.x = area.points[0].x;
-    this->origin.point.y = area.points[0].y;
+    this->origin.x = area.points[0].x;
+    this->origin.y = area.points[0].y;
     for(int i=1; i<4; i++) {
-        if(std::abs(area.points[i].x) < std::abs(this->origin.point.x)) {
-            this->origin.point.x = area.points[i].x;
+        if(std::abs(area.points[i].x) < std::abs(this->origin.x)) {
+            this->origin.x = area.points[i].x;
         }
-        if(std::abs(area.points[i].y) < std::abs(this->origin.point.y)) {
-            this->origin.point.y = area.points[i].y;
+        if(std::abs(area.points[i].y) < std::abs(this->origin.y)) {
+            this->origin.y = area.points[i].y;
         }
     }
-    this->origin_pub.publish(this->origin);
 }
 
 void DefineArea::pos_in_grid() {
-    this->pose_grid.header.frame_id = "pose_grid";
-    this->pose_grid.header.stamp = ros::Time::now();
-
     for(int y=0; y<this->nbr_subGrid_y; y++) {
         if((this->grid.gridY[y].gridX[0].top_left.y < Odometry::pose.y) && (Odometry::pose.y < this->grid.gridY[y].gridX[0].bottom_right.y)) {
-            this->pose_grid.point.y = y;
+            this->pose_grid.y = y;
             break;
         }
     }
     for(int x=0; x<this->nbr_subGrid_x; x++) {
         if((this->grid.gridY[0].gridX[x].top_left.x < Odometry::pose.x) && (Odometry::pose.x < this->grid.gridY[0].gridX[x].bottom_right.x)) {
-            this->pose_grid.point.x = x;
+            this->pose_grid.x = x;
             break;
         }
     }
-    this->pose_grid_pub.publish(this->pose_grid);
 }
 
 void DefineArea::choose_next_tile() {
@@ -120,12 +107,12 @@ void DefineArea::choose_next_tile() {
         perimeter = size * 2 + size * 2 - 4;
         
         for(int n=0; n<perimeter; n++) {
-            if((this->pose_grid.point.x+x >= 0) && (this->pose_grid.point.y+y >= 0)
-                    && (this->pose_grid.point.x+x <= this->nbr_subGrid_x) && (this->pose_grid.point.y+y <= this->nbr_subGrid_y)
-                    && !this->grid.gridY[this->pose_grid.point.y+y].gridX[this->pose_grid.point.x+x].done
-                    && !this->grid.gridY[this->pose_grid.point.y+y].gridX[this->pose_grid.point.x+x].unreachable) {
-                this->next_tile.x = this->pose_grid.point.x + x;
-                this->next_tile.y = this->pose_grid.point.y + y;
+            if((this->pose_grid.x+x >= 0) && (this->pose_grid.y+y >= 0)
+                    && (this->pose_grid.x+x <= this->nbr_subGrid_x) && (this->pose_grid.y+y <= this->nbr_subGrid_y)
+                    && !this->grid.gridY[this->pose_grid.y+y].gridX[this->pose_grid.x+x].done
+                    && !this->grid.gridY[this->pose_grid.y+y].gridX[this->pose_grid.x+x].unreachable) {
+                this->next_tile.x = this->pose_grid.x + x;
+                this->next_tile.y = this->pose_grid.y + y;
                 break;
             }
             if((n < move_to_max_x) || (n >= (move_to_max_x + size * 3 - 3))) {
