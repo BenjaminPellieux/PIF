@@ -19,7 +19,7 @@
 #define MIN_AREA 5
 #define MAX_AREA 1000
 #define SAT_RANGE 30
-#define DEBUG 0
+#define DEBUG 1
 
 
 

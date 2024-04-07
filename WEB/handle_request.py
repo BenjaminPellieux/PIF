@@ -1,7 +1,7 @@
 from client_rosbridge import *
 from lib_topic import *
 from datetime import datetime
-current_speed: float = 0.5
+current_speed: float = 5.0
 
 
 def handle_zone(data: list, ros_client: WebSocketApp):
@@ -29,36 +29,27 @@ def change_speed(speed: str, ros_client: WebSocketApp):
     if ros_client.topic_data:
         current_speed = int(speed)
 
-def change_mode(mode: str, ros_client: websocket):
-    if mode == "1":
-        message: dict = {
-            "data": True
-        }
-    else:
-        message: dict = {
-            "data": False
-            }
-    print(f"[DEBUG] message_point : {message=}")
-    try: 
-        ros_client.publish('/pif/web/mode/status', "std_msgs/Bool" , message)
-    except:
-        print("[ERROR] WebSocket closed")
-
 
 def handle_command(cmnd: str, ros_client: WebSocketApp):
     global current_speed
      # Vérifiez si la clé est présente dans command_topic
     if cmnd in command_topic:
-        command_changes: dict = command_topic[cmnd]
+        command_changes: dict = command_topic[cmnd] 
 
         # Mise à jour des valeurs de 'linear' et 'angular' dans 'commande_move'
         for command_type, values in command_changes.items():
             for axis, value in values.items():
-                commande_move[command_type][axis] = value * current_speed
-            if ros_client.orient and command_type != "angular":
-                commande_move["angular"]["z"] +=  ros_client.orient["z"]
-    try: 
-        ros_client.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', command_changes)
-    except:
-        print("[ERROR] WebSocket closed")
+                commande_move[command_type][axis] = float(value) * current_speed
+           
+        print(f"[DEBUG] {commande_move=}")
+        try: 
+            ros_client.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', commande_move)
+        except:
+            print("[ERROR] WebSocket closed")
+
+        for command_type, values in commande_move.items():
+            for axis, value in values.items():
+                commande_move[command_type][axis] = 0.0
+        
+        print(f"[DEBUG] {commande_move=}")
 

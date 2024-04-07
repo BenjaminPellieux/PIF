@@ -64,7 +64,7 @@ Position GPS de Wall-E
 [Documentation]()
 
 
-## Detect 
+## Vision Detect 
 
 ### Publish
 

@@ -29,7 +29,6 @@ void WasteDetection::detect_obstacle()
 
 void WasteDetection::detect_waste()
 {
-    std::cout << "Je detecte les dechet\n";
     cv::Mat image_blurred, hsv, mask_others, mask_majority_color, kernel;
     std::vector<std::vector<cv::Point>> contours;
 
