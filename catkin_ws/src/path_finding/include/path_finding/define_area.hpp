@@ -22,10 +22,10 @@ private:
     void pos_in_grid();
 public:
     bool area_recieved;
-    Local_Pose next_tile;
+    Local_Pose next_tile,
+               pose_grid,
+               origin;
     path_finding::GridStamped grid;
-    geometry_msgs::Point pose_grid,
-                         origin;
 
     DefineArea(ros::NodeHandle);
     void choose_next_tile();
