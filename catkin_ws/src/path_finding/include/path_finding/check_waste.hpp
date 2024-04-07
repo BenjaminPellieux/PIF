@@ -13,13 +13,15 @@
 #define HEIGHT_SCREEN 240
 
 
-class DetectWaste : public Odometry {
+class CheckWaste : public Odometry {
 private:
     ros::Publisher cmd_vel_pub;
+    ros::Subscriber detectWaste_sub,
+                    haskilens_sub;
     float detectWaste;
     path_finding::PoseWaste idWaste;
 public:
-    DetectWaste(ros::NodeHandle);
+    CheckWaste(ros::NodeHandle);
     bool spin();
     void go_to_waste();
 
