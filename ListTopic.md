@@ -63,7 +63,7 @@ Rotation actuelle absolue en (rad / PI - 1)
 [Documentation](https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Imu.html)
 
 
-### go_to
+### go_to_waste
 
 #### Publish
 
@@ -81,6 +81,23 @@ Rotation actuelle absolue en (rad / PI - 1)
 - Topic Type :  std_msgs/Bool
 [Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
+### Go To pose
+
+#### Publish
+
+- Topic Name : /cmd_vel
+- Topic Type : geometry_msgs/Twist
+[Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
+
+- Topic Name : /pif/moving
+- Topic Type : std_msgs/Bool
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
+
+#### Subscribe 
+
+- Topic Name :  /obstacle_marker
+- Topic Type :  visualization_msgs/Marker
+[Documentation](http://docs.ros.org/en/noetic/api/visualization_msgs/html/msg/Marker.html)
 
 ### define_area
 
@@ -116,3 +133,62 @@ Dechet detecte et sa position
     | path_finding/PoseWaste data => | string waste
                                      | geometry_msgs/Point center (https://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Point.html)
 )
+
+## Coord GPS node 
+
+### Publish
+
+position gps du robot (rtk)
+- Topic Name : /pif/gps
+- Topic Type : sensor_msgs/NavSatFix
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+
+## Gps reset 
+
+### Publish
+
+- Topic Name : /pif/origin
+- Topic Type : sensor_msgs/NavSatFix
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+
+### Subscribe 
+
+- Topic Name : argument[1] (/pif/gps_converted for go_to but can be used for gps selsect)
+- Topic Type : sensor_msgs/NavSatFix
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+
+- Topic Name : /pif/reset_origin
+- Topic Type : std_msgs/Bool
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
+
+## Gps transform
+
+### Publish
+
+- Topic Name : argument[2] (/pif/gps_converted for go_to but can be used for gps selsect)
+- Topic Type : std_msgs/Point
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+
+### Subscribe 
+
+- Topic Name : /pif/origin
+- Topic Type : sensor_msgs/NavSatFix
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+
+- Topic Name : argument[1] (/pif/gps for getting gps rtk position)
+- Topic Type : sensor_msgs/NavSatFix
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+
+## scan detect obstacle
+
+### Publish
+
+- Topic Name :  /obstacle_marker
+- Topic Type :  visualization_msgs/Marker
+[Documentation](http://docs.ros.org/en/noetic/api/visualization_msgs/html/msg/Marker.html)
+
+### Subscribe 
+
+- Topic Name : argument[1] (/scan or /front/scan in simu)
+- Topic Type : sensor_msgs/LaserScan
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/LaserScan.html)
