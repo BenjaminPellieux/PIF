@@ -7,12 +7,12 @@ project(path_finding)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED
+find_package(catkin REQUIRED COMPONENTS
 	roscpp
 	message_generation
 	std_msgs
 	geometry_msgs
-	COMPONENTS roslaunch
+	roslaunch
 )
 
 ## System dependencies are found with CMake's conventions
@@ -132,8 +132,8 @@ include_directories(
 add_library(define_area
 	src/${PROJECT_NAME}/define_area.cpp
 )
-add_library(detect_waste
-	src/${PROJECT_NAME}/detect_waste.cpp
+add_library(check_waste
+	src/${PROJECT_NAME}/check_waste.cpp
 )
 add_library(go_to
 	src/${PROJECT_NAME}/go_to.cpp
@@ -167,7 +167,7 @@ add_executable(test_define_area src/test_programs/test_define_area.cpp)
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}_node
 	define_area
-	detect_waste
+	check_waste
 	go_to
 	odometry
 	${catkin_LIBRARIES}
@@ -210,7 +210,7 @@ install(TARGETS define_area
 	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
 )
-install(TARGETS detect_waste
+install(TARGETS check_waste
 	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}

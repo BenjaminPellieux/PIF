@@ -1,0 +1,12 @@
+<launch>
+    <arg name="select_fct" default="" />
+
+    <node pkg="gps_transform" type="gps_reset_origin_node" name="gps_reset_origin_node" args="/pif/gps" />
+
+    <group if="$(eval ((select_fct == 'go_to') || (select_fct == '')))">
+        <node pkg="gps_transform" type="gps_transform_node" name="gps_transform_node" args="/pif/gps /pif/gps_converted" />
+    <group />
+    <group if="$(eval ((select_fct == 'zone_creation') || (select_fct == '')))">
+        <node pkg="gps_transform" type="gps_transform_node" name="gps_transform_node" args="/pif/area/gps /pif/zone_creation/gps_converted" />
+    <group />
+</launch>
