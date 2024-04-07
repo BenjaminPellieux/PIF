@@ -42,11 +42,7 @@ Position GPS de Wall-E
 - Topic Type : 
 [Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
-<<<<<<< HEAD
-## Coord GPS node 
-=======
 ### Coord GPS node
->>>>>>> 43b07d9ef14c71cde6d596fa66b995aa76f525b6
 
 
 
@@ -54,7 +50,6 @@ Position GPS de Wall-E
 
 ### odometry
 
-<<<<<<< HEAD
 
 ## Waste Labeling
 
@@ -81,95 +76,6 @@ Position GPS de Wall-E
 - Topic Name : /pif/waste/geometry
 - Topic Type : geometry_msgs/QuaternionStamped 
 [Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/QuaternionStamped.html)
-=======
-#### Subscribe 
-
-Position actuelle sous X et Y
-- Topic Name :  /pif/gps_converted
-- Topic Type :  nav_msgs/Odometry
-[Documentation](https://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Odometry.html)
-
-Rotation actuelle absolue en (rad / PI - 1)
-- Topic Name :  /imu/data
-- Topic Type :  sensor_msgs/Imu
-[Documentation](https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Imu.html)
-
-
-### go_to
-
-#### Publish
-
-- Topic Name : /cmd_vel
-- Topic Type : geometry_msgs/Twist
-[Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
-
-- Topic Name : /pif/moving
-- Topic Type : std_msgs/Bool
-[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
-
-#### Subscribe 
-
-- Topic Name :  /obstacle_marker
-- Topic Type :  visualization_msgs/Marker
-[Documentation](http://docs.ros.org/en/noetic/api/visualization_msgs/html/msg/Marker.html)
-
-
-### define_area
-
-#### Subscribe 
-
-Zone selectionne
-- Topic Name :  /area/polygon
-- Topic Type :  geometry_msgs/PolygonStamped
-[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
-
-
-### check_waste
-
-#### Publish
-
-Envoi de commande de rotation
-- Topic Name : /cmd_vel
-- Topic Type : geometry_msgs/Twist
-[Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
-
-#### Subscribe
-
-Angle du déchet par raport au robot
-- Topic Name :  /Waste/Geometry
-- Topic Type :  geometry_msgs/QuaternionStamped
-[Documentation](https://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/QuaternionStamped.html)
-
-Dechet detecte et sa position
-- Topic Name :  /Label/id
-- Topic Type :  path_finding/PoseWasteStamped
-[Documentation](
-    | Header header
-    | path_finding/PoseWaste data => | string waste
-                                     | geometry_msgs/Point center (https://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Point.html)
-)
-
-
-
-## Coord GPS node 
-
-### Publish
-
-position gps du robot (rtk)
-- Topic Name : /pif/gps
-- Topic Type : sensor_msgs/NavSatFix
-[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
-
-
-
-## Gps reset 
-
-### Publish
-
-- Topic Name : /pif/origin
-- Topic Type : sensor_msgs/NavSatFix
-[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
->>>>>>> 43b07d9ef14c71cde6d596fa66b995aa76f525b6
 
 ### Subscribe 
 
