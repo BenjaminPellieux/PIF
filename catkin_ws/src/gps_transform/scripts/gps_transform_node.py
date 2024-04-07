@@ -23,20 +23,27 @@ class gps_transform():
 
         # ROS 
         rospy.init_node('gps_transform', anonymous=True)
-        rospy.Subscriber(sys.argv[1], NavSatFix, self.callback)
-        self.pub_gps_convert = rospy.Publisher('/pif/gps_converted', Odometry, queue_size=10)
+        rospy.Subscriber(sys.argv[1], NavSatFix, self.callback_transform)
+        rospy.Subscriber('/pif/origin', NavSatFix, self.callback_origin)
+        self.pub_gps_convert = rospy.Publisher(sys.argv[2], Point, queue_size=10)
         self.rate = rospy.Rate(10) # 10hz
 
         self.robot_pose: Local_Pose = Local_Pose() 
         self.origin_pose: Local_Pose = Local_Pose()
-        self.called: bool = False
-        self.odom: Odometry = Odometry()
-        self.__start__()
+        self.called_transform: bool = False
+        self.called_origin: bool = False
+        self.odom: Point = Point()
+        self.__run__()
 
-    def callback(self, data)-> None:
-        self.called = True
+    def callback_transform(self, data)-> None:
+        self.called_transform = True
         self.robot_pose.lat = data.latitude
         self.robot_pose.lon = data.longitude
+        
+    def callback_origin(self, data)-> None:
+        self.called_origin = True
+        self.origin_pose.lat = data.latitude
+        self.origin_pose.lon = data.longitude
 
     # Fonction pour convertir de ECEF à ENU
     def ecef_to_enu(self, x, y, z, ref_alt = 0) -> tuple:
@@ -60,30 +67,12 @@ class gps_transform():
         enu = np.dot(m, [dx, dy, dz])
         return tuple(enu.tolist())
 
-    def __start__(self) -> None:
-        i = 0
-        while i < 10 and not rospy.is_shutdown():
-            while not self.called:
-                pass
-            self.called = False
-            self.origin_pose.lat += self.robot_pose.lat
-            self.origin_pose.lon += self.robot_pose.lon
-            print(f"[DEBUG] origin get {i}")
-            i += 1
-        
-        try:
-            self.origin_pose.lat /= 10
-            self.origin_pose.lon /= 10
-        except ZeroDivisionError:
-            print("[ERROR] Division by zero")
-        
-        print(f"[LOG] origin found : {self.origin_pose.lat} {self.origin_pose.lon}")
-        self.__run__()
+   
 
     def __run__(self) -> None:
         while not rospy.is_shutdown():
-            if self.called:
-                self.called = False
+            if self.called_transform and self.called_origin:
+                self.called_transform = False
                 # Altitude assumée à 0 pour simplifier
 
                 # Transformer de géodésique (LLA) à ECEF pour obtenir les coordonnées
@@ -93,8 +82,8 @@ class gps_transform():
 
                 # Convertir les coordonnées ECEF du robot en coordonnées ENU par rapport
                 # au point de référence
-                self.odom.pose.pose.position.x, self.odom.pose.pose.position.y, _ = self.ecef_to_enu(robot_x, robot_y, robot_z)
-                print(f"[LOG] Coordonnées ENU : {self.odom.pose.pose.position.x} {self.odom.pose.pose.position.y}")
+                self.odom.x, self.odom.y, _ = self.ecef_to_enu(robot_x, robot_y, robot_z)
+                print(f"[LOG] Coordonnées ENU : {self.odom.x} {self.odom.y}")
                 self.pub_gps_convert.publish(self.odom)
                 self.rate.sleep()
 

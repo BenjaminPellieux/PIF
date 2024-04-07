@@ -6,6 +6,7 @@ Go_To::Go_To(ros::NodeHandle nh) : Odometry(nh) {
 	this->sub_laser = nh.subscribe("/obstacle_marker", 1000, &Go_To::callback_obs, this);
 
 	this->cmd_xy = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
+	this->moving = nh.advertise<std_msgs::Bool>("/pif/moving", 1);
 
 	ROS_INFO("go_to -> complete.");
 }
@@ -109,6 +110,7 @@ int Go_To::run()
 {
 
 	geometry_msgs::Twist msg;
+	std_msgs::Bool is_moving;
 	ros::Rate rate(5);
 	int ret = 0;
 	double op_adj;
@@ -133,7 +135,11 @@ int Go_To::run()
 				msg.angular.z = 0;
 				accel = 0;
 				start_move = 1;
+				is_moving.data = 1;
+				moving.publish(is_moving);
 			} else {
+				is_moving.data = 0;
+				moving.publish(is_moving);
 				if (start_move)
 					dist_to_dest = sqrt(((cmd_pose.x - Odometry::pose.x) * (cmd_pose.x - Odometry::pose.x)) + ((cmd_pose.y - Odometry::pose.y) * (cmd_pose.y - Odometry::pose.y))) + 5;
 				start_move = 0;
