@@ -83,8 +83,15 @@ def locate():
 
 
 if __name__ == '__main__':
-    video_stream: WebVideoApp = WebVideoApp()
-    ws_app: WebSocketApp = WebSocketApp()
+    
+    try:
+        config = json.load(open("config/config.json"))
+        video_stream: WebVideoApp = WebVideoApp(config["ip_rasp"])
+        ws_app: WebSocketApp = WebSocketApp(config["ip_rasp"])
+    except:
+        video_stream: WebVideoApp = WebVideoApp()
+        ws_app: WebSocketApp = WebSocketApp()
+
     ws_app.start()
     video_stream.start()
     app.run(host='localhost', port=8080, ssl_context=('key/cert.pem', 'key/key.pem'))
