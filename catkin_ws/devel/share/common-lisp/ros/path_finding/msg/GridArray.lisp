@@ -64,17 +64,10 @@
   "c9bfbf14df9229b96f8d392a4058d7ed")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<GridArray>)))
   "Returns full string definition for message of type '<GridArray>"
-<<<<<<< HEAD
-  (cl:format cl:nil "path_finding/Grid[] grid~%================================================================================~%MSG: path_finding/Grid~%geometry_msgs/Point[4] sub_area~%bool done~%bool unreachable~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
-(cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'GridArray)))
-  "Returns full string definition for message of type 'GridArray"
-  (cl:format cl:nil "path_finding/Grid[] grid~%================================================================================~%MSG: path_finding/Grid~%geometry_msgs/Point[4] sub_area~%bool done~%bool unreachable~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
-=======
   (cl:format cl:nil "path_finding/Grid[] gridX~%================================================================================~%MSG: path_finding/Grid~%geometry_msgs/Point top_left~%geometry_msgs/Point bottom_right~%bool done~%bool unreachable~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'GridArray)))
   "Returns full string definition for message of type 'GridArray"
   (cl:format cl:nil "path_finding/Grid[] gridX~%================================================================================~%MSG: path_finding/Grid~%geometry_msgs/Point top_left~%geometry_msgs/Point bottom_right~%bool done~%bool unreachable~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
->>>>>>> 0b949d28773dff8622021b58d2a2983cc2a15580
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <GridArray>))
   (cl:+ 0
      4 (cl:reduce #'cl:+ (cl:slot-value msg 'gridX) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ (roslisp-msg-protocol:serialization-length ele))))

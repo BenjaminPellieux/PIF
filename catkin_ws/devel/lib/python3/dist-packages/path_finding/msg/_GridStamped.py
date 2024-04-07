@@ -15,11 +15,7 @@ class GridStamped(genpy.Message):
   _type = "path_finding/GridStamped"
   _has_header = True  # flag to mark the presence of a Header object
   _full_text = """Header header
-<<<<<<< HEAD
-path_finding/GridArray[] grid
-=======
 path_finding/GridArray[] gridY
->>>>>>> 0b949d28773dff8622021b58d2a2983cc2a15580
 ================================================================================
 MSG: std_msgs/Header
 # Standard metadata for higher-level stamped data types.

@@ -85,17 +85,10 @@
   "326792e8c45913b0ed6b6b020c9acb4b")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<Grid>)))
   "Returns full string definition for message of type '<Grid>"
-<<<<<<< HEAD
-  (cl:format cl:nil "geometry_msgs/Point[4] sub_area~%bool done~%bool unreachable~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
-(cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'Grid)))
-  "Returns full string definition for message of type 'Grid"
-  (cl:format cl:nil "geometry_msgs/Point[4] sub_area~%bool done~%bool unreachable~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
-=======
   (cl:format cl:nil "geometry_msgs/Point top_left~%geometry_msgs/Point bottom_right~%bool done~%bool unreachable~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'Grid)))
   "Returns full string definition for message of type 'Grid"
   (cl:format cl:nil "geometry_msgs/Point top_left~%geometry_msgs/Point bottom_right~%bool done~%bool unreachable~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
->>>>>>> 0b949d28773dff8622021b58d2a2983cc2a15580
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <Grid>))
   (cl:+ 0
      (roslisp-msg-protocol:serialization-length (cl:slot-value msg 'top_left))

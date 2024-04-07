@@ -155,11 +155,7 @@ struct Definition< ::path_finding::GridStamped_<ContainerAllocator> >
   static const char* value()
   {
     return "Header header\n"
-<<<<<<< HEAD
-"path_finding/GridArray[] grid\n"
-=======
 "path_finding/GridArray[] gridY\n"
->>>>>>> 0b949d28773dff8622021b58d2a2983cc2a15580
 "================================================================================\n"
 "MSG: std_msgs/Header\n"
 "# Standard metadata for higher-level stamped data types.\n"

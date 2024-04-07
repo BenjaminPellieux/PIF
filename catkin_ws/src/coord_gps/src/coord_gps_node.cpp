@@ -6,11 +6,9 @@ ZoneChecker::ZoneChecker()
     this->gps_sub = nh.subscribe("/navsat/fix", 10, &ZoneChecker::gpsCallback, this);
     this->zone_sub = nh.subscribe("/Area/Point", 10, &ZoneChecker::zoneCallback, this);
     this->in_zone_pub = nh.advertise<std_msgs::Bool>("/in_zone", 10);
-<<<<<<< HEAD
     this->polygon_pub = nh.advertise<geometry_msgs::Polygon>("/area/polygon", 10); // Ajout du publisher pour le topic "/area/polygon"
-=======
     this->area_pub = nh.advertise<geometry_msgs::PolygonStamped>("/area/polygon", 10);
->>>>>>> 0b949d28773dff8622021b58d2a2983cc2a15580
+
     this->global_pos = (Point) {false, 0.0, 0.0};
     for(uint8_t i ; i != 4; i++){
         this->Point_tab[i].recvd  = false; 
@@ -82,12 +80,9 @@ bool ZoneChecker::isInsideRectangle()
 
 void ZoneChecker::checkZone()
 {
-<<<<<<< HEAD
    
     if ((this->global_pos.recvd) && (AllRcvd()))
-=======
-    if (AllRcvd())
->>>>>>> 0b949d28773dff8622021b58d2a2983cc2a15580
+
     {
         std_msgs::Bool msg;
         geometry_msgs::Polygon polygon_msg; // Création du message pour le polygon

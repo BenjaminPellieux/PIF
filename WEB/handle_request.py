@@ -18,12 +18,7 @@ def handle_zone(data: list):
                 "latitude": point_info['lat'], # latitude
                 "longitude": point_info['lng'] # longitude
                 }
-                #"point": {
-                #    "x": point_info['lat'],  # latitude
-                #    "y": point_info['lng'],  # longitude
-                #    "z": 0.0,  # Unused
-                #     }
-                #}
+
         print(f"[DEBUG] message_point :{i} {message=}")
         try: 
             ws_app.publish('/Area/Point', 'sensor_msgs/NavSatFix', message)
@@ -36,7 +31,6 @@ def change_speed(speed: str):
         current_speed = int(speed)
 
 def change_mode(mode: str):
-    topic_type: str = "std_msgs/Bool"
     if mode == "1":
     	message: dict = {
     		"data": True
@@ -47,7 +41,7 @@ def change_mode(mode: str):
     		}
     print(f"[DEBUG] message_point : {message=}")
     try: 
-        ws_app.publish('/Area/Point', topic_type, message)
+        ws_app.publish('/Mode/Status', "std_msgs/Bool" , message)
     except:
         print("[ERROR] WebSocket closed")
 

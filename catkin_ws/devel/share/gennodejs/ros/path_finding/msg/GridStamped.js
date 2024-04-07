@@ -91,11 +91,7 @@ class GridStamped {
     // Returns full string definition for message
     return `
     Header header
-<<<<<<< HEAD
-    path_finding/GridArray[] grid
-=======
     path_finding/GridArray[] gridY
->>>>>>> 0b949d28773dff8622021b58d2a2983cc2a15580
     ================================================================================
     MSG: std_msgs/Header
     # Standard metadata for higher-level stamped data types.

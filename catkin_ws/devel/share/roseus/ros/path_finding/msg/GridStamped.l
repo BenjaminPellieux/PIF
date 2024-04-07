@@ -82,11 +82,7 @@
 (setf (get path_finding::GridStamped :datatype-) "path_finding/GridStamped")
 (setf (get path_finding::GridStamped :definition-)
       "Header header
-<<<<<<< HEAD
-path_finding/GridArray[] grid
-=======
 path_finding/GridArray[] gridY
->>>>>>> 0b949d28773dff8622021b58d2a2983cc2a15580
 ================================================================================
 MSG: std_msgs/Header
 # Standard metadata for higher-level stamped data types.

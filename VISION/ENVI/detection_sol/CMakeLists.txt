@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 cmake_minimum_required(VERSION 3.0)
 project(video2.cpp)
 
@@ -11,7 +10,6 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 
 add_executable(video2 video2.cpp)
 target_link_libraries(video2 ${OpenCV_LIBS})
-=======
 cmake_minimum_required(VERSION 3.10) # Spécifiez la version minimale de CMake
 
 project(vision_pixel_par_pixel) # Nom de votre projet
