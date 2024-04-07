@@ -84,17 +84,15 @@ int main(int argc, char *argv[])
 			sleep(1);
 		} else {
 			printf("buffer : %s\n", buffer);
-			pos.latitude = atof(&buffer[24]);
-			pos.longitude = atof(&buffer[38]);
-			pos.altitude = 0.0633;
-			printf("lat : %lf\nlon : %lf\n", pos.latitude, pos.longitude);
-
-			//posxy.pose.pose.position.x = x;
-			//posxy.pose.pose.position.y = y;
-
-			//gps_pub_xy.publish(posxy);
-			gps_pub.publish(pos);
-			ros::spinOnce();
+			if (sizeof(buffer) > 38) {
+				pos.latitude = atof(&buffer[24]);
+				pos.longitude = atof(&buffer[38]);
+				pos.altitude = 0.0633;
+				printf("lat : %lf\nlon : %lf\n", pos.latitude, pos.longitude);
+	
+				gps_pub.publish(pos);
+				ros::spinOnce();
+			}
 		}
 		
 		
