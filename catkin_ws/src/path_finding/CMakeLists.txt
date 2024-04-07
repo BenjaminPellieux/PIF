@@ -7,12 +7,12 @@ project(path_finding)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED
+find_package(catkin REQUIRED COMPONENTS
 	roscpp
 	message_generation
 	std_msgs
 	geometry_msgs
-	COMPONENTS roslaunch
+	roslaunch
 )
 
 ## System dependencies are found with CMake's conventions
