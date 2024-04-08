@@ -37,6 +37,7 @@ class gps_transform():
 
     def callback_transform(self, data)-> None:
         self.called_transform = True
+        self.header = data.header
         self.robot_pose.lat = data.latitude
         self.robot_pose.lon = data.longitude
         
@@ -84,6 +85,7 @@ class gps_transform():
                 # au point de référence
                 self.odom.x, self.odom.y, _ = self.ecef_to_enu(robot_x, robot_y, robot_z)
                 print(f"[LOG] Coordonnées ENU : {self.odom.x} {self.odom.y}")
+                self.odom.header = self.header
                 self.pub_gps_convert.publish(self.odom)
                 self.rate.sleep()
 

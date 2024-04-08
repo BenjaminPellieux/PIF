@@ -8,7 +8,8 @@ int main (int argc, char **argv)
 	ros::NodeHandle test;
 	Go_To pif_to_to = Go_To(test);
 	
-	pif_to_to.set_target(3.0, 3.0);
+	pif_to_to.cmd_pose.x = atof(argv[1]);
+	pif_to_to.cmd_pose.y = atof(argv[2]);
 	pif_to_to.run();
 	
 	return 0;
