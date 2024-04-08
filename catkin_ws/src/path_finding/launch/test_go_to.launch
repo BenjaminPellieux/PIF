@@ -22,6 +22,9 @@
 	<node pkg="pif_gps_convert" type="pif_gps_convert_node" name=""
 	args="192.168.131.81" />
 	
+	<node pkg="gps_transform" type="gps_reset_origin_node.py" name=""
+	args="/pif/gps" />
+	
 	<node pkg="gps_transform" type="gps_transform_node.py" name=""
 	args="/pif/gps /pif/gps_converted" />
 	

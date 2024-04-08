@@ -48,7 +48,7 @@ int Go_To::modify_target_from_lidar(double *coef_x,
 		*coef_x = 1;
 	} else if (obs_dist < 1) { //if too close
 		*coef_x = 0;//stop
-	} else if (obs_dist < 4) {
+	} else if (obs_dist < 2) {
 		//if obstacle 
 		ret = 1;
 		if (*try_nb == NO_OBS) {
@@ -73,26 +73,14 @@ int Go_To::modify_target_from_lidar(double *coef_x,
 			} else {
 				*target_ang = obs_ang + 0.6;
 			}
-			ROS_INFO("new target = %lf", *target_ang);
+			//ROS_INFO("new target = %lf", *target_ang);
 			
 			if (*target_ang > 1) 
 				*target_ang - 2;
 			if (*target_ang < -1) 
 				*target_ang + 2;
-			
-			
 				
-			*coef_x = ((obs_dist - 1) / 2);
-			
-			
-			if (*target_ang > 1) 
-				*target_ang - 2;
-			if (*target_ang < -1) 
-				*target_ang + 2;
-			
-			
-				
-			*coef_x = ((obs_dist - 1) / 2);
+			*coef_x = obs_dist - 1;
 			
 			
 			
@@ -119,14 +107,22 @@ int Go_To::run()
 	double obs_try = 0; //TRY_LEFT, TRY_RIGHT, NO_OBS
 	int try_nb = 0,
 	cant_go_to = -1;
-
+	uint8_t pose_called_counter = 0;
 	double obs_coef_x;
 	double obs_accel_z;
 	double dist_to_dest;
 	uint8_t start_move = 0;
 	while ((ros::ok()) && (cant_go_to < 0)) {
-		if (Odometry::rot_called && Odometry::pose_called && this->called_obs) {
+	
+		if (Odometry::pose_called) {
+			pose_called_counter = 5;
 			Odometry::pose_called = 0;
+		} else {
+			if (pose_called_counter != 0)
+				pose_called_counter--;
+		}
+		
+		if (Odometry::rot_called && (pose_called_counter > 0) && this->called_obs) {
 			this->called_obs = 0;
 			Odometry::rot_called = 0;
 			
@@ -198,7 +194,7 @@ int Go_To::run()
 				
 				msg.linear.x = ((accel * sqrt(((cmd_pose.x - Odometry::pose.x) * (cmd_pose.x - Odometry::pose.x)) + ((cmd_pose.y - Odometry::pose.y) * (cmd_pose.y - Odometry::pose.y)))) / 2) * obs_coef_x;
 				
-				if (msg.linear.x >= 0.5) 
+				if (msg.linear.x >= 0.5)
 					msg.linear.x = 0.5;
 			}
 			cmd_xy.publish(msg);
