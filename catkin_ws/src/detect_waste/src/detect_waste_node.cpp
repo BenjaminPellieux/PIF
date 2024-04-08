@@ -104,11 +104,11 @@ void WasteDetection::detect_waste()
 
 void WasteDetection::run()
 {
-
+    bool bSuccess;
     while (ros::ok())
     {
 
-        bool bSuccess = cap.read(this->frame);
+        bSuccess = cap.read(this->frame);
         if (!bSuccess)
         {
             std::cout << "Fin de la vidéo" << std::endl;

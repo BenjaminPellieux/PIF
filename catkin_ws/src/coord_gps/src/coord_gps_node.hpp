@@ -35,13 +35,10 @@ class ZoneChecker {
 
     // Definition des propriétés de la classe ZoneCheker 
     private:
-        ros::Subscriber gps_sub;
         ros::Subscriber zone_sub;
         ros::Publisher in_zone_pub;
-        ros::Publisher polygon_pub;
         ros::Publisher area_pub;
         Point global_pos;
-        //geometry_msgs::PolygonStamped Point_tab;
         Point Point_tab[4];
         geometry_msgs::PolygonStamped area;
 };

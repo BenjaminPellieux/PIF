@@ -19,7 +19,7 @@ int main (int argc, char **argv) {
             if(define_area.area_recieved) {
                 for(int i=0; i<define_area.grid.gridY.size(); i++) {
                     for(int j=0; j<define_area.grid.gridY[0].gridX.size(); j++) {
-                        if((j == define_area.origin.x) && (i == define_area.origin.y)) {
+                        if((j == define_area.first_tile.x) && (i == define_area.first_tile.y)) {
                             printf("< >");
                         } else {
                             printf("[ ]");
@@ -27,16 +27,16 @@ int main (int argc, char **argv) {
                     }
                     printf("\n");
                 }
-                printf("origin : x => %lf, y => %lf", define_area.origin.x, define_area.origin.y);
+                printf("origin : x => %lf, y => %lf", define_area.first_tile.x, define_area.first_tile.y);
 
-                nav.pose.pose.position.x = define_area.origin.x + DETECT_RANGE / std::sqrt(2);
-                nav.pose.pose.position.y = define_area.origin.y + DETECT_RANGE / std::sqrt(2);
+                nav.pose.pose.position.x = define_area.first_tile.x + DETECT_RANGE / std::sqrt(2);
+                nav.pose.pose.position.y = define_area.first_tile.y + DETECT_RANGE / std::sqrt(2);
 
-                define_area.grid.gridY[define_area.origin.y].gridX[define_area.origin.x].done = true;
+                define_area.grid.gridY[define_area.first_tile.y].gridX[define_area.first_tile.x].done = true;
                 pub_gps.publish(nav);
 
                 define_area.area_recieved = false;
-            } else if((define_area.origin.x != 0) && (define_area.origin.y != 0)) {
+            } else if((define_area.first_tile.x != 0) && (define_area.first_tile.y != 0)) {
                 define_area.choose_next_tile();
                 Local_Pose next = define_area.get_next_tile_pose();
                 nav.pose.pose.position.x = next.x;
