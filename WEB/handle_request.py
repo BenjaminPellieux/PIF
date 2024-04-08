@@ -44,6 +44,21 @@ def change_mode(mode: str, ros_client: websocket):
     except:
         print("[ERROR] WebSocket closed")
 
+def continue_mode(mode: str, ros_client: websocket):
+    if mode == "1":
+        message: dict = {
+            "data": True
+        }
+    else:
+        message: dict = {
+            "data": False
+            }
+    print(f"[DEBUG] message_point : {message=}")
+    try: 
+        ros_client.publish('/pif/web/mode/continue', "std_msgs/Bool" , message)
+    except:
+        print("[ERROR] WebSocket closed")        
+
 
 def handle_command(cmnd: str, ros_client: WebSocketApp):
     global current_speed

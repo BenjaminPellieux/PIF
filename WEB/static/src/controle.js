@@ -78,6 +78,13 @@ function commandStatus(auto) {
     });
 }
 
+function continueStatus(auto) {
+    console.log("[DEBUG] Name command: "  +auto.checked);
+    $.post( "/continueStatus", {
+        comd: auto.checked 
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     var speedRange = document.getElementById("speedRange");
     var speedValue = document.getElementById("speedValue");

@@ -50,6 +50,14 @@ def commandStatus():
         return "400"
     return "200"
 
+@app.route('/continueStatus', methods=['POST'])
+def continueStatus():
+    try:
+        ros_client.publish('/pif/web/controle', 'std_msgs/Bool', {"data":request.form["comd"]})
+    except:
+        print("[ERROR] WebSocket closed")
+        return "400"
+    return "200"
 
 
 @app.route('/post_topic_value', methods=['POST'])
