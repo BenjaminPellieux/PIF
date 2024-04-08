@@ -2,6 +2,7 @@
 # ROS lib
 import sys
 import rospy
+from sys import argv
 from std_msgs.msg import String
 from sensor_msgs.msg import NavSatFix
 from nav_msgs.msg import Odometry
@@ -10,12 +11,7 @@ from geometry_msgs.msg import Point, Pose, Quaternion, Twist, Vector3
 # Python std lib
 from pyproj import Transformer, CRS
 import numpy as np
-from dataclasses import dataclass
-
-@dataclass
-class Local_Pose():
-    lat: float = 0
-    lon: float = 0
+from lib_pos import *
 
 class gps_transform():
 
@@ -23,9 +19,9 @@ class gps_transform():
 
         # ROS 
         rospy.init_node('gps_transform', anonymous=True)
-        rospy.Subscriber(sys.argv[1], NavSatFix, self.callback_transform)
+        rospy.Subscriber(argv[1], NavSatFix, self.callback_transform)
         rospy.Subscriber('/pif/origin', NavSatFix, self.callback_origin)
-        self.pub_gps_convert = rospy.Publisher(sys.argv[2], Point, queue_size=10)
+        self.pub_gps_convert = rospy.Publisher(argv[2], Point, queue_size=10)
         self.rate = rospy.Rate(10) # 10hz
 
         self.robot_pose: Local_Pose = Local_Pose() 
@@ -89,7 +85,7 @@ class gps_transform():
 
 if __name__ == '__main__':
     try:
-        gps_convert = gps_transform()
+        gps_convert: gps_transform = gps_transform()
         rospy.spin()
     except rospy.ROSInterruptException:
         pass

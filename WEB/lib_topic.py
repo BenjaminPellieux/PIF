@@ -19,7 +19,7 @@ commande_move: dict = {"linear": {
                 }
 
 topic_type_dict: dict ={  "/odometry/filtered": "nav_msgs/Odometry",
-                           "/navsat/fix" :  "sensor_msgs/NavSatFix"}
+                           "/pif/gps" :  "sensor_msgs/NavSatFix"}
 zone_topic: dict={"header": {
                             "seq": None,
                             "stamp":None,

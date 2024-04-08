@@ -1,6 +1,6 @@
 # Introcution 
 
-Ce document a  pour but de presenter l'ensemble des topic utiliser par notre solution
+Ce document à pour but de présenter l'ensemble des topics utilisés par notre solution
 
 
 ## Serveur WEB
@@ -19,7 +19,7 @@ Envoi de commande de deplacement
 [Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
 
 Controle manuel ou automatique
-- Topic Name : /Mode/Status  
+- Topic Name : /pif/web/controle 
 - Topic Type : std_msgs/Bool
 [Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
@@ -33,14 +33,14 @@ Position Odometrique de Wall-E
 
 
 Position GPS de Wall-E
-- Topic Name : /navsat/fix
+- Topic Name : /pif/gps
 - Topic Type : sensor_msgs/NavSatFix
 [Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
 
 
 - Topic Name : 
 - Topic Type : 
-[Documentation]()
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
 ### Coord GPS node
 
@@ -50,93 +50,46 @@ Position GPS de Wall-E
 
 ### odometry
 
-#### Subscribe 
 
-Position actuelle sous X et Y
-- Topic Name :  /pif/gps_converted
-- Topic Type :  nav_msgs/Odometry
-[Documentation](https://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Odometry.html)
-
-Rotation actuelle absolue en (rad / PI - 1)
-- Topic Name :  /imu/data
-- Topic Type :  sensor_msgs/Imu
-[Documentation](https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Imu.html)
-
-
-### go_to
-
-#### Publish
-
-- Topic Name : /cmd_vel
-- Topic Type : geometry_msgs/Twist
-[Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
-
-- Topic Name : /pif/moving
-- Topic Type : std_msgs/Bool
-[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
-
-#### Subscribe 
-
-- Topic Name :  /obstacle_marker
-- Topic Type :  visualization_msgs/Marker
-[Documentation](http://docs.ros.org/en/noetic/api/visualization_msgs/html/msg/Marker.html)
-
-
-### define_area
-
-#### Subscribe 
-
-Zone selectionne
-- Topic Name :  /area/polygon
-- Topic Type :  geometry_msgs/PolygonStamped
-[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
-
-
-### check_waste
-
-#### Publish
-
-Envoi de commande de rotation
-- Topic Name : /cmd_vel
-- Topic Type : geometry_msgs/Twist
-[Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
-
-#### Subscribe
-
-Angle du déchet par raport au robot
-- Topic Name :  /Waste/Geometry
-- Topic Type :  geometry_msgs/QuaternionStamped
-[Documentation](https://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/QuaternionStamped.html)
-
-Dechet detecte et sa position
-- Topic Name :  /Label/id
-- Topic Type :  path_finding/PoseWasteStamped
-[Documentation](
-    | Header header
-    | path_finding/PoseWaste data => | string waste
-                                     | geometry_msgs/Point center (https://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Point.html)
-)
-
-
-
-## Coord GPS node 
+## Waste Labeling
 
 ### Publish
 
-position gps du robot (rtk)
-- Topic Name : /pif/gps
-- Topic Type : sensor_msgs/NavSatFix
-[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+- Topic Name : /pif/hard/label
+- Topic Type : std_msgs/String
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/String.html)
 
 
+- Topic Name : /pif/hard/aspi
+- Topic Type : std_msgs/Bool 
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
-## Gps reset 
+
+## Vision Detect 
 
 ### Publish
 
-- Topic Name : /pif/origin
-- Topic Type : sensor_msgs/NavSatFix
-[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+- Topic Name : /pif/waste/pos 
+- Topic Type : geometry_msgs/Point 
+[Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Point.html)
+
+- Topic Name : /pif/waste/geometry
+- Topic Type : geometry_msgs/QuaternionStamped 
+[Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/QuaternionStamped.html)
+
+
+- Topic Name : pif/obstacle
+- Topic Type : std_msgs/UInt16 
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/UInt16.html)
+
+### Subscribe 
+
+
+
+
+
+## Gps reset origin 
+
 
 ### Subscribe 
 
