@@ -1,13 +1,15 @@
 from client_rosbridge import *
 from lib_topic import *
 from datetime import datetime
-current_speed: float = 0.5
+current_speed: float = 5.0
+cmd_continue: bool = False
 
 
-def handle_zone(data: list):
+
+
+def handle_zone(data: list, ros_client: WebSocketApp):
     area: dict = {i:data[0][i] for i in range(len(data[0]))}
-    print(f"[DEBUG]  area: {area=} {len(area)=})")
-    topic_type: str = "sensor_msgs/NavSatFix"
+    print(f"[DEBUG]  area: {area=} {len(area)=}")
     for i, point_info in area.items():
         message: dict = {
                 "header": {
@@ -21,45 +23,51 @@ def handle_zone(data: list):
 
         print(f"[DEBUG] message_point :{i} {message=}")
         try: 
-            ws_app.publish('/Area/Point', 'sensor_msgs/NavSatFix', message)
+            ros_client.publish('/Area/Point', 'sensor_msgs/NavSatFix', message)
         except:
             print("[ERROR] WebSocket closed")
 
-def change_speed(speed: str):
+def change_speed(speed: str, ros_client: WebSocketApp):
     global current_speed
-    if ws_app.topic_data:
+    if ros_client.topic_data:
         current_speed = int(speed)
 
-def change_mode(mode: str):
-    if mode == "1":
-    	message: dict = {
-    		"data": True
-    		}
-    else:
-    	message: dict = {
-    		"data": False
-    		}
-    print(f"[DEBUG] message_point : {message=}")
-    try: 
-        ws_app.publish('/Mode/Status', "std_msgs/Bool" , message)
-    except:
-        print("[ERROR] WebSocket closed")
+    
+def change_continue(status: str, ros_client: WebSocketApp):
+    global cmd_continue
+    if ros_client.topic_data:
+        cmd_continue = bool(status)
 
-
-def handle_command(cmnd: str):
+    
+def handle_command(cmnd: str, ros_client: WebSocketApp):
     global current_speed
+    global cmd_continue
      # Vérifiez si la clé est présente dans command_topic
     if cmnd in command_topic:
-        command_changes: dict = command_topic[cmnd]
+        command_changes: dict = command_topic[cmnd] 
 
         # Mise à jour des valeurs de 'linear' et 'angular' dans 'commande_move'
         for command_type, values in command_changes.items():
             for axis, value in values.items():
-                commande_move[command_type][axis] = value * current_speed
-            if ws_app.orient and command_type != "angular":
-                commande_move["angular"]["z"] +=  ws_app.orient["z"]
-    try: 
-        ws_app.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', command_changes)
-    except:
-        print("[ERROR] WebSocket closed")
+                commande_move[command_type][axis] = float(value) * current_speed
+           
+        print(f"[DEBUG] {commande_move=}")
+        if cmd_continue:
+            while (cmd_continue):              
+                try: 
+                    ros_client.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', commande_move)
+                except:
+                    print("[ERROR] WebSocket closed")
+                sleep(1)
+        else:
+            try: 
+                ros_client.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', commande_move)
+            except:
+                print("[ERROR] WebSocket closed")
+
+        for command_type, values in commande_move.items():
+            for axis, value in values.items():
+                commande_move[command_type][axis] = 0.0
+        
+        print(f"[DEBUG] {commande_move=}")
 
