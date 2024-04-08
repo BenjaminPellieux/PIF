@@ -5,12 +5,7 @@
 
 
 // Structure pour les réglages HSV
-typedef struct{
-    int low_h = 0, high_h = 179;
-    int low_s = 0, high_s = 255;
-    int low_v = 0, high_v = 122;
-    int threshold_white = 5;  // Ajout du seuil
-}HSVSettings;
+
 
 // Fonction pour ajuster la luminosité de l'image
 void adjustBrightness(cv::Mat& image, double alpha, int beta) {
@@ -25,7 +20,7 @@ int main(int argc, char** argv) {
     ros::NodeHandle nh;
     ros::Publisher pub_obstacle = nh.advertise<std_msgs::UInt16>("/Obstacle", 10);
     cv::VideoCapture cap;
-    cap.open("/home/ros/PIF/PIF/VISION/DETECTION/Video/test5.mp4");
+    cap.open("/home/ros/PIF/PIF/VISION/DETECTION/Video/test.mp4");
     // 0 indique le premier périphérique de la webcam, changez-le si vous avez plusieurs caméras
 
     // Vérifier si la capture vidéo est ouverte
@@ -39,7 +34,7 @@ int main(int argc, char** argv) {
     cv::namedWindow("Seuillage", cv::WINDOW_AUTOSIZE);
     
     // Paramètres de luminosité
-    double alpha = 1.0;  // ajustez ce paramètre pour la luminosité (1 = pas de changement)
+    double alpha = 0.65;  // ajustez ce paramètre pour la luminosité (1 = pas de changement)
     int beta = 20;       // ajustez ce paramètre pour la luminosité (0 = pas de changement)
 
     int frame  =0;

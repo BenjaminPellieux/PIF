@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <ros/ros.h>
 #include "std_msgs/Bool.h"
+#include "std_msgs/UInt16.h"
 #include "geometry_msgs/Point.h"
 #include "geometry_msgs/QuaternionStamped.h"
 
@@ -22,6 +23,12 @@
 #define DEBUG 1
 
 
+typedef struct{
+    int low_h = 0, high_h = 179;
+    int low_s = 0, high_s = 255;
+    int low_v = 0, high_v = 122;
+    int threshold_white = 5; 
+}HSVSettings;
 
 class WasteDetection{
 
@@ -30,9 +37,11 @@ class WasteDetection{
         ros::NodeHandle nh;
         ros::Publisher detect_pub;
         ros::Publisher vector_waste;
+        ros::Publisher pub_obstacle;
         ros::Subscriber moving_status;
         
-
+        
+        HSVSettings hsvSettings;
         bool obstacle_app;
         bool send_img = false;
         u_int8_t count_area = 1;
@@ -49,6 +58,7 @@ class WasteDetection{
         void detect_waste();
         void detect_obstacle();
         void run();
-        void obstacleCallback(const std_msgs::Bool &msg);
+        void adjustBrightness(double alpha, int beta);
+        void movingCallback(const std_msgs::Bool &msg);
         geometry_msgs::QuaternionStamped calc_geometry_msgs();
 };

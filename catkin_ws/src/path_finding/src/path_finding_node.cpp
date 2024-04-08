@@ -25,16 +25,18 @@ int main(int argc, char **argv) {
     while(ros::ok()) {
         if(!mode) {
             if(define_area.area_recieved) {
-                // WARNING may need to change the formula
-                go_to.set_target(define_area.origin.x + DETECT_RANGE / std::sqrt(2), define_area.origin.y + DETECT_RANGE / std::sqrt(2));
+                go_to.set_target(define_area.first_tile.x, define_area.first_tile.y);
                 go_to.run();
                 define_area.area_recieved = false;
-            } else if((define_area.origin.x != 0) && (define_area.origin.y != 0)) {
+            } else if((define_area.first_tile.x != 0) && (define_area.first_tile.y != 0)) {
                 if(!check_waste.spin()) {
                     check_waste.go_to_waste();
                 } else {
-                    // WARNING if function to end the loop : is there an other tile left ?
-                    define_area.choose_next_tile();
+                    if(!define_area.choose_next_tile()) {
+                        go_to.set_target(define_area.first_tile.x, define_area.first_tile.y);
+                        go_to.run();
+                        break;
+                    }
                     Local_Pose next = define_area.get_next_tile_pose();
                     go_to.set_target(next.x, next.y);
                 }

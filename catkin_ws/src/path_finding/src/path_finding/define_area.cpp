@@ -62,37 +62,45 @@ void DefineArea::create_grid(geometry_msgs::Polygon area) {
 }
 
 void DefineArea::set_origin(geometry_msgs::Polygon area) {
-    this->origin.x = area.points[0].x;
-    this->origin.y = area.points[0].y;
+    Local_Pose origin_grid;
+    origin_grid.x = area.points[0].x;
+    origin_grid.y = area.points[0].y;
     for(int i=1; i<4; i++) {
-        if(std::abs(area.points[i].x) < std::abs(this->origin.x)) {
-            this->origin.x = area.points[i].x;
+        if(std::abs(area.points[i].x) < std::abs(origin_grid.x)) {
+            origin_grid.x = area.points[i].x;
         }
-        if(std::abs(area.points[i].y) < std::abs(this->origin.y)) {
-            this->origin.y = area.points[i].y;
+        if(std::abs(area.points[i].y) < std::abs(origin_grid.y)) {
+            origin_grid.y = area.points[i].y;
         }
     }
+    origin_grid = this->pos_in_grid(origin_grid);
+
+    this->first_tile.x = (this->grid.gridY[origin_grid.y].gridX[origin_grid.x].bottom_right.x - this->grid.gridY[origin_grid.y].gridX[origin_grid.x].top_left.x) / 2;
+    this->first_tile.y = (this->grid.gridY[origin_grid.y].gridX[origin_grid.x].bottom_right.y - this->grid.gridY[origin_grid.y].gridX[origin_grid.x].top_left.y) / 2;
 }
 
-void DefineArea::pos_in_grid() {
+Local_Pose DefineArea::pos_in_grid(Local_Pose pose) {
+    Local_Pose pose_in_grid;
+
     for(int y=0; y<this->nbr_subGrid_y; y++) {
-        if((this->grid.gridY[y].gridX[0].top_left.y < Odometry::pose.y) && (Odometry::pose.y < this->grid.gridY[y].gridX[0].bottom_right.y)) {
-            this->pose_grid.y = y;
+        if((this->grid.gridY[y].gridX[0].top_left.y < pose.y) && (pose.y < this->grid.gridY[y].gridX[0].bottom_right.y)) {
+            pose_in_grid.y = y;
             break;
         }
     }
     for(int x=0; x<this->nbr_subGrid_x; x++) {
-        if((this->grid.gridY[0].gridX[x].top_left.x < Odometry::pose.x) && (Odometry::pose.x < this->grid.gridY[0].gridX[x].bottom_right.x)) {
-            this->pose_grid.x = x;
+        if((this->grid.gridY[0].gridX[x].top_left.x < pose.x) && (pose.x < this->grid.gridY[0].gridX[x].bottom_right.x)) {
+            pose_in_grid.x = x;
             break;
         }
     }
+    return pose_in_grid;
 }
 
-void DefineArea::choose_next_tile() {
+bool DefineArea::choose_next_tile() {
     int size, move_to_max_x, perimeter, x, y;
 
-    this->pos_in_grid();
+    this->pose_grid = this->pos_in_grid(Odometry::pose);
 
     this->next_tile.x = -1;
     this->next_tile.y = -1;
@@ -127,8 +135,12 @@ void DefineArea::choose_next_tile() {
             
             ros::spinOnce();
         }
-        if((this->next_tile.x != -1) && (this->next_tile.y != -1))
-            break;
+    }
+
+    if((this->next_tile.x != -1) && (this->next_tile.y != -1)) {
+        return false;
+    } else {
+        return true;
     }
 }
 
