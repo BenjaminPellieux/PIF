@@ -1,13 +1,11 @@
 #include "coord_gps_node.hpp"
 
-ZoneChecker::ZoneChecker()
+ZoneChecker::ZoneChecker(ros::NodeHandle nh) : Odometry(nh)
 {
-    ros::NodeHandle nh;
     this->zone_sub = nh.subscribe("/Area/Point", 10, &ZoneChecker::zoneCallback, this);
     this->in_zone_pub = nh.advertise<std_msgs::Bool>("/in_zone", 10);
     this->area_pub = nh.advertise<geometry_msgs::PolygonStamped>("/area/polygon", 10);
 
-    this->global_pos = (Point) {false, 0.0, 0.0};
     for(uint8_t i ; i != 4; i++){
         this->Point_tab[i].recvd  = false; 
     }
@@ -52,7 +50,6 @@ void ZoneChecker::zoneCallback(const geometry_msgs::PointStamped::ConstPtr &msg)
         
         this->area_pub.publish(this->area);
         this->area.polygon.points.clear();
-        checkZone();
     }
     checkZone();
 }
@@ -69,13 +66,14 @@ bool ZoneChecker::isInsideRectangle()
     auto max_x = std::max_element(std::begin(table_x),std::end(table_x));
     auto min_y = std::min_element(std::begin(table_y),std::end(table_y));
     auto max_y = std::max_element(std::begin(table_y),std::end(table_y));
-    return (*min_x <= this->global_pos.lat && this->global_pos.lat <= *max_x && *min_y <= this->global_pos.lon && this->global_pos.lon <= *max_y);
+    return (*min_x <= this->pose.x && this->pose.x <= *max_x \
+            && *min_y <= this->pose.y && this->pose.y <= *max_y);
 }
 
 void ZoneChecker::checkZone()
 {
    
-    if ((this->global_pos.recvd) && (AllRcvd()))
+    if ((this->pose.x) && (AllRcvd()))
     {
         std_msgs::Bool msg;
         if (isInsideRectangle()){   
@@ -102,7 +100,8 @@ bool ZoneChecker::AllRcvd(){
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "zone_checker");
-    ZoneChecker zone_checker;
+    ros::NodeHandle nh;
+    ZoneChecker zone_checker = ZoneChecker(nh);
     ros::spin();
     return EXIT_SUCCESS;
 }

@@ -13,6 +13,7 @@
 #include "geometry_msgs/PolygonStamped.h"
 #include "geometry_msgs/Point32.h"
 #include "std_msgs/Bool.h"
+#include "path_finding/odometry.hpp"
 
 // Définition du type Point
 typedef struct {
@@ -23,10 +24,10 @@ typedef struct {
 }Point;
 
 // Définition de la Class ZoneCheker 
-class ZoneChecker {
+class ZoneChecker:  public Odometry{
     // Definition en Public des méthodes de la classe ZoneCheker
     public:
-        ZoneChecker(); // Constructor
+        ZoneChecker(ros::NodeHandle nh); // Constructor
         void gpsCallback(const sensor_msgs::NavSatFix::ConstPtr& msg);
         void zoneCallback(const geometry_msgs::PointStamped::ConstPtr& msg);
         bool isInsideRectangle();
