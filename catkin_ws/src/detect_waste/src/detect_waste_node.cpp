@@ -5,8 +5,8 @@ WasteDetection::WasteDetection(VideoSender &videoSender) : videoSender_(videoSen
     this->closest_rect.y = 0;
     this->detect_pub = nh.advertise<geometry_msgs::Point>("/pif/waste/pos", 1000);
     this->vector_waste = nh.advertise<geometry_msgs::QuaternionStamped>("/pif/waste/geometry", 10000);
-    this->pub_obstacle = nh.advertise<std_msgs::UInt16>("/Obstacle", 10);
-    this->moving_status = nh.subscribe("/pif/moving", 10, &WasteDetection::obstacleCallback, this);
+    this->pub_obstacle = nh.advertise<std_msgs::UInt16>("pif/obstacle", 10);
+    this->moving_status = nh.subscribe("/pif/moving", 10, &WasteDetection::movingCallback, this);
     std::cout << "DEBUG START Detect waste" << std::endl;
     // this->cap.open("/home/ros/PIF/VISION/DETECTION/Video/Default_Video_Test.mp4");
     this->cap.open(0);
@@ -18,14 +18,52 @@ WasteDetection::WasteDetection(VideoSender &videoSender) : videoSender_(videoSen
     run();
 }
 
-void WasteDetection::obstacleCallback(const std_msgs::Bool &msg)
+void WasteDetection::movingCallback(const std_msgs::Bool &msg)
 {
     this->obstacle_app = msg.data;
 }
 
+void WasteDetection::adjustBrightness(double alpha, int beta) {
+    this->frame.convertTo(this->frame, -1, alpha, beta);
+}
+
+
 void WasteDetection::detect_obstacle()
 {
-    std::cout << "Je detecte les obstacles\n";
+    double alpha = 0.65;
+    int beta = 20;       
+    adjustBrightness(alpha, beta);
+
+    cv::Mat hsv;
+    cv::cvtColor(this->frame, hsv, cv::COLOR_BGR2HSV);
+
+    cv::Mat mask;
+    cv::inRange(hsv, cv::Scalar(this->hsvSettings.low_h, this->hsvSettings.low_s, this->hsvSettings.low_v),
+            cv::Scalar(this->hsvSettings.high_h, this->hsvSettings.high_s, this->hsvSettings.high_v), mask);
+
+    // Appliquer l'érosion pour éliminer le bruit
+    cv::Mat erosion;
+    cv::Mat element = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(10, 10));
+    cv::erode(mask, erosion, element);
+
+    // Appliquer le flou gaussien
+    cv::Mat result;
+    cv::GaussianBlur(erosion, result, cv::Size(5, 5), 4);
+
+    // Déterminer si le véhicule peut avancer ou non
+    cv::Mat bottomRegion = result.rowRange(result.rows * 0.6, result.rows - 1);
+    double whitePercentage = (countNonZero(bottomRegion) * 100.0) / bottomRegion.total();
+
+    std_msgs::UInt16 msg;
+    for(int i=0; i < 16; i++) {
+            cv::Mat Region = result.colRange(result.cols * (i/16.0), result.cols * ((i+1.0)/16.0));
+            double RegionWhitePercentage = (cv::countNonZero(Region) * 100.0) / Region.total();
+            
+            if(RegionWhitePercentage < this->hsvSettings.threshold_white)
+                    msg.data = msg.data | (0x0001 << i);
+    }
+    
+    pub_obstacle.publish(msg);
 }
 
 void WasteDetection::detect_waste()

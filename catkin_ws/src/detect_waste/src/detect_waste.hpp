@@ -58,6 +58,7 @@ class WasteDetection{
         void detect_waste();
         void detect_obstacle();
         void run();
-        void obstacleCallback(const std_msgs::Bool &msg);
+        void adjustBrightness(double alpha, int beta);
+        void movingCallback(const std_msgs::Bool &msg);
         geometry_msgs::QuaternionStamped calc_geometry_msgs();
 };
