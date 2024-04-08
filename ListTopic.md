@@ -42,29 +42,30 @@ Position GPS de Wall-E
 - Topic Type : 
 [Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
-## Coord GPS node 
+### Coord GPS node
 
 
 
-## Go To 
+## path_finding
 
+### odometry
 
 
 ## Waste Labeling
 
 ### Publish
 
-- Topic Name : Label/id
+- Topic Name : /pif/hard/label
 - Topic Type : std_msgs/String
 [Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/String.html)
 
 
-- Topic Name : Aspi/Status
-- Topic Type : std_msgs::Bool 
-[Documentation]()
+- Topic Name : /pif/hard/aspi
+- Topic Type : std_msgs/Bool 
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
 
-## Detect 
+## Vision Detect 
 
 ### Publish
 
@@ -78,9 +79,55 @@ Position GPS de Wall-E
 
 ### Subscribe 
 
-- Topic Name :  /pif/moving
-- Topic Type :  std_msgs/Bool
+
+
+
+
+## Gps reset origin 
+
+
+### Subscribe 
+
+- Topic Name : argument[1] (/pif/gps or /navsat/fix in simu)
+- Topic Type : sensor_msgs/NavSatFix
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+
+- Topic Name : /pif/reset_origin
+- Topic Type : std_msgs/Bool
 [Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
 
 
+## Gps transform
+
+### Publish
+
+- Topic Name : argument[2] (/pif/gps_converted for go_to but can be used for zone_select)
+- Topic Type : std_msgs/Point
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+
+### Subscribe 
+
+- Topic Name : /pif/origin
+- Topic Type : sensor_msgs/NavSatFix
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+
+- Topic Name : argument[1] (/pif/gps or /navsat/fix in simu)
+- Topic Type : sensor_msgs/NavSatFix
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+
+
+
+## scan detect obstacle (lidar)
+
+### Publish
+
+- Topic Name :  /obstacle_marker
+- Topic Type :  visualization_msgs/Marker
+[Documentation](http://docs.ros.org/en/noetic/api/visualization_msgs/html/msg/Marker.html)
+
+### Subscribe 
+
+- Topic Name : argument[1] (/scan or /front/scan in simu)
+- Topic Type : sensor_msgs/LaserScan
+[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/LaserScan.html)

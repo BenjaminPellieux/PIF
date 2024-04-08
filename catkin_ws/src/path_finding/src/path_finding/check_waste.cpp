@@ -1,19 +1,20 @@
-#include "path_finding/detect_waste.hpp"
+#include "path_finding/check_waste.hpp"
 
 
-DetectWaste::DetectWaste(ros::NodeHandle nh) : Odometry(nh) {
-    ros::Subscriber detectWaste_sub = nh.subscribe("/Waste/Pos", 100, &DetectWaste::WastePosCallback, this);
+CheckWaste::CheckWaste(ros::NodeHandle nh) : Odometry(nh) {
+    this->detectWaste_sub = nh.subscribe("/Waste/Geometry", 100, &CheckWaste::WastePosCallback, this);
+    this->haskilens_sub = nh.subscribe("Label/id", 100, &CheckWaste::WasteIdCallback, this);
 
     this->cmd_vel_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
 
-    ROS_INFO("detect_waste -> complete.");
+    ROS_INFO("check_waste -> complete.");
 }
 
-bool DetectWaste::spin() {
+bool CheckWaste::spin() {
     bool clear = true;
     geometry_msgs::Twist cmd_vel;
     double orientation_max = Odometry::rot + 2.0;
-    ros::Rate rate(5);
+    ros::Rate rate(6);
     
     cmd_vel.angular.z = 0.5;
     while(Odometry::rot < orientation_max) {
@@ -28,7 +29,7 @@ bool DetectWaste::spin() {
     return clear;
 }
 
-void DetectWaste::go_to_waste() {
+void CheckWaste::go_to_waste() {
     geometry_msgs::Twist cmd_vel;
     bool detected;
 
@@ -52,10 +53,10 @@ void DetectWaste::go_to_waste() {
     }
 }
 
-void DetectWaste::WastePosCallback(const geometry_msgs::QuaternionStamped::ConstPtr &pos) {
+void CheckWaste::WastePosCallback(const geometry_msgs::QuaternionStamped::ConstPtr &pos) {
     this->detectWaste = pos->quaternion.z;
 }
 
-void DetectWaste::WasteIdCallback(const path_finding::PoseWasteStamped::ConstPtr &msg) {
+void CheckWaste::WasteIdCallback(const path_finding::PoseWasteStamped::ConstPtr &msg) {
     this->idWaste = ((msg->data.waste != "NABLE") && (msg->data.waste != "NULL")) ? msg->data : path_finding::PoseWaste();
 }

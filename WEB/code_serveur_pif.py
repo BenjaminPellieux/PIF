@@ -35,13 +35,8 @@ def command():
 def new_speed():
     change_speed(request.form["speed"], ros_client)
     return "200"
-    
-@app.route('/mode', methods=['POST'])
-def mode():
-    change_mode(request.form["mode"], ros_client)
-    return "200"
 
-@app.route('/commandstatus', methods=['POST'])
+@app.route('/command_status', methods=['POST'])
 def commandStatus():
     try:
         ros_client.publish('/pif/web/controle', 'std_msgs/Bool', {"data":request.form["comd"]})
@@ -50,7 +45,7 @@ def commandStatus():
         return "400"
     return "200"
 
-@app.route('/continueStatus', methods=['POST'])
+@app.route('/continue_status', methods=['POST'])
 def continueStatus():
     try:
         ros_client.publish('/pif/web/controle', 'std_msgs/Bool', {"data":request.form["comd"]})
@@ -65,6 +60,7 @@ def get_topic_value():
     data = request.json
     topic = data['topic']
     print(f"[INFO][UPDATE_TOPIC] topic: {topic} type: {topic_type_dict[topic]} Data {True if ros_client.topic_data.get(topic) else False}")
+    #    print(f"[ERROR][UPDATE_TOPIC] NO DATA FOUND ")
     if ros_client.topic_data.get(topic):
         return jsonify(ros_client.topic_data.get(topic))
     return jsonify("ERROR")

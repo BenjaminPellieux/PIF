@@ -2,6 +2,8 @@
 #include <sensor_msgs/Imu.h>
 #include <nav_msgs/Odometry.h>
 
+#ifndef undefined
+#define undefined
 
 typedef struct {
     double x;
@@ -24,3 +26,5 @@ class Odometry {
         void callback_gps(const geometry_msgs::Point::ConstPtr &nav);
         void callback_odom(const sensor_msgs::Imu::ConstPtr &odometry);
 };
+
+#endif
