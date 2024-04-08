@@ -55,12 +55,12 @@ Position GPS de Wall-E
 
 ### Publish
 
-- Topic Name : Label/id
+- Topic Name : /pif/hard/label
 - Topic Type : std_msgs/String
 [Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/String.html)
 
 
-- Topic Name : Aspi/Status
+- Topic Name : /pif/hard/aspi
 - Topic Type : std_msgs::Bool 
 [Documentation]()
 
