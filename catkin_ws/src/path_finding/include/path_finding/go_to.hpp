@@ -28,8 +28,6 @@
 
 class Go_To : public Odometry {
     public:
-        Local_Pose cmd_pose;
-        
         double obs_dist;
         double obs_ang;
 
@@ -46,9 +44,12 @@ class Go_To : public Odometry {
                                      double *target_ang,
                                      uint8_t dist_at_begin);
         int run();
+        void set_target(double, double);
 
     private:
         ros::Subscriber sub_laser;
         ros::Publisher cmd_xy;
         ros::Publisher moving;
+
+        Local_Pose cmd_pose;
 };

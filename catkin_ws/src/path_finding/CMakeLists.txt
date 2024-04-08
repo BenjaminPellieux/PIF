@@ -112,8 +112,8 @@ roslaunch_add_file_check(launch)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 	INCLUDE_DIRS include
-	LIBRARIES ${PROJECT_NAME}
-	CATKIN_DEPENDS roscpp
+	LIBRARIES define_area check_waste go_to odometry
+	CATKIN_DEPENDS roscpp std_msgs geometry_msgs
 #  DEPENDS system_lib
 )
 

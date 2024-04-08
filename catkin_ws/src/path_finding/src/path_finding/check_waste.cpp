@@ -14,7 +14,7 @@ bool CheckWaste::spin() {
     bool clear = true;
     geometry_msgs::Twist cmd_vel;
     double orientation_max = Odometry::rot + 2.0;
-    ros::Rate rate(5);
+    ros::Rate rate(6);
     
     cmd_vel.angular.z = 0.5;
     while(Odometry::rot < orientation_max) {

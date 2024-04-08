@@ -108,10 +108,9 @@ int Go_To::modify_target_from_lidar(double *coef_x,
 
 int Go_To::run()
 {
-
 	geometry_msgs::Twist msg;
 	std_msgs::Bool is_moving;
-	ros::Rate rate(5);
+	ros::Rate rate(6);
 	int ret = 0;
 	double op_adj;
 	double accel = 0;
@@ -209,4 +208,9 @@ int Go_To::run()
 		ros::spinOnce();
 	}
 	return cant_go_to;
+}
+
+void Go_To::set_target(double x, double y) {
+	this->cmd_pose.x = x;
+	this->cmd_pose.y = y;
 }
