@@ -61,8 +61,8 @@ Position GPS de Wall-E
 
 
 - Topic Name : /pif/hard/aspi
-- Topic Type : std_msgs::Bool 
-[Documentation]()
+- Topic Type : std_msgs/Bool 
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
 
 ## Vision Detect 
@@ -76,6 +76,15 @@ Position GPS de Wall-E
 - Topic Name : /pif/waste/geometry
 - Topic Type : geometry_msgs/QuaternionStamped 
 [Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/QuaternionStamped.html)
+
+### Subscribe 
+
+
+
+
+
+## Gps reset origin 
+
 
 ### Subscribe 
 
