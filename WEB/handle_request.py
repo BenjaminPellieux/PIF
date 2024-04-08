@@ -44,8 +44,9 @@ def change_mode(mode: str, ros_client: websocket):
     except:
         print("[ERROR] WebSocket closed")
 
-def continue_mode(mode: str, ros_client: websocket):
-    if mode == "1":
+def continue_mode(continue: str, ros_client: WebSocketApp):
+    global continue_mode
+    if continue == "1":
         message: dict = {
             "data": True
         }
