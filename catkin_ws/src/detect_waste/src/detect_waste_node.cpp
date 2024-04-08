@@ -5,6 +5,7 @@ WasteDetection::WasteDetection(VideoSender &videoSender) : videoSender_(videoSen
     this->closest_rect.y = 0;
     this->detect_pub = nh.advertise<geometry_msgs::Point>("/pif/waste/pos", 1000);
     this->vector_waste = nh.advertise<geometry_msgs::QuaternionStamped>("/pif/waste/geometry", 10000);
+    this->pub_obstacle = nh.advertise<std_msgs::UInt16>("/Obstacle", 10);
     this->moving_status = nh.subscribe("/pif/moving", 10, &WasteDetection::obstacleCallback, this);
     std::cout << "DEBUG START Detect waste" << std::endl;
     // this->cap.open("/home/ros/PIF/VISION/DETECTION/Video/Default_Video_Test.mp4");

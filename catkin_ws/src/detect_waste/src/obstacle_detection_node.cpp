@@ -5,12 +5,7 @@
 
 
 // Structure pour les réglages HSV
-typedef struct{
-    int low_h = 0, high_h = 179;
-    int low_s = 0, high_s = 255;
-    int low_v = 0, high_v = 122;
-    int threshold_white = 5;  // Ajout du seuil
-}HSVSettings;
+
 
 // Fonction pour ajuster la luminosité de l'image
 void adjustBrightness(cv::Mat& image, double alpha, int beta) {
