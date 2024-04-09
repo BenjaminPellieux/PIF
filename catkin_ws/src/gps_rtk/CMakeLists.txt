@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(obstacle_detection)
+project(gps_rtk)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -7,9 +7,8 @@ project(obstacle_detection)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED
-	   roscpp
-	   OpenCV
+find_package(catkin REQUIRED COMPONENTS
+    roscpp
 )
 
 ## System dependencies are found with CMake's conventions
@@ -103,7 +102,7 @@ find_package(catkin REQUIRED
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES obstacle_detection
+#  LIBRARIES gps_rtk
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
@@ -115,13 +114,13 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-	include
-	${catkin_INCLUDE_DIRS}
+    include
+    ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/obstacle_detection.cpp
+#   src/${PROJECT_NAME}/gps_rtk.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -132,13 +131,13 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME}_node src/obstacle_detection_node.cpp)
+add_executable(${PROJECT_NAME}_node src/gps_rtk_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
 ## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
-# set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
+set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -146,7 +145,7 @@ add_executable(${PROJECT_NAME}_node src/obstacle_detection_node.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}_node
-	${catkin_LIBRARIES}
+    ${catkin_LIBRARIES}
 )
 
 #############
@@ -196,7 +195,7 @@ target_link_libraries(${PROJECT_NAME}_node
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_obstacle_detection.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_gps_rtk.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

@@ -20,8 +20,8 @@ HUSKYLENS huskylens;
 ros::NodeHandle  nh;
 std_msgs::String str_msg;
 std_msgs::Bool bool_msg;
-ros::Publisher pu_label("Label/id", &str_msg);
-ros::Publisher pu_aspi("Aspi/Status", &bool_msg);
+ros::Publisher pu_label("/pif/hard/label", &str_msg);
+ros::Publisher pu_aspi("/pif/hard/aspi", &bool_msg);
 bool foundRelevantObject;
 int my_delay; 
 

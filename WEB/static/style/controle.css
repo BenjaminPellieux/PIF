@@ -99,6 +99,13 @@ button {
     align-items: center;
 }
 
+.continue_container {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
 .slider {
     display: flex;
     flex-direction: column;
