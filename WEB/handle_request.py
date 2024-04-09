@@ -51,19 +51,11 @@ def handle_command(cmnd: str, ros_client: WebSocketApp):
             for axis, value in values.items():
                 commande_move[command_type][axis] = float(value) * current_speed
            
-        print(f"[DEBUG] {commande_move=}")
-        if cmd_continue:
-            while cmd_continue:              
-                try: 
-                    ros_client.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', commande_move)
-                except:
-                    print("[ERROR] WebSocket closed")
-                sleep(1)
-        else:
-            try: 
-                ros_client.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', commande_move)
-            except:
-                print("[ERROR] WebSocket closed")
+        print(f"[DEBUG] {commande_move=}")              
+        try: 
+            ros_client.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', commande_move)
+        except:
+            print("[ERROR] WebSocket closed")
 
         for command_type, values in commande_move.items():
             for axis, value in values.items():

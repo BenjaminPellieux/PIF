@@ -6,7 +6,8 @@ apt-xapian-index==0.49
 asgiref==3.5.2
 asttokens==2.0.7
 async-timeout==4.0.2
-attrs==19.3.0
+attr==0.3.1
+attrs==23.2.0
 autobahn==17.10.1
 Automat==0.8.0
 azure-core==1.25.0
@@ -160,6 +161,9 @@ moveit-ros-visualization==1.1.13
 mpi4py==3.0.3
 msrest==0.7.1
 multivolumefile==0.2.3
+mysql==0.0.3
+mysql-connector-python==8.3.0
+mysqlclient==2.2.4
 netifaces==0.10.4
 nltk==3.6.7
 nmea-navsat-driver==0.6.1
@@ -175,6 +179,7 @@ packaging==21.3
 pandas==1.4.3
 paramiko==2.6.0
 parso==0.8.3
+pbr==6.0.0
 pexpect==4.6.0
 pickleshare==0.7.5
 Pillow==9.0.1
@@ -217,6 +222,7 @@ pyOpenSSL==19.0.0
 pyparsing==2.4.6
 pypng==0.0.20
 pyppmd==0.18.1
+pyproj==3.5.0
 PyQRCode==1.2.1
 PyQt5==5.14.1
 pyRFC3339==1.1
@@ -356,6 +362,7 @@ tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.1
 termcolor==1.1.0
 terminaltables==3.1.10
+testresources==2.0.1
 texttable==1.6.4
 tf==1.13.2
 tf-conversions==1.13.2
