@@ -2,7 +2,7 @@
 
 ZoneChecker::ZoneChecker(ros::NodeHandle nh) : Odometry(nh)
 {
-    this->zone_sub = nh.subscribe("/Area/Point", 10, &ZoneChecker::zoneCallback, this);
+    this->zone_sub = nh.subscribe("/pif/coord_gps/area", 10, &ZoneChecker::zoneCallback, this);
     this->in_zone_pub = nh.advertise<std_msgs::Bool>("/in_zone", 10);
     this->area_pub = nh.advertise<geometry_msgs::PolygonStamped>("/area/polygon", 10);
 

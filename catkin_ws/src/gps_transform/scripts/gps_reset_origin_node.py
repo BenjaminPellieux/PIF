@@ -9,7 +9,12 @@ from sensor_msgs.msg import NavSatFix
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point, Pose, Quaternion, Twist, Vector3
 from pyproj import Transformer, CRS
-from lib_pos import *
+from dataclasses import dataclass
+
+@dataclass
+class Local_Pose():
+    lat: float = 0
+    lon: float = 0
 
 
 
