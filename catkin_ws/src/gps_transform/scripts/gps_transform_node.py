@@ -83,8 +83,8 @@ class gps_transform():
 
                 # Convertir les coordonnées ECEF du robot en coordonnées ENU par rapport
                 # au point de référence
-                self.odom.x, self.odom.y, _ = self.ecef_to_enu(robot_x, robot_y, robot_z)
-                print(f"[LOG] Coordonnées ENU : {self.odom.x} {self.odom.y}")
+                self.odom.point.x, self.odom.point.y, _ = self.ecef_to_enu(robot_x, robot_y, robot_z)
+                print(f"[LOG] Coordonnées ENU : {self.odom.point.x} {self.odom.point.y}")
                 self.odom.header = self.header
                 self.pub_gps_convert.publish(self.odom)
                 self.rate.sleep()
