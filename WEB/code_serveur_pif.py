@@ -1,11 +1,13 @@
 from flask import Flask, render_template, jsonify, request, send_file
 import json
+from sys import argv
 from handle_request import *
 from client_video import *
 
 # IP_RASP = "192.168.131.1"
 IP_RASP = "10.8.0.3"
 PORT = "9090"
+
 # PORT = "11311"
 
 
@@ -63,8 +65,10 @@ def get_topic_value():
 
 @app.route('/current_image')
 def current_image():
-    return send_file('tmp/PIF.jpg', mimetype='image/jpeg')
-
+    try:
+        return send_file('tmp/PIF.jpg', mimetype='image/jpeg')
+    except:
+        return "ERROR"
 
 @app.route('/area', methods=['POST'])
 def area():
@@ -80,16 +84,44 @@ def locate():
     
 
 
-if __name__ == '__main__':
+def load_config(environment=None):
+    """Charge un fichier de configuration en fonction de l'environnement spécifié."""
+    if environment == "ovh":
+        config_path = "config/serv_config.json"  # Chemin vers le fichier de configuration pour OVH
+    else:
+        config_path = "config/config.json"  # Chemin par défaut
+
     try:
-        config = json.load(open("config/config.json"))
-        video_stream: WebVideoApp = WebVideoApp(config["ip_rasp"])
-        ros_client: WebSocketApp = WebSocketApp(config["ip_rasp"])
-    except:
-        video_stream: WebVideoApp = WebVideoApp()
-        ros_client: WebSocketApp = WebSocketApp()
+        with open(config_path, 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print(f"Erreur : Le fichier {config_path} n'a pas été trouvé.")
+        exit(1)
+    except json.JSONDecodeError:
+        print(f"Erreur : Le fichier {config_path} n'est pas un JSON valide.")
+        exit(1)
+
+
+if __name__ == '__main__':
+    # Vérifie si un argument a été passé et utilise cet argument comme indication de l'environnement
+    environment = argv[1] if len(argv) > 1 else None
+    config = load_config(environment)
+
+    try:
+        video_stream = WebVideoApp(config["ip_rasp"])
+        ros_client = WebSocketApp(config["ip_lan"])
+    except KeyError as e:
+        print(f"Erreur de configuration : clé {str(e)} manquante.")
+        exit(1)
 
     ros_client.start()
     video_stream.start()
-    app.run(host='localhost', port=8080, ssl_context=('key/cert.pem', 'key/key.pem'), debug=False)
-    
+
+    try:
+        app.run(host=config.get('host', 'localhost'),
+                port=config.get('port', 8080),
+                ssl_context=('key/cert.pem', 'key/key.pem'),
+                debug=False)
+    except Exception as e:
+        print(f"Erreur lors du lancement du serveur : {str(e)}")
+        exit(1)
