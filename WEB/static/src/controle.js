@@ -14,7 +14,6 @@ var pose = {
         z: 0.0
     }
 };
-var odom = pose;
 
 var clock = {
     nsecs: 0,

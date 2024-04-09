@@ -108,8 +108,8 @@ if __name__ == '__main__':
     config = load_config(environment)
 
     try:
-        video_stream = WebVideoApp(config["ip_rasp"])
-        ros_client = WebSocketApp(config["ip_lan"])
+        video_stream = WebVideoApp(config["ip_lan"])
+        ros_client = WebSocketApp(config["ip_rasp"])
     except KeyError as e:
         print(f"Erreur de configuration : clé {str(e)} manquante.")
         exit(1)

@@ -3,6 +3,20 @@ var map = L.map('map').setView([48.98479706310472, 1.7016915401253376], 18);
 var api_status = false;
 var bat_level = "NONE";
 var dist_traveled = 0.0;
+var pose = {
+    orientation: {
+        w: 0.0,
+        x: 0.0,
+        y: 0.0,
+        z: 0.0
+    },
+    position: {
+        x: 0.0,
+        y: 0.0,
+        z: 0.0
+    }
+};
+var odom = pose;
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
@@ -56,8 +70,8 @@ function submit_area(coordinates) {
 
 //Simulez la réception de nouvelles données GPS toutes les 2 secondes
 setInterval(function() {
-    handleOdom(requestTopicValue('/odometry/filtered'));
-    handleAspi(requestTopicValue('/pif/hard/aspi'));
+    handleOdom('/odometry/filtered');
+    handleAspi('/pif/hard/aspi');
     setTimeout(500);
     updateTab()
     console.log("INFO SLEEPING");
@@ -66,41 +80,40 @@ setInterval(function() {
 }, 2000);
 
 
-function handleAspi(data){
-    if (data){
+async function handleAspi(topic){
+    const data = await requestTopicValue(topic);
+    if ("ERROR" === data){
+        api_status = "NONE";
+    }else{
         api_status = data.data;
     }
-    api_status = "NONE";
 }
 
 
-function handleOdom(data){
-    if (data){
-        dist_traveled =  Math.sqrt(Math.pow(data.pose.pose.position.x, 2) + Math.pow(data.pose.pose.position.z, 2)); 
-        console.log("[DEBUG] ", dist_traveled)
-    }
-    dist_traveled = "NONE";
-}
-
-function requestTopicValue(topic) {
-    fetch('/post_topic_value', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ topic: topic})
-})
-.then(response => response.json())
-.then(data => {
-    console.log(`[INFO] Update Valeur pour ${topic}: `, data);
+async function handleOdom(topic){
+    const data = await requestTopicValue(topic);
     if ("ERROR" === data){
-        //alert("Une erreur est survenue\n WALL-E semble déconécter !!!")
-        return false;
+        dist_traveled = "NONE";
+    }else{
+        dist_traveled =  Math.sqrt(Math.pow(data.pose.pose.position.x, 2) + Math.pow(data.pose.pose.position.z, 2)); 
     }
-    return data;
+}
 
-})
-.catch(error => console.error('Erreur lors de la récupération des données:', error));
+async function requestTopicValue(topic) {
+    try {
+        const response = await fetch('/post_topic_value', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ topic: topic })
+        });
+        const data = await response.json();
+        console.log(`[INFO] Update Valeur pour ${topic}: `, data);
+        return data; // Retourne data qui peut être utilisé avec await
+    } catch (error) {
+        console.error('Erreur lors de la récupération des données:', error);
+    }
 }
 
 
