@@ -6,7 +6,7 @@ from sys import argv
 from std_msgs.msg import String
 from sensor_msgs.msg import NavSatFix
 from nav_msgs.msg import Odometry
-from geometry_msgs.msg import Point, Pose, Quaternion, Twist, Vector3
+from geometry_msgs.msg import PointStamped, Pose, Quaternion, Twist, Vector3
 
 # Python std lib
 from pyproj import Transformer, CRS
@@ -26,14 +26,15 @@ class gps_transform():
         rospy.init_node('gps_transform', anonymous=True)
         rospy.Subscriber(argv[1], NavSatFix, self.callback_transform)
         rospy.Subscriber('/pif/origin', NavSatFix, self.callback_origin)
-        self.pub_gps_convert = rospy.Publisher(argv[2], Point, queue_size=10)
+        self.pub_gps_convert = rospy.Publisher(sys.argv[2], PointStamped, queue_size=10)
+
         self.rate = rospy.Rate(10) # 10hz
 
         self.robot_pose: Local_Pose = Local_Pose() 
         self.origin_pose: Local_Pose = Local_Pose()
         self.called_transform: bool = False
         self.called_origin: bool = False
-        self.odom: Point = Point()
+        self.odom: PointStamped = PointStamped()
         self.__run__()
 
     def callback_transform(self, data)-> None:
@@ -84,8 +85,8 @@ class gps_transform():
 
                 # Convertir les coordonnées ECEF du robot en coordonnées ENU par rapport
                 # au point de référence
-                self.odom.x, self.odom.y, _ = self.ecef_to_enu(robot_x, robot_y, robot_z)
-                print(f"[LOG] Coordonnées ENU : {self.odom.x} {self.odom.y}")
+                self.odom.point.x, self.odom.point.y, _ = self.ecef_to_enu(robot_x, robot_y, robot_z)
+                print(f"[LOG] Coordonnées ENU : {self.odom.point.x} {self.odom.point.y}")
                 self.odom.header = self.header
                 self.pub_gps_convert.publish(self.odom)
                 self.rate.sleep()
