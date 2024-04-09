@@ -1,9 +1,9 @@
 #!/bin/bash
 
 gource \
-    -s 2.5 \
+    -s 1.5 \
     -1080x920 \
-    --auto-skip-seconds .1 \
+    --auto-skip-seconds .01 \
     --multi-sampling \
     --stop-at-end \
     --highlight-users \
