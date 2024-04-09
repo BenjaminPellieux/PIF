@@ -22,9 +22,9 @@
 #define IP_ADDR_GPS_DIFF	"192.168.131.81"
 #define PORT_GPS_DIFF		5600
 
+
 int main(int argc, char *argv[])
 {
-	
 	int sockfd, portno, n;
 	struct sockaddr_in serv_addr;
 	struct hostent *server;
@@ -32,13 +32,13 @@ int main(int argc, char *argv[])
 	sensor_msgs::NavSatFix pos;
 	//nav_msgs::Odometry posxy;
 	
-	ros::init(argc, argv, "gps_convert_node");
+	ros::init(argc, argv, "gps_rtk");
 	
 	ros::NodeHandle gps_xy;
 
 	ros::Publisher gps_pub = gps_xy.advertise<sensor_msgs::NavSatFix>("/pif/gps", 1000);
 	//ros::Publisher gps_pub_xy = gps_xy.advertise<nav_msgs::Odometry>("/pif/xy", 1000);
-	
+
 	char buffer[256];
 
     

@@ -1,5 +1,7 @@
 <launch>
     <!-- Start the gps acquisition and transformation -->
+    <node name="gps_rtk_node" pkg="gps_rtk" type="gps_rtk_node" args="192.168.131.81" />
+    <node name="pif_magneto_node" pkg="pif_magneto" type="pif_magneto_node" />
     <include file="$(find gps_transform)/launch/gps_transform.launch" />
     <node name="coord_gps" pkg="coord_gps" type="coord_gps" />
 
@@ -9,9 +11,10 @@
 
     <!-- Start the arduino communication -->
     <arg name="arduino_port" default="ACM0" />
-    <node name="arduino_comm" pkg="rosserial_python" type="serial_node.py" args="/dev/tty$(arg arduino_port)" />
+    <arg name="arduino_baudrate" default="57600" />
+    <node name="arduino_comm" pkg="rosserial_python" type="serial_node.py" args="/dev/tty$(arg arduino_port) _baud:=$(arg arduino_baudrate)" />
 
-    <!-- Missing vision process node -->
+    <!-- Start environnemental vision process -->
     <node name="detect_waste_node" pkg="detect_waste" type="detect_waste_node" />
 
     <!-- Start path finding -->
