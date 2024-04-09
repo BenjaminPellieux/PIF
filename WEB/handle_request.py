@@ -53,7 +53,7 @@ def handle_command(cmnd: str, ros_client: WebSocketApp):
            
         print(f"[DEBUG] {commande_move=}")
         if cmd_continue:
-            while (cmd_continue):              
+            while cmd_continue:              
                 try: 
                     ros_client.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', commande_move)
                 except:

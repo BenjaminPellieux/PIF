@@ -47,11 +47,7 @@ def commandStatus():
 
 @app.route('/continue_status', methods=['POST'])
 def continueStatus():
-    try:
-        ros_client.publish('/pif/web/controle', 'std_msgs/Bool', {"data":request.form["comd"]})
-    except:
-        print("[ERROR] WebSocket closed")
-        return "400"
+    change_continue(request.form["comd"], ros_client)
     return "200"
 
 
