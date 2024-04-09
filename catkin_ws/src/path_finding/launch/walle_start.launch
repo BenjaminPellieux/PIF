@@ -1,6 +1,7 @@
 <launch>
     <!-- Start the gps acquisition and transformation -->
-    <node name="gps_rtk_node" pkg="gps_rtk" type="gps_rtk_node" args="192.168.131.81" />
+    <arg name="rtk_adress" default="192.168.131.81" />
+    <node name="gps_rtk_node" pkg="gps_rtk" type="gps_rtk_node" args="$(arg rtk_adress)" />
     <node name="pif_magneto_node" pkg="pif_magneto" type="pif_magneto_node" />
     <include file="$(find gps_transform)/launch/gps_transform.launch" />
     <node name="coord_gps" pkg="coord_gps" type="coord_gps" />
