@@ -76,7 +76,8 @@ function handleAspi(data){
 
 function handleOdom(data){
     if (data){
-        dist_traveled =  Math.sqrt(Math.pow(data.pose.pose.position.x, 2) + Math.pow(data.pose.pose.position.y, 2)); 
+        dist_traveled =  Math.sqrt(Math.pow(data.pose.pose.position.x, 2) + Math.pow(data.pose.pose.position.z, 2)); 
+        console.log("[DEBUG] ", dist_traveled)
     }
     dist_traveled = "NONE";
 }
