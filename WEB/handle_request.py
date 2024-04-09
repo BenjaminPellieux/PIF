@@ -23,7 +23,7 @@ def handle_zone(data: list, ros_client: WebSocketApp):
 
         print(f"[DEBUG] message_point :{i} {message=}")
         try: 
-            ros_client.publish('/Area/Point', 'sensor_msgs/NavSatFix', message)
+            ros_client.publish('/pif/web/area/point', 'sensor_msgs/NavSatFix', message)
         except:
             print("[ERROR] WebSocket closed")
 
@@ -37,7 +37,7 @@ def change_continue(status: str, ros_client: WebSocketApp):
     global cmd_continue
     if ros_client.topic_data:
         cmd_continue = bool(status)
-
+        print(f"[DEBUG] {cmd_continue=}")
     
 def handle_command(cmnd: str, ros_client: WebSocketApp):
     global current_speed
