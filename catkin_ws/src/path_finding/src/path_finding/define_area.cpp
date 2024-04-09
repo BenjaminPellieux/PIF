@@ -3,6 +3,8 @@
 
 DefineArea::DefineArea(ros::NodeHandle nh) : Odometry(nh) {
     this->area_recieved = false;
+    this->first_tile.x = 0.0;
+    this->first_tile.y = 0.0;
 
     this->area_sub = nh.subscribe("/area/polygon", 100, &DefineArea::areaCallback, this);
 

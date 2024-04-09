@@ -11,7 +11,12 @@ from geometry_msgs.msg import Point, Pose, Quaternion, Twist, Vector3
 # Python std lib
 from pyproj import Transformer, CRS
 import numpy as np
-from lib_pos import *
+from dataclasses import dataclass
+
+@dataclass
+class Local_Pose():
+    lat: float = 0
+    lon: float = 0
 
 class gps_transform():
 
