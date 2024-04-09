@@ -1,0 +1,10 @@
+{
+    "ip_rasp": "10.8.0.3",
+    "port_rasp": 9090,
+    "server_port": 7070,
+    "key": [
+      "key/cert.pem",
+      "key/key.pem"
+    ]
+}
+  

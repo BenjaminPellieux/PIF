@@ -46,19 +46,23 @@ function updateMarker(lat, lng) {
 setInterval(function() {
     // Recuperation des donnée du topic
     requestTopicValue('/odometry/filtered');
-    setTimeout(function(){ 
-        console.log("INFO SLEEPING");
-    }, 2000);  
-
-    requestTopicValue('/navsat/fix');
-    
-    // Remplacez les valeurs par vos données odom en temps réel 
+    requestTopicValue('/pif/gps');
+    setTimeout(500);
     updateData(pose, clock);
-    fetchImage();
-        // Remplacez les valeurs par vos données GPS en temps réel sur la MAP
+    console.log("INFO SLEEPING");
+      
+    // Remplacez les valeurs par vos données odom en temps réel 
+    
     updateMarker(NewLat - DiffLat, NewLng - DiffLng);
     
-}, 1000);
+}, 2000);
+
+function fetchImage(){
+    const liveImage = document.getElementById('live-image');
+    liveImage.src = "/current_image?time=" + new Date().getTime();
+}
+
+setInterval(fetchImage,500);
 
 function command(e) {
     console.log("[DEBUG] Name command: "  +e.name);
@@ -69,7 +73,14 @@ function command(e) {
 
 function commandStatus(auto) {
     console.log("[DEBUG] Name command: "  +auto.checked);
-    $.post( "/command", {
+    $.post( "/commandstatus", {
+        comd: auto.checked 
+    });
+}
+
+function continueStatus(auto) {
+    console.log("[DEBUG] Name command: "  +auto.checked);
+    $.post( "/continueStatus", {
         comd: auto.checked 
     });
 }
@@ -99,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 function requestTopicValue(topic) {
-    fetch('/get_topic_value', {
+    fetch('/post_topic_value', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'

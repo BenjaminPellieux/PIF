@@ -1,16 +1,14 @@
 #!/usr/bin/env python
 # ROS lib
-import sys
+
 import rospy
+from sys import argv
 from std_msgs.msg import String
 from std_msgs.msg import Bool
 from sensor_msgs.msg import NavSatFix
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point, Pose, Quaternion, Twist, Vector3
-
-# Python std lib
 from pyproj import Transformer, CRS
-import numpy as np
 from dataclasses import dataclass
 
 @dataclass
@@ -18,13 +16,15 @@ class Local_Pose():
     lat: float = 0
     lon: float = 0
 
+
+
 class gps_reset_origin():
 
     def __init__(self):
 
         # ROS 
         rospy.init_node('gps_reset_origin', anonymous=True)
-        rospy.Subscriber(sys.argv[1], NavSatFix, self.callback_gps)
+        rospy.Subscriber(argv[1], NavSatFix, self.callback_gps)
         rospy.Subscriber('/pif/reset_origin', Bool, self.callback_reset)
         self.pub_gps_convert = rospy.Publisher('/pif/origin', NavSatFix, queue_size=10)
         self.rate = rospy.Rate(1) # 1hz
@@ -46,7 +46,7 @@ class gps_reset_origin():
         
     def callback_reset(self, data)-> None:
         self.called_reset = True
-        self.reset = data;
+        self.reset = data
     
 
     def get_origin(self) -> None:

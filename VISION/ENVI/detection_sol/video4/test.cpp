@@ -17,7 +17,7 @@ void adjustBrightness(cv::Mat& image, double alpha, int beta) {
 int main() {
     // Initialiser la capture vidéo depuis un fichier
     cv::VideoCapture cap;
-    cap.open("/home/ros/PIF/PIF/VISION/DETECTION/Video/test5.mp4");
+    cap.open("/home/ros/PIF/PIF/VISION/DETECTION/Video/test.mp4");
 
     // Vérifier si la capture vidéo est ouverte
     if (!cap.isOpened()) {
@@ -29,7 +29,7 @@ int main() {
     cv::namedWindow("Image", cv::WINDOW_AUTOSIZE);
     cv::namedWindow("Seuillage", cv::WINDOW_AUTOSIZE);
     // Paramètres de luminosité
-    double alpha = 0.6;  
+    double alpha = 0.65;  
     int beta = 20;       
 
     while (true) {
@@ -43,22 +43,19 @@ int main() {
             break;
         }
 
+	
+        
+	
         // Ajuster la luminosité de la frame
         adjustBrightness(src, alpha, beta);
 
+
+        // Ajuster automatiquement les paramètres de luminosité
+        
         // Convertir la frame en espace de couleur HSV
         cv::Mat hsv;
         cv::cvtColor(src, hsv, cv::COLOR_BGR2HSV);
         
-        /*
-        Calculer la luminosité moyenne de l'image en niveaux de gris
-        Scalar meanLuminance = mean(hsv);
-        int averageBrightness = meanLuminance.val[0]; // Valeur de luminosité moyenne
-
-        // Ajuster dynamiquement les valeurs des seuils HSV en fonction de la luminosité moyenne
-        hsvSettings.low_v = 0;
-        hsvSettings.high_v = averageBrightness * 0.5; // Ajustement basé sur la luminosité moyenne
-        */
 
         // Appliquer un masque en utilisant les valeurs HSV ajustées
         cv::Mat mask;
@@ -76,6 +73,11 @@ int main() {
 
         // Déterminer si le véhicule peut avancer ou non
         cv::Mat bottomRegion = result.rowRange(result.rows * 0.70, result.rows - 1);
+        //cv::threshold(bottomRegion, bottomRegion, 0, 255, cv::THRESH_BINARY);
+
+        
+        
+        
         double whitePercentage = (cv::countNonZero(bottomRegion) * 100.0) / bottomRegion.total();
 
         // Diviser la frame en deux parties gauche et droite

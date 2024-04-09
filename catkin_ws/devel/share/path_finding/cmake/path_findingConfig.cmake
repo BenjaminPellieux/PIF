@@ -116,7 +116,7 @@ if(NOT "/home/ros/PIF/catkin_ws/devel/include;/home/ros/PIF/catkin_ws/src/path_f
   endforeach()
 endif()
 
-set(libraries "path_finding")
+set(libraries "define_area;check_waste;go_to;odometry")
 foreach(library ${libraries})
   # keep build configuration keywords, target names and absolute libraries as-is
   if("${library}" MATCHES "^(debug|optimized|general)$")
@@ -185,7 +185,7 @@ foreach(t ${path_finding_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "roscpp")
+set(depends "roscpp;std_msgs;geometry_msgs")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls

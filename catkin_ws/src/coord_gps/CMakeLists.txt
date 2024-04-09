@@ -6,6 +6,7 @@ find_package(catkin REQUIRED COMPONENTS
 	std_msgs
 	geometry_msgs
 	roscpp
+	path_finding
 )
 
 #find_package(catkin REQUIRED 
@@ -21,5 +22,6 @@ add_executable(${PROJECT_NAME}_node src/coord_gps_node.cpp)
 
 set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME gps_node PREFIX "")
 
-target_link_libraries(${PROJECT_NAME}_node ${catkin_LIBRARIES})
-#roslaunch_add_file_check(launch)
+target_link_libraries(${PROJECT_NAME}_node
+	${catkin_LIBRARIES}
+)

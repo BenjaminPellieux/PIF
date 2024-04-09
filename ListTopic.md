@@ -1,6 +1,6 @@
 # Introcution 
 
-Ce document a  pour but de presenter l'ensemble des topic utiliser par notre solution
+Ce document à pour but de présenter l'ensemble des topics utilisés par notre solution
 
 
 ## Serveur WEB
@@ -19,7 +19,7 @@ Envoi de commande de deplacement
 [Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
 
 Controle manuel ou automatique
-- Topic Name : /Mode/Status  
+- Topic Name : /pif/web/controle 
 - Topic Type : std_msgs/Bool
 [Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
@@ -33,16 +33,17 @@ Position Odometrique de Wall-E
 
 
 Position GPS de Wall-E
-- Topic Name : /navsat/fix
+- Topic Name : /pif/gps
 - Topic Type : sensor_msgs/NavSatFix
 [Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
 
 
 - Topic Name : 
 - Topic Type : 
-[Documentation]()
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
 ### Coord GPS node
+
 
 
 
@@ -119,24 +120,46 @@ Dechet detecte et sa position
 
 
 
-## Coord GPS node 
+
+## Waste Labeling
 
 ### Publish
 
-position gps du robot (rtk)
-- Topic Name : /pif/gps
-- Topic Type : sensor_msgs/NavSatFix
-[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+- Topic Name : /pif/hard/label
+- Topic Type : std_msgs/String
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/String.html)
 
 
+- Topic Name : /pif/hard/aspi
+- Topic Type : std_msgs/Bool 
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
-## Gps reset 
+
+## Vision Detect 
 
 ### Publish
 
-- Topic Name : /pif/origin
-- Topic Type : sensor_msgs/NavSatFix
-[Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
+- Topic Name : /pif/waste/pos 
+- Topic Type : geometry_msgs/Point 
+[Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Point.html)
+
+- Topic Name : /pif/waste/geometry
+- Topic Type : geometry_msgs/QuaternionStamped 
+[Documentation](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/QuaternionStamped.html)
+
+
+- Topic Name : pif/obstacle
+- Topic Type : std_msgs/UInt16 
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/UInt16.html)
+
+### Subscribe 
+
+
+
+
+
+## Gps reset origin 
+
 
 ### Subscribe 
 
