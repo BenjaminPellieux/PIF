@@ -47,6 +47,7 @@ setInterval(function() {
     requestTopicValue('/odometry/filtered');
     requestTopicValue('/pif/gps');
     setTimeout(500);
+    fetchImage();
     updateData(pose, clock);
     console.log("INFO SLEEPING");
       
@@ -54,14 +55,15 @@ setInterval(function() {
     
     updateMarker(NewLat - DiffLat, NewLng - DiffLng);
     
-}, 2000);
+}, 200);
 
 function fetchImage(){
     const liveImage = document.getElementById('live-image');
     liveImage.src = "/current_image?time=" + new Date().getTime();
+    console.log("current_image time= " + new Date().getTime());
 }
 
-setInterval(fetchImage,500);
+// setInterval(fetchImage,500);
 
 function command(e) {
     console.log("[DEBUG] Name command: "  +e.name);

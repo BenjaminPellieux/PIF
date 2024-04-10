@@ -61,7 +61,6 @@ class WebServer:
                 self.ros_client.publish('/pif/web/controle', 'std_msgs/Bool', {"data":request.form["comd"]})
             except:
                 print("[ERROR] WebSocket closed")
-                self.ros_client.reconnect()
                 return "400"
             return "200"
 
@@ -80,11 +79,11 @@ class WebServer:
             if self.ros_client.topic_data.get(topic):
                 return jsonify(self.ros_client.topic_data.get(topic))
             
-            self.ros_client.reconnect()
             return jsonify("ERROR")
 
         @app.route('/current_image')
         def current_image():
+            print("[INFO][UPDATE_IMAGE] --------------------------")
             try:
                 return send_file('tmp/PIF.jpg', mimetype='image/jpeg')
             except:
