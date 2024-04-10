@@ -27,10 +27,8 @@ class WebSocketApp(Thread):
         
     
     def reconnect(self):
-        while not self.ws or not self.ws.sock or not self.ws.sock.connected:
-            print("[INFO] Tentative de reconnexion...")
-            sleep(1)  # Délai avant de retenter la connexion
-            self.run()
+        print("[INFO] Tentative de reconnexion...")
+        self.run()
 
     def on_message(self, ws:  websocket, message: json) -> None:
         data = json.loads(message)
@@ -42,14 +40,10 @@ class WebSocketApp(Thread):
 
     def on_error(self, ws: websocket, error: str) -> None:
         print("[INFO][ON_ERROR] Erreur :", error)
-        sleep(1)  # Attendre avant de retenter la connexion
-        self.reconnect()
-
+        self.run()
 
     def on_close(self,  ws:  websocket) -> None:
         print("[INFO][ON_CLOSE] Connexion fermée. Tentative de reconnexion...")
-        sleep(1)
-        self.reconnect()
 
 
     def on_open(self,  ws:  websocket) -> None:

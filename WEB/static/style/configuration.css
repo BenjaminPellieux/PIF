@@ -81,9 +81,11 @@ button {
 
 /* Style pour les bordures extérieures du tableau */
 #config-table {
+    margin-top: 60px;
     border-collapse: collapse; /* Fusionner les bordures de cellules */
     border: 2px solid black; /* Bordure de 2 pixels solide pour le tableau */
     width: 1000px;
+    margin: 0 auto;
 }
 
 /* Style pour les bordures internes du tableau */
@@ -96,18 +98,24 @@ button {
 }
 
 .container {
-    display: flex;
-    justify-content: space-between; /* Espacement égal entre les éléments */
     margin: 0 auto;
+    margin-bottom: 60px;
 }
 
 .map {
-    width: 90%;
-}
-.bouton-sauvegarde {
-    margin: 20px;
+    width: 1500px; 
+    height: 600px; /* La carte aura une hauteur de 600 pixels */
+    margin-top: 40px; /* Ajoute une marge en haut de la carte */
+    margin-bottom: 40px;
+    position: relative; /* Assurez-vous que la position est relative pour que les éléments enfants soient positionnés par rapport à cette carte */
 }
 
+#map {
+    width: 100%; /* La carte elle-même occupera 100% de la largeur de son parent, c'est-à-dire la div avec la classe "map" */
+    height: 100%; /* La carte elle-même occupera 100% de la hauteur de son parent, c'est-à-dire la div avec la classe "map" */
+}
+
+.bouton-sauvegarde,
 .config {
-    margin: 0 auto;
+    margin-bottom: 60px; /* Ajoute un espacement de 60px en bas de chaque élément */
 }

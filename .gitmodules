@@ -16,3 +16,6 @@
 [submodule "catkin_ws/src/YDLidar-SDK"]
 	path = catkin_ws/src/YDLidar-SDK
 	url = git@github.com:YDLIDAR/YDLidar-SDK.git
+[submodule "catkin_ws/src/ydlidar_ros_driver"]
+	path = catkin_ws/src/ydlidar_ros_driver
+	url = git@github.com:YDLIDAR/ydlidar_ros_driver.git

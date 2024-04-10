@@ -4,17 +4,16 @@ var error = false;
 var pose = {
     orientation: {
         w: 0.0,
-        x: 0,
-        y: 0,
+        x: 0.0,
+        y: 0.0,
         z: 0.0
     },
     position: {
         x: 0.0,
         y: 0.0,
-        z: 0
+        z: 0.0
     }
 };
-var odom = pose;
 
 var clock = {
     nsecs: 0,
@@ -48,6 +47,7 @@ setInterval(function() {
     requestTopicValue('/odometry/filtered');
     requestTopicValue('/pif/gps');
     setTimeout(500);
+    fetchImage();
     updateData(pose, clock);
     console.log("INFO SLEEPING");
       
@@ -55,14 +55,15 @@ setInterval(function() {
     
     updateMarker(NewLat - DiffLat, NewLng - DiffLng);
     
-}, 2000);
+}, 200);
 
 function fetchImage(){
     const liveImage = document.getElementById('live-image');
     liveImage.src = "/current_image?time=" + new Date().getTime();
+    console.log("current_image time= " + new Date().getTime());
 }
 
-setInterval(fetchImage,500);
+// setInterval(fetchImage,500);
 
 function command(e) {
     console.log("[DEBUG] Name command: "  +e.name);
@@ -73,14 +74,14 @@ function command(e) {
 
 function commandStatus(auto) {
     console.log("[DEBUG] Name command: "  +auto.checked);
-    $.post( "/commandstatus", {
+    $.post( "/command_status", {
         comd: auto.checked 
     });
 }
 
 function continueStatus(auto) {
     console.log("[DEBUG] Name command: "  +auto.checked);
-    $.post( "/continueStatus", {
+    $.post( "/continue_status", {
         comd: auto.checked 
     });
 }

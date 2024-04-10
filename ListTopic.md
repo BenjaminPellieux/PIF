@@ -8,7 +8,7 @@ Ce document à pour but de présenter l'ensemble des topics utilisés par notre 
 ### Publish
 
 Envoi les point de la zone GPS 
-- Topic Name : /Area/Point
+- Topic Name : /pif/web/area/point
 - Topic Type : sensor_msgs/NavSatFix
 [Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
 
@@ -38,8 +38,13 @@ Position GPS de Wall-E
 [Documentation](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/NavSatFix.html)
 
 
-- Topic Name : 
-- Topic Type : 
+- Topic Name : /pif/hard/label
+- Topic Type : std_msgs/String
+[Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/String.html)
+
+
+- Topic Name : /pif/hard/aspi
+- Topic Type : std_msgs/Bool 
 [Documentation](http://docs.ros.org/en/melodic/api/std_msgs/html/msg/Bool.html)
 
 ### Coord GPS node

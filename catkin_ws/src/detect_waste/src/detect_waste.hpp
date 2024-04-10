@@ -14,8 +14,8 @@
 
 
 
-//#define IP_SERV "10.8.0.1"
-#define IP_SERV "0.0.0.0"
+#define IP_SERV "54.36.103.170"
+//#define IP_SERV "0.0.0.0"
 #define PORT_SERV "7070"
 #define MIN_AREA 5
 #define MAX_AREA 1000
