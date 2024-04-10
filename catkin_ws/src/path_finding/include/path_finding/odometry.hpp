@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 //#include <sensor_msgs/Imu.h>
 #include <nav_msgs/Odometry.h>
+#include <std_msgs/Float32.h>
 #include <geometry_msgs/PointStamped.h>
 
 #ifndef undefined
@@ -25,7 +26,7 @@ class Odometry {
 
         Odometry(ros::NodeHandle);
         void callback_gps(const geometry_msgs::PointStamped::ConstPtr &nav);
-        void callback_odom(const nav_msgs::Odometry::ConstPtr &odometry);
+        void callback_odom(const std_msgs::Float32::ConstPtr &odometry);
 };
 
 #endif

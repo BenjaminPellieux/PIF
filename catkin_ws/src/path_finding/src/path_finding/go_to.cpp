@@ -34,8 +34,7 @@ int Go_To::modify_target_from_lidar(double *coef_x,
 						double *accel_z,
 						double *obs_try,
 						int *try_nb,
-						double *target_ang,
-						uint8_t dist_at_begin) {
+						double *target_ang) {
 	int ret = 0;
 	double angle_to_add;
 
@@ -110,14 +109,15 @@ int Go_To::run()
 	double obs_coef_x;
 	double obs_accel_z;
 	double dist_to_dest;
-	uint8_t start_move = 0;
+	double dist_to_dest_old;
+	int inaccessible_counter = 0;
 	while ((ros::ok()) && (cant_go_to < 0)) {
 	
 		if (Odometry::pose_called) {
 			pose_called_counter = 5;
 			Odometry::pose_called = 0;
 		} else {
-			if (pose_called_counter != 0)
+			if (pose_called_counter > 0)
 				pose_called_counter--;
 		}
 		
@@ -129,15 +129,32 @@ int Go_To::run()
 				msg.linear.x = 0;
 				msg.angular.z = 0;
 				accel = 0;
-				start_move = 1;
 				is_moving.data = 1;
 				moving.publish(is_moving);
 			} else {
 				is_moving.data = 0;
 				moving.publish(is_moving);
-				if (start_move)
-					dist_to_dest = sqrt(((cmd_pose.x - Odometry::pose.x) * (cmd_pose.x - Odometry::pose.x)) + ((cmd_pose.y - Odometry::pose.y) * (cmd_pose.y - Odometry::pose.y))) + 5;
-				start_move = 0;
+				
+				
+				dist_to_dest_old = dist_to_dest;
+				dist_to_dest = sqrt(((cmd_pose.x - Odometry::pose.x) * (cmd_pose.x - Odometry::pose.x)) + ((cmd_pose.y - Odometry::pose.y) * (cmd_pose.y - Odometry::pose.y)));
+				
+				if (dist_to_dest >= dist_to_dest_old)
+				{
+					inaccessible_counter++;
+				}
+				else 
+				{
+					inaccessible_counter--;
+				}
+				if (inaccessible_counter > INNACCESSIBLE_COUNTER_MAX) {
+					cant_go_to = 1;
+				}
+				else if (inaccessible_counter > 50)
+				{
+					printf("going too far : %lf\n", inaccessible_counter);
+				}
+				
 				
 				if (((cmd_pose.x - Odometry::pose.x) < 0) && ((cmd_pose.y - Odometry::pose.y) > 0)) {
 					op_adj = - (atan((cmd_pose.x - Odometry::pose.x)/(cmd_pose.y - Odometry::pose.y)) / 3.14) + 0.5;
@@ -162,8 +179,7 @@ int Go_To::run()
 									&obs_accel_z,
 									&obs_try,
 									&try_nb,
-									&op_adj,
-									dist_to_dest);
+									&op_adj);
 									
 				if (ret < 0) {
 					cant_go_to = 1;
@@ -186,7 +202,7 @@ int Go_To::run()
 				dist = sqrt(((cmd_pose.x - Odometry::pose.x) * (cmd_pose.x - Odometry::pose.x)) + ((cmd_pose.y - Odometry::pose.y) * (cmd_pose.y - Odometry::pose.y)));
 				
 				if ((accel < 0.1) && (dist > 1))
-					accel = accel + 0.001;
+					accel = accel + 0.0001;
 				
 				
 				
