@@ -29,7 +29,7 @@ document.getElementById('sendData').onclick = function() {
     if (lastLayer) {
         var coordinates = lastLayer.getLatLngs();
         if (coordinates[0].length != 4){
-            alert("Saisie incorrecte selectionnez une zone CARRE !")
+            alert("Saisie incorrecte selectionnez une zone RECTANGLE !")
         }
         else {
             var readableCoordinates = coordinates.map(function(latlng) {
