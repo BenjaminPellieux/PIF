@@ -1,6 +1,6 @@
 // Initialisation de la carte
 var map = L.map('map').setView([48.98479706310472, 1.7016915401253376], 18);
-var api_status = false;
+var apsi_status = false;
 var bat_level = "NONE";
 var dist_traveled = 0.0;
 var pose = {
@@ -83,9 +83,9 @@ setInterval(function() {
 async function handleAspi(topic){
     const data = await requestTopicValue(topic);
     if ("ERROR" === data){
-        api_status = "NONE";
+        apsi_status = "NONE";
     }else{
-        api_status = data.data;
+        apsi_status = data.data;
     }
 }
 
@@ -120,8 +120,8 @@ async function requestTopicValue(topic) {
 function updateTab() {
     var cell_bat = document.getElementById('battery-level');
     var cell_dist = document.getElementById('distance-traveled');
-    var cell_api = document.getElementById('etatAspirateur');
+    var cell_apsi = document.getElementById('etatAspirateur');
     cell_bat.innerText = bat_level;
     cell_dist.innerText = dist_traveled;
-    cell_api.innerHTML = api_status;
+    cell_apsi.innerHTML = apsi_status;
 }
