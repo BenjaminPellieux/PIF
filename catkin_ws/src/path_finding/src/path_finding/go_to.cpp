@@ -152,7 +152,7 @@ int Go_To::run()
 				}
 				else if (inaccessible_counter > 50)
 				{
-					printf("going too far : %lf\n", inaccessible_counter);
+					printf("going too far : %d\n", inaccessible_counter);
 				}
 				
 				
