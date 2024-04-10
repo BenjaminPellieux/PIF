@@ -9,7 +9,7 @@ class WebServer:
         self.app = Flask(__name__, static_folder='static')
         self.configure_routes()
         self.config = self.load_config(environment)
-        self.video_stream = WebVideoApp(self.config["ip_lan"])
+        self.video_stream = WebVideoApp(self.config["host"])
         self.ros_client = WebSocketApp(self.config["ip_rasp"])
         self.ros_client.start()
         self.video_stream.start()
