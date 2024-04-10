@@ -1,16 +1,16 @@
 <launch>
     <arg name="select_fct" default="" />
 
-    <node pkg="gps_transform" type="gps_reset_origin_node" name="gps_reset_origin_node" args="/pif/gps" />
+    <node pkg="gps_transform" type="gps_reset_origin_node.py" name="gps_reset_origin_node" args="/pif/gps" />
 
     <group if="$(eval select_fct == 'go_to')">
-        <node pkg="gps_transform" type="gps_transform_node" name="gps_transform_node" args="/pif/gps /pif/gps_converted" />
+        <node pkg="gps_transform" type="gps_transform_node.py" name="gps_transform_node" args="/pif/gps /pif/gps_converted" />
     </group>
     <group if="$(eval select_fct == 'zone_creation')">
-        <node pkg="gps_transform" type="gps_transform_node" name="gps_transform_node" args="/pif/area/gps /pif/zone_creation/gps_converted" />
+        <node pkg="gps_transform" type="gps_transform_node.py" name="gps_transform_node" args="/Area/Point /pif/coord_gps/area" />
     </group>
     <group if="$(eval select_fct == '')">
-        <node pkg="gps_transform" type="gps_transform_node" name="gps_transform_node" args="/pif/gps /pif/gps_converted" />
-        <node pkg="gps_transform" type="gps_transform_node" name="gps_transform_area" args="/pif/area/gps /pif/zone_creation/gps_converted" />
+        <node pkg="gps_transform" type="gps_transform_node.py" name="gps_transform_node" args="/pif/gps /pif/gps_converted" />
+        <node pkg="gps_transform" type="gps_transform_node.py" name="gps_transform_area" args="/Area/Point /pif/coord_gps/area" />
     </group>
 </launch>

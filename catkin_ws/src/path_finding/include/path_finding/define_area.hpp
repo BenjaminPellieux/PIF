@@ -19,16 +19,16 @@ private:
 
     void create_grid(geometry_msgs::Polygon);
     void set_origin(geometry_msgs::Polygon);
-    void pos_in_grid();
+    Local_Pose pos_in_grid(Local_Pose);
 public:
     bool area_recieved;
     Local_Pose next_tile,
                pose_grid,
-               origin;
+               first_tile;
     path_finding::GridStamped grid;
 
     DefineArea(ros::NodeHandle);
-    void choose_next_tile();
+    bool choose_next_tile();
     Local_Pose get_next_tile_pose();
 
     void areaCallback(const geometry_msgs::PolygonStamped::ConstPtr &);

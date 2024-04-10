@@ -4,17 +4,16 @@ var error = false;
 var pose = {
     orientation: {
         w: 0.0,
-        x: 0,
-        y: 0,
+        x: 0.0,
+        y: 0.0,
         z: 0.0
     },
     position: {
         x: 0.0,
         y: 0.0,
-        z: 0
+        z: 0.0
     }
 };
-var odom = pose;
 
 var clock = {
     nsecs: 0,
@@ -73,14 +72,14 @@ function command(e) {
 
 function commandStatus(auto) {
     console.log("[DEBUG] Name command: "  +auto.checked);
-    $.post( "/commandstatus", {
+    $.post( "/command_status", {
         comd: auto.checked 
     });
 }
 
 function continueStatus(auto) {
     console.log("[DEBUG] Name command: "  +auto.checked);
-    $.post( "/continueStatus", {
+    $.post( "/continue_status", {
         comd: auto.checked 
     });
 }

@@ -1,7 +1,11 @@
 <launch>
-  <arg name="nb_it" default="2" />
+  <arg name="nb_it" default="4" />
 
-  <include file="$(find gps_transform)/launch/gps_transform_simu.launch" args="zone_creation" />
+  <include file="$(find jackal_gazebo)/launch/jackal_world.launch" />
+
+  <include file="$(find gps_transform)/launch/gps_transform_simu.launch">
+    <arg name="select_fct" value="zone_creation" />
+  </include>
 
   <node pkg="path_finding" type="test_define_area" name="test_define_area" output="screen" args="$(arg nb_it)" />
 </launch>

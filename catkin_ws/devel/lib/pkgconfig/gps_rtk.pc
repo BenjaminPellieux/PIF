@@ -1,0 +1,8 @@
+prefix=/home/ros/PIF/catkin_ws/devel
+
+Name: gps_rtk
+Description: Description of gps_rtk
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

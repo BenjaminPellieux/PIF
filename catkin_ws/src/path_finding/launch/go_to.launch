@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
   <node name="ydlidar_node"  pkg="ydlidar_ros"  type="ydlidar_node" output="screen" respawn="false" >
     <param name="port"         type="string" value="/dev/ydlidar"/>  
@@ -22,12 +23,12 @@
 	args="192.168.131.81" />
 	
 	<node pkg="gps_transform" type="gps_transform_node.py" name=""
-	args="/pif/gps_converted" />
+	args="/pif/gps /pif/gps_converted" />
 	
 	<node pkg="scan_detect_obstacle" type="scan_detect_obstacle_node" name=""
 	args="/scan" />
 	
 	<node pkg="path_finding" type="test_go_to_node" name=""
-	args="" output="screen" />
+	args="5.0 5.0" output="screen" />
 </launch>
 
