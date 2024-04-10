@@ -134,27 +134,9 @@ int Go_To::run()
 			} else {
 				is_moving.data = 0;
 				moving.publish(is_moving);
-				
-				
-				dist_to_dest_old = dist_to_dest;
-				dist_to_dest = sqrt(((cmd_pose.x - Odometry::pose.x) * (cmd_pose.x - Odometry::pose.x)) + ((cmd_pose.y - Odometry::pose.y) * (cmd_pose.y - Odometry::pose.y)));
-				
-				if (dist_to_dest >= dist_to_dest_old)
-				{
-					inaccessible_counter++;
-				}
-				else 
-				{
-					inaccessible_counter--;
-				}
-				if (inaccessible_counter > INNACCESSIBLE_COUNTER_MAX) {
-					cant_go_to = 1;
-				}
-				else if (inaccessible_counter > 50)
-				{
-					printf("going too far : %d\n", inaccessible_counter);
-				}
-				
+				if (start_move)
+					dist_to_dest = sqrt(((cmd_pose.x - Odometry::pose.x) * (cmd_pose.x - Odometry::pose.x)) + ((cmd_pose.y - Odometry::pose.y) * (cmd_pose.y - Odometry::pose.y))) + 5;
+				start_move = 0;
 				
 				if (((cmd_pose.x - Odometry::pose.x) < 0) && ((cmd_pose.y - Odometry::pose.y) > 0)) {
 					op_adj = - (atan((cmd_pose.x - Odometry::pose.x)/(cmd_pose.y - Odometry::pose.y)) / 3.14) + 0.5;
