@@ -14,7 +14,7 @@ ZoneChecker::ZoneChecker()
  
 void ZoneChecker::gpsCallback(const sensor_msgs::NavSatFix::ConstPtr &msg)
 {
-    this->global_pos = (Point) {true, msg->latitude, msg->longitude};
+    this->odometry = (Point) {true, msg->x, msg->y};
     checkZone();
 }
  
@@ -30,12 +30,12 @@ bool ZoneChecker::isInsideRectangle()
     auto max_x = std::max_element(std::begin(table_x),std::end(table_x));
     auto min_y = std::min_element(std::begin(table_y),std::end(table_y));
     auto max_y = std::max_element(std::begin(table_y),std::end(table_y));
-    return (*min_x <= this->global_pos.lat && this->global_pos.lat <= *max_x && *min_y <= this->global_pos.lon && this->global_pos.lon <= *max_y);
+    return (*min_x <= this->odometry.x && this->odometry.x <= *max_x && *min_y <= this->odometry.y && this->odometry.y <= *max_y);
 }
  
 void ZoneChecker::checkZone()
 {
-    if ((this->global_pos.recvd) && (AllRcvd()))
+    if ((this->odometry.recvd) && (AllRcvd()))
     {
         std_msgs::Bool msg;
         if (isInsideRectangle()){   

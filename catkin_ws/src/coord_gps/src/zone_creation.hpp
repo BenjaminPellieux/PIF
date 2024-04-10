@@ -7,6 +7,8 @@
 #include <ros/ros.h>
 #include <geometry_msgs/PolygonStamped.h>
 #include <geometry_msgs/Point32.h>
+#include "path_finding/odometry.hpp"
+
 
 class ZoneDefinition {
 private:

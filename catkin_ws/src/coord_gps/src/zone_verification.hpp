@@ -11,6 +11,7 @@
 #include <geometry_msgs/Polygon.h>
 #include <geometry_msgs/PolygonStamped.h>
 #include <algorithm>
+#include "path_finding/odometry.hpp"
 
 class ZoneVerification {
 private:
