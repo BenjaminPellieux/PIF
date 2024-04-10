@@ -26,7 +26,12 @@ class Odometry {
 
         Odometry(ros::NodeHandle);
         void callback_gps(const geometry_msgs::PointStamped::ConstPtr &nav);
+        
+#ifdef SIMU
+        void callback_odom(const nav_msgs::Odometry::ConstPtr &odometry);
+#else
         void callback_odom(const std_msgs::Float32::ConstPtr &odometry);
+#endif 
 };
 
 #endif

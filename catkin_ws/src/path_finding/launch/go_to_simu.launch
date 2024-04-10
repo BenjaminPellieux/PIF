@@ -1,11 +1,15 @@
 <?xml version="1.0"?>
 <launch>
-	<include file="$(find jackal_gazebo)/launch/jackal_world.launch">
-		<arg name="config" value="front_laser" />
-	</include>
-	<include file="$(find gps_transform)/launch/gps_transform_simu.launch">
-		<arg name="select_fct" value="go_to" />
-	</include>
-	<node pkg="scan_detect_obstacle" type="scan_detect_obstacle_node" name="" args="/front/scan" />
-	<node pkg="path_finding" type="test_go_to_node" name="" args="" output="screen" />
+    <!-- Start the gps acquisition and transformation -->  
+    <node pkg="gps_transform" type="gps_transform_node.py" args="/navsat/fix /pif/gps_converted" name="" />
+    
+    <node pkg="gps_transform" type="gps_reset_origin_node.py" args="/navsat/fix" name=""/>
+    
+
+    <!-- Start the lidar scan-->
+    <node pkg="scan_detect_obstacle" type="scan_detect_obstacle_node" name="" args="/front/scan"/>
+
+    <!-- Start goto test -->
+    <node pkg="path_finding" type="test_go_to_node" name="" args="5.0 5.0" output="screen" />
 </launch>
+
