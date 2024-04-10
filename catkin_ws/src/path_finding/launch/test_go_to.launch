@@ -1,37 +1,25 @@
 <?xml version="1.0"?>
 <launch>
-  <node name="ydlidar_node"  pkg="ydlidar_ros"  type="ydlidar_node" output="screen" respawn="false" >
-    <param name="port"         type="string" value="/dev/ydlidar"/>  
-    <param name="baudrate"         type="int" value="128000"/>  
-    <param name="frame_id"     type="string" value="laser_frame"/>
-    <param name="resolution_fixed"    type="bool"   value="true"/>
-    <param name="auto_reconnect"    type="bool"   value="true"/>
-    <param name="reversion"    type="bool"   value="false"/>
-    <param name="angle_min"    type="double" value="-180" />
-    <param name="angle_max"    type="double" value="180" />
-    <param name="range_min"    type="double" value="0.1" />
-    <param name="range_max"    type="double" value="12.0" />
-    <param name="ignore_array" type="string" value="" />
-    <param name="frequency"    type="double" value="8"/>
-    <param name="samp_rate"    type="int"    value="5"/>
-  </node>
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser4"
-    args="0.2245 0.0 0.2 0.0 0.0  0.0 /base_footprint /laser_frame 40" />
+    <!-- Start the gps acquisition and transformation -->
+    <arg name="rtk_adress" default="192.168.131.81" />
+    <node name="gps_rtk_node" pkg="gps_rtk" type="gps_rtk_node" args="$(arg rtk_adress)" />
+    <include file="$(find gps_transform)/launch/gps_transform.launch" />
+    <node name="coord_gps" pkg="coord_gps" type="coord_gps" />
     
-    
-	<node pkg="pif_gps_convert" type="pif_gps_convert_node" name=""
-	args="192.168.131.81" />
-	
-	<node pkg="gps_transform" type="gps_reset_origin_node.py" name=""
-	args="/pif/gps" />
-	
-	<node pkg="gps_transform" type="gps_transform_node.py" name=""
-	args="/pif/gps /pif/gps_converted" />
-	
-	<node pkg="scan_detect_obstacle" type="scan_detect_obstacle_node" name=""
-	args="/scan" />
-	
-	<node pkg="path_finding" type="test_go_to_node" name=""
-	args="5.0 5.0" output="screen" />
+    <!-- Start the arduino magneto communication -->
+    <arg name="arduino_port_magneto" default="ACM0" />
+    <arg name="arduino_baudrate_magneto" default="115200" />
+    <node name="arduino_comm" pkg="rosserial_python" type="serial_node.py" args="/dev/tty$(arg arduino_port_magneto) _baud:=$(arg arduino_baudrate_magneto)" />
+
+
+    <!-- Start the lidar -->
+    <include file="$(find ydlidar_ros)/launch/X4.launch" />
+    <node name="scan_detect_obstacle" pkg="scan_detect_obstacle" type="scan_detect_obstacle" args="/scan"/>
+
+    <!-- Start environnemental vision process -->
+    <node name="detect_waste_node" pkg="detect_waste" type="detect_waste_node" />
+
+    <!-- Start goto test -->
+    <node pkg="path_finding" type="test_go_to_node" name="" args="5.0 5.0" output="screen" />
 </launch>
 
