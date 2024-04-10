@@ -21,10 +21,33 @@ Change into the project directory:
 Run the main server script:
 
 ```sh
-python3 code_serveurpif.py
+python3 code_serveur_pif.py
 ```
 
 This will start the Flask server and other necessary services like the video streaming and WebSocket communication modules.
+
+On your Lubuntu VM you have to start the rosbridge app 
+```sh
+roslaunch rosbridge_server rosbridge_websocket.launch port:=9090 ip:=10.8.0.3
+```
+
+#### 4.1 Start Local
+
+Then to get the Jackal topic on your VM you'll have to use Jackal Gazebo simulation
+
+```sh
+roslaunch jackal_gazebo jackal_world.launch
+```
+
+### 4.2 Start on serveur
+
+To Run the main server script on the ovh server you'll have to add the parameter ovh while starting code_server_pif.py :
+```sh
+python3 code_serveur_pif.py ovh 
+```
+
+You can make the programme un back ground by additing & at the end of the command line
+
 
 ### 5. Access the Web Interface
 Open a web browser and go to:
