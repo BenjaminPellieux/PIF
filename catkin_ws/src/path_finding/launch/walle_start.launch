@@ -1,7 +1,6 @@
 <launch>
     <!-- Start the gps acquisition and transformation -->
     <arg name="rtk_adress" default="192.168.131.81" />
-<<<<<<< HEAD
     <node name="gps_rtk_node" pkg="gps_rtk" type="node" args="$(arg rtk_adress)" />
     <node name="pif_magneto_node" pkg="pif_magneto" type="pif_magneto_node" />
     <include file="$(find gps_transform)/launch/gps_transform.launch" />
@@ -10,21 +9,6 @@
     <!-- Start the lidar -->
     <include file="$(find ydlidar_ros)/launch/X4.launch" />
     <node name="scan_detect_obstacle" pkg="scan_detect_obstacle" type="scan_detect_obstacle_node" />
-=======
-    <node name="gps_rtk_node" pkg="gps_rtk" type="gps_rtk_node" args="$(arg rtk_adress)" />
-    <include file="$(find gps_transform)/launch/gps_transform.launch" />
-    <node name="coord_gps" pkg="coord_gps" type="coord_gps" />
-    
-    <!-- Start the arduino magneto communication -->
-    <arg name="arduino_port_magneto" default="ACM0" />
-    <arg name="arduino_baudrate_magneto" default="115200" />
-    <node name="arduino_comm" pkg="rosserial_python" type="serial_node.py" args="/dev/tty$(arg arduino_port_magneto) _baud:=$(arg arduino_baudrate_magneto)" />
-
-
-    <!-- Start the lidar -->
-    <include file="$(find ydlidar_ros)/launch/X4.launch" />
-    <node name="scan_detect_obstacle" pkg="scan_detect_obstacle" type="scan_detect_obstacle" args="/scan"/>
->>>>>>> b64db5bec47d6e751acd9ca7123bf63275c10097
 
     <!-- Start the arduino communication -->
     <arg name="arduino_port" default="ACM1" />
