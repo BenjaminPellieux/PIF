@@ -26,6 +26,7 @@ def handle_zone(data: list, ros_client: WebSocketApp):
             ros_client.publish('/pif/web/area/point', 'sensor_msgs/NavSatFix', message)
         except:
             print("[ERROR] WebSocket closed")
+            ros_client.reconnect()
 
 def change_speed(speed: str, ros_client: WebSocketApp):
     global current_speed
@@ -37,8 +38,7 @@ def change_continue(status: str, ros_client: WebSocketApp):
     global cmd_continue
     if ros_client.topic_data:
         cmd_continue = bool(status)
-        print(f"[DEBUG] {cmd_continue=}")
-    
+        
 def handle_command(cmnd: str, ros_client: WebSocketApp):
     global current_speed
     global cmd_continue
@@ -56,6 +56,7 @@ def handle_command(cmnd: str, ros_client: WebSocketApp):
             ros_client.publish('/jackal_velocity_controller/cmd_vel', 'geometry_msgs/Twist', commande_move)
         except:
             print("[ERROR] WebSocket closed")
+            ros_client.reconnect()
 
         for command_type, values in commande_move.items():
             for axis, value in values.items():

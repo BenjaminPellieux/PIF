@@ -61,6 +61,7 @@ class WebServer:
                 self.ros_client.publish('/pif/web/controle', 'std_msgs/Bool', {"data":request.form["comd"]})
             except:
                 print("[ERROR] WebSocket closed")
+                self.ros_client.reconnect()
                 return "400"
             return "200"
 
@@ -78,6 +79,8 @@ class WebServer:
             #    print(f"[ERROR][UPDATE_TOPIC] NO DATA FOUND ")
             if self.ros_client.topic_data.get(topic):
                 return jsonify(self.ros_client.topic_data.get(topic))
+            
+            self.ros_client.reconnect()
             return jsonify("ERROR")
 
         @app.route('/current_image')
