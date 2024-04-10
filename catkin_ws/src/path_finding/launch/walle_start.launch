@@ -1,14 +1,14 @@
 <launch>
     <!-- Start the gps acquisition and transformation -->
     <arg name="rtk_adress" default="192.168.131.81" />
-    <node name="gps_rtk_node" pkg="gps_rtk" type="gps_rtk_node" args="$(arg rtk_adress)" />
+    <node name="gps_rtk_node" pkg="gps_rtk" type="node" args="$(arg rtk_adress)" />
     <node name="pif_magneto_node" pkg="pif_magneto" type="pif_magneto_node" />
     <include file="$(find gps_transform)/launch/gps_transform.launch" />
-    <node name="coord_gps" pkg="coord_gps" type="coord_gps" />
+    <node name="coord_gps" pkg="coord_gps" type="gps_node" />
 
     <!-- Start the lidar -->
     <include file="$(find ydlidar_ros)/launch/X4.launch" />
-    <node name="scan_detect_obstacle" pkg="scan_detect_obstacle" type="scan_detect_obstacle" />
+    <node name="scan_detect_obstacle" pkg="scan_detect_obstacle" type="scan_detect_obstacle_node" />
 
     <!-- Start the arduino communication -->
     <arg name="arduino_port" default="ACM0" />
@@ -16,7 +16,7 @@
     <node name="arduino_comm" pkg="rosserial_python" type="serial_node.py" args="/dev/tty$(arg arduino_port) _baud:=$(arg arduino_baudrate)" />
 
     <!-- Start environnemental vision process -->
-    <node name="detect_waste_node" pkg="detect_waste" type="detect_waste_node" />
+    <node name="detect_waste_node" pkg="detect_waste" type="node" />
 
     <!-- Start path finding -->
     <node name="path_finding_node" pkg="path_finding" type="path_finding_node" />
