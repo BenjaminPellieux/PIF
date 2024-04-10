@@ -26,12 +26,17 @@ int main(int argc, char **argv) {
         if(!mode) {
             if(define_area.area_recieved) {
                 go_to.set_target(define_area.first_tile.x, define_area.first_tile.y);
-                go_to.run();
+                if(go_to.run() == 1) {
+                    ROS_INFO("Area unreacheable.");
+                    go_to.set_target(0.0, 0.0);
+                    go_to.run();
+                }
                 define_area.area_recieved = false;
             } else if((define_area.first_tile.x != 0) && (define_area.first_tile.y != 0)) {
                 if(!check_waste.spin()) {
                     check_waste.go_to_waste();
                 } else {
+                    define_area.grid.gridY[define_area.pose_grid.y].gridX[define_area.pose_grid.x].done = true;
                     if(!define_area.choose_next_tile()) {
                         go_to.set_target(define_area.first_tile.x, define_area.first_tile.y);
                         go_to.run();
@@ -40,7 +45,9 @@ int main(int argc, char **argv) {
                     Local_Pose next = define_area.get_next_tile_pose();
                     go_to.set_target(next.x, next.y);
                 }
-                go_to.run();
+                if(go_to.run() == 1) {
+                    define_area.grid.gridY[define_area.pose_grid.y].gridX[define_area.pose_grid.x].unreachable = true;
+                }
             }
         }
         ros::spinOnce();

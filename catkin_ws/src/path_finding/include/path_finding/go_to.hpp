@@ -19,6 +19,8 @@
 
 #define RANGE_GOOD_ENOUGH	1
 
+#define INNACCESSIBLE_COUNTER_MAX	100
+
 #define SPEED_FWD	1.0
 
 #define TRY_LEFT	-1
