@@ -1,0 +1,8 @@
+prefix=/home/ros/PIF/catkin_ws/devel
+
+Name: path_finding
+Description: Description of path_finding
+Version: 0.0.0
+Cflags: -I/home/ros/PIF/catkin_ws/devel/include -I/home/ros/PIF/catkin_ws/src/path_finding/include
+Libs: -L${prefix}/lib -ldefine_area -lcheck_waste -lgo_to -lodometry
+Requires: roscpp std_msgs geometry_msgs

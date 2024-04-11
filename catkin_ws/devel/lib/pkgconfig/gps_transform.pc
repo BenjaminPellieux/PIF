@@ -1,0 +1,8 @@
+prefix=/home/ros/PIF/catkin_ws/devel
+
+Name: gps_transform
+Description: Description of gps_transform
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
