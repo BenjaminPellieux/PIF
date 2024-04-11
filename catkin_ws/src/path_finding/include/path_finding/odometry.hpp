@@ -7,6 +7,8 @@
 #ifndef undefined
 #define undefined
 
+#define SIMU
+
 typedef struct {
     double x;
     double y;

@@ -13,18 +13,48 @@ CheckWaste::CheckWaste(ros::NodeHandle nh) : Odometry(nh) {
 bool CheckWaste::spin() {
     bool clear = true;
     geometry_msgs::Twist cmd_vel;
-    double orientation_max = Odometry::rot + 2.0;
+    double target_angle;
     ros::Rate rate(6);
     
     cmd_vel.angular.z = 0.5;
-    while(Odometry::rot < orientation_max) {
-        if(this->detectWaste) {
-            clear = false;
-            break;
-        }
-        this->cmd_vel_pub.publish(cmd_vel);
-        rate.sleep();
-        ros::spinOnce();
+    if(Odometry::rot < 0.0) {
+    	target_angle = 1.0;
+    	while(Odometry::rot > -1.0) {
+    		printf("orientation now : %lf\norientation target : %lf", Odometry::rot, target_angle);
+    		this->cmd_vel_pub.publish(cmd_vel);
+    		ros::spinOnce();
+    	}
+    	
+    	cmd_vel.angular.z = 0.1;
+    	while(Odometry::rot < target_angle) {
+        		if(this->detectWaste) {
+            		clear = false;
+            		break;
+        		}
+        		printf("orientation now : %lf\norientation target : %lf", Odometry::rot, target_angle);
+        		this->cmd_vel_pub.publish(cmd_vel);
+        		rate.sleep();
+        		ros::spinOnce();
+    	}
+    } else {
+    	target_angle = -1.0;
+    	while(Odometry::rot < 1.0) {
+    		printf("orientation now : %lf\norientation target : %lf", Odometry::rot, target_angle);
+    		this->cmd_vel_pub.publish(cmd_vel);
+    		ros::spinOnce();
+    	}
+    	
+    	cmd_vel.angular.z = 0.1;
+    	while(Odometry::rot > target_angle) {
+        		if(this->detectWaste) {
+            		clear = false;
+            		break;
+        		}
+        		printf("orientation now : %lf\norientation target : %lf", Odometry::rot, target_angle);
+        		this->cmd_vel_pub.publish(cmd_vel);
+        		rate.sleep();
+        		ros::spinOnce();
+    	}
     }
     return clear;
 }

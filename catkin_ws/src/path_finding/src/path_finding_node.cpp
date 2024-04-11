@@ -4,7 +4,6 @@
 
 #include <std_msgs/Bool.h>
 
-
 ros::Subscriber auto_sub;
 bool mode;
 
@@ -26,6 +25,7 @@ int main(int argc, char **argv) {
         if(!mode) {
             if(define_area.area_recieved) {
                 go_to.set_target(define_area.first_tile.x, define_area.first_tile.y);
+                printf("Origin : x:%lf y:%lf\nGrid : %ld x %ld", define_area.first_tile.x, define_area.first_tile.y, define_area.grid.gridY[0].gridX.size(), define_area.grid.gridY.size());
                 if(go_to.run() == 1) {
                     ROS_INFO("Area unreacheable.");
                     go_to.set_target(0.0, 0.0);
@@ -43,6 +43,7 @@ int main(int argc, char **argv) {
                         break;
                     }
                     Local_Pose next = define_area.get_next_tile_pose();
+                    ROS_INFO("Target next_tile : x:%lf y:%lf", next.x, next.y);
                     go_to.set_target(next.x, next.y);
                 }
                 if(go_to.run() == 1) {

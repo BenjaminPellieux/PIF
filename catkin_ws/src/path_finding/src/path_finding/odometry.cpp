@@ -5,11 +5,11 @@ Odometry::Odometry(ros::NodeHandle nh) {
     this->pose = (Local_Pose) {0.0, 0.0};
 
 #ifdef SIMU
-	this->sub_gps = nh.subscribe("/pif/gps_converted", 1000, &Odometry::callback_gps, this);
-#else 
-	this->sub_gps = nh.subscribe("/pif/gps_converted", 1000, &Odometry::callback_gps, this);
-#endif
 	this->sub_odom = nh.subscribe("/odometry/filtered", 1000, &Odometry::callback_odom, this);
+#else 
+	this->sub_odom = nh.subscribe("/pif/magneto/data", 1000, &Odometry::callback_odom, this);
+#endif
+	this->sub_gps = nh.subscribe("/pif/gps_converted", 1000, &Odometry::callback_gps, this);
 }
 
 void Odometry::callback_gps(const geometry_msgs::PointStamped::ConstPtr &nav) {
