@@ -8,7 +8,7 @@
 #include <path_finding/PoseWaste.h>
 
 
-#define DETECT_RANGE 12.0
+#define DETECT_RANGE 5.0
 #define WIDTH_SCREEN 320
 #define HEIGHT_SCREEN 240
 

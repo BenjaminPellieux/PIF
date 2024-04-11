@@ -9,12 +9,12 @@
 #include <path_finding/GridStamped.h>
 
 
-#define DETECT_RANGE 12.0
+#define DETECT_RANGE 5.0
 
 
 class DefineArea : public Odometry {
 private:
-    float nbr_subGrid_x, nbr_subGrid_y;
+    double nbr_subGrid_x, nbr_subGrid_y;
     ros::Subscriber area_sub;
 
     void create_grid(geometry_msgs::Polygon);

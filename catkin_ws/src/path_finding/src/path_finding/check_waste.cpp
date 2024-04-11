@@ -18,29 +18,31 @@ bool CheckWaste::spin() {
     
     cmd_vel.angular.z = 0.5;
     if(Odometry::rot < 0.0) {
-    	target_angle = 1.0;
-    	while(Odometry::rot > -1.0) {
-    		printf("orientation now : %lf\norientation target : %lf", Odometry::rot, target_angle);
+    	target_angle = 0.99;
+    	while(Odometry::rot > -0.99) {
+    		printf("orientation now : %lf\n", Odometry::rot);
     		this->cmd_vel_pub.publish(cmd_vel);
+    		rate.sleep();
     		ros::spinOnce();
     	}
     	
-    	cmd_vel.angular.z = 0.1;
+    	cmd_vel.angular.z = -0.1;
     	while(Odometry::rot < target_angle) {
         		if(this->detectWaste) {
             		clear = false;
             		break;
         		}
-        		printf("orientation now : %lf\norientation target : %lf", Odometry::rot, target_angle);
+        		printf("orientation now : %lf, orientation target : %lf\n", Odometry::rot, target_angle);
         		this->cmd_vel_pub.publish(cmd_vel);
         		rate.sleep();
         		ros::spinOnce();
     	}
     } else {
-    	target_angle = -1.0;
-    	while(Odometry::rot < 1.0) {
-    		printf("orientation now : %lf\norientation target : %lf", Odometry::rot, target_angle);
+    	target_angle = -0.99;
+    	while(Odometry::rot < 0.99) {
+    		printf("orientation now : %lf\n", Odometry::rot);
     		this->cmd_vel_pub.publish(cmd_vel);
+    		rate.sleep();
     		ros::spinOnce();
     	}
     	
@@ -50,7 +52,7 @@ bool CheckWaste::spin() {
             		clear = false;
             		break;
         		}
-        		printf("orientation now : %lf\norientation target : %lf", Odometry::rot, target_angle);
+        		printf("orientation now : %lf, orientation target : %lf\n", Odometry::rot, target_angle);
         		this->cmd_vel_pub.publish(cmd_vel);
         		rate.sleep();
         		ros::spinOnce();
