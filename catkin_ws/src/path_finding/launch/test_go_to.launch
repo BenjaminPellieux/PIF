@@ -2,9 +2,11 @@
 <launch>
     <!-- Start the gps acquisition and transformation -->
     <arg name="rtk_adress" default="192.168.131.81" />
-    <node name="gps_rtk_node" pkg="gps_rtk" type="gps_rtk_node" args="$(arg rtk_adress)" />
-    <include file="$(find gps_transform)/launch/gps_transform.launch" />
-    <node name="coord_gps" pkg="coord_gps" type="coord_gps" />
+    <node name="gps_rtk_node" pkg="gps_rtk" type="node" args="$(arg rtk_adress)" />
+    
+    <node pkg="gps_transform" type="gps_transform_node.py" args="/pif/gps /pif/gps_converted" name="" />
+    
+    <node pkg="gps_transform" type="gps_reset_origin_node.py" args="/pif/gps" name=""/>
     
     <!-- Start the arduino magneto communication -->
     <arg name="arduino_port_magneto" default="ACM0" />
@@ -14,10 +16,8 @@
 
     <!-- Start the lidar -->
     <include file="$(find ydlidar_ros)/launch/X4.launch" />
-    <node name="scan_detect_obstacle" pkg="scan_detect_obstacle" type="scan_detect_obstacle" args="/scan"/>
-
-    <!-- Start environnemental vision process -->
-    <node name="detect_waste_node" pkg="detect_waste" type="detect_waste_node" />
+    
+    <node name="" pkg="scan_detect_obstacle" type="scan_detect_obstacle_node" args="/scan"/>
 
     <!-- Start goto test -->
     <node pkg="path_finding" type="test_go_to_node" name="" args="5.0 5.0" output="screen" />

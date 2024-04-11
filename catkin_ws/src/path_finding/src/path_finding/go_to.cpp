@@ -34,8 +34,7 @@ int Go_To::modify_target_from_lidar(double *coef_x,
 						double *accel_z,
 						double *obs_try,
 						int *try_nb,
-						double *target_ang,
-						uint8_t dist_at_begin) {
+						double *target_ang) {
 	int ret = 0;
 	double angle_to_add;
 
@@ -48,43 +47,43 @@ int Go_To::modify_target_from_lidar(double *coef_x,
 		*coef_x = 1;
 	} else if (obs_dist < 1) { //if too close
 		*coef_x = 0;//stop
-	} else if (obs_dist < 2) {
-		//if obstacle 
-		ret = 1;
-		if (*try_nb == NO_OBS) {
-			*try_nb++;
-			if (obs_ang < 0) {
-				*obs_try = TRY_RIGHT;
-				printf("obs on right\n");
-			} else {
-				*obs_try = TRY_LEFT;
-				printf("obs on left\n");
-			}
-		} 
-		
-		if (*try_nb) {
-			if (obs_ang > 0.6)
-				obs_ang = 0.6;
-			if (obs_ang < -0.6)
-				obs_ang = - 0.6;
+	} else if (obs_dist < 2.5) {
+		if (obs_dist < 2) {
+			//if obstacle 
+			ret = 1;
+			if (*try_nb == NO_OBS) {
+				*try_nb++;
+				if (obs_ang < 0) {
+					*obs_try = TRY_RIGHT;
+					printf("obs on right\n");
+				} else {
+					*obs_try = TRY_LEFT;
+					printf("obs on left\n");
+				}
+			} 
 			
-			if (obs_ang > 0) {
-				*target_ang = obs_ang - 0.6;
-			} else {
-				*target_ang = obs_ang + 0.6;
-			}
-			//ROS_INFO("new target = %lf", *target_ang);
-			
-			if (*target_ang > 1) 
-				*target_ang - 2;
-			if (*target_ang < -1) 
-				*target_ang + 2;
+			if (*try_nb) {
+				if (obs_ang > 0.6)
+					obs_ang = 0.6;
+				if (obs_ang < -0.6)
+					obs_ang = - 0.6;
 				
-			*coef_x = obs_dist - 1;
-			
-			
-			
+				if (obs_ang > 0) {
+					*target_ang = obs_ang - 0.6;
+				} else {
+					*target_ang = obs_ang + 0.6;
+				}
+				//ROS_INFO("new target = %lf", *target_ang);
+				
+				if (*target_ang > 1) 
+					*target_ang - 2;
+				if (*target_ang < -1) 
+					*target_ang + 2;
+			}	
 		}
+		
+		*coef_x = (obs_dist - 1) * 0.66;
+		
 	} else {
 		*obs_try = 0;
 		*try_nb = 0;
@@ -110,14 +109,16 @@ int Go_To::run()
 	double obs_coef_x;
 	double obs_accel_z;
 	double dist_to_dest;
-	uint8_t start_move = 0;
+	double dist_to_dest_old;
+	long int inaccessible_counter = 0;
+	int coef_dist_inv_innaccessible;
 	while ((ros::ok()) && (cant_go_to < 0)) {
 	
 		if (Odometry::pose_called) {
 			pose_called_counter = 5;
 			Odometry::pose_called = 0;
 		} else {
-			if (pose_called_counter != 0)
+			if (pose_called_counter > 0)
 				pose_called_counter--;
 		}
 		
@@ -129,15 +130,39 @@ int Go_To::run()
 				msg.linear.x = 0;
 				msg.angular.z = 0;
 				accel = 0;
-				start_move = 1;
+				is_moving.data = 0;
+				cant_go_to = 0;
+				moving.publish(is_moving);
+				return cant_go_to;
+			} else {
 				is_moving.data = 1;
 				moving.publish(is_moving);
-			} else {
-				is_moving.data = 0;
-				moving.publish(is_moving);
-				if (start_move)
-					dist_to_dest = sqrt(((cmd_pose.x - Odometry::pose.x) * (cmd_pose.x - Odometry::pose.x)) + ((cmd_pose.y - Odometry::pose.y) * (cmd_pose.y - Odometry::pose.y))) + 5;
-				start_move = 0;
+				
+				
+				dist_to_dest_old = dist_to_dest;
+				dist_to_dest = sqrt(((cmd_pose.x - Odometry::pose.x) * (cmd_pose.x - Odometry::pose.x)) + ((cmd_pose.y - Odometry::pose.y) * (cmd_pose.y - Odometry::pose.y)));
+				
+				coef_dist_inv_innaccessible = 101 - ((dist_to_dest < 100) ? dist_to_dest : 100);
+				printf("coef too far : %d\n", coef_dist_inv_innaccessible);
+				if (dist_to_dest >= dist_to_dest_old)
+				{
+					inaccessible_counter += coef_dist_inv_innaccessible;
+				}
+				else 
+				{
+					inaccessible_counter -= coef_dist_inv_innaccessible;
+					if (inaccessible_counter <= -100) {
+						inaccessible_counter = -100;
+					}
+				}
+				if (inaccessible_counter > INNACCESSIBLE_COUNTER_MAX)
+				{
+					
+					cant_go_to = 1;
+				}
+				
+				printf("going too far : %ld\n", inaccessible_counter);
+				
 				
 				if (((cmd_pose.x - Odometry::pose.x) < 0) && ((cmd_pose.y - Odometry::pose.y) > 0)) {
 					op_adj = - (atan((cmd_pose.x - Odometry::pose.x)/(cmd_pose.y - Odometry::pose.y)) / 3.14) + 0.5;
@@ -155,15 +180,13 @@ int Go_To::run()
 				
 				if (op_adj > 1)
 					op_adj -= 2;
-				printf("r_z : %lf\n", Odometry::rot);
-				printf("dest angle from origin : %lf\n", op_adj);
-				printf("obs_angle : %lf\n", obs_ang);
+				printf("is at x : %lf\t y : %lf\n", pose.x, pose.y);
+				printf("going at x : %lf\t y : %lf\n", cmd_pose.x, cmd_pose.y);
 				ret = modify_target_from_lidar(&obs_coef_x,
 									&obs_accel_z,
 									&obs_try,
 									&try_nb,
-									&op_adj,
-									dist_to_dest);
+									&op_adj);
 									
 				if (ret < 0) {
 					cant_go_to = 1;
@@ -186,15 +209,19 @@ int Go_To::run()
 				dist = sqrt(((cmd_pose.x - Odometry::pose.x) * (cmd_pose.x - Odometry::pose.x)) + ((cmd_pose.y - Odometry::pose.y) * (cmd_pose.y - Odometry::pose.y)));
 				
 				if ((accel < 0.1) && (dist > 1))
-					accel = accel + 0.001;
+					accel = accel + 0.0005;
 				
-				
-				
-				
-				msg.linear.x = ((accel * sqrt(((cmd_pose.x - Odometry::pose.x) * (cmd_pose.x - Odometry::pose.x)) + ((cmd_pose.y - Odometry::pose.y) * (cmd_pose.y - Odometry::pose.y)))) / 2) * obs_coef_x;
+				msg.linear.x = ((accel * dist) / 2) * obs_coef_x;
 				
 				if (msg.linear.x >= 0.5)
 					msg.linear.x = 0.5;
+					
+				msg.angular.z = msg.angular.z;
+				
+				if (msg.angular.z > 0.2)
+				{
+					msg.angular.z = 0.2;
+				}
 			}
 			cmd_xy.publish(msg);
 		} else {
