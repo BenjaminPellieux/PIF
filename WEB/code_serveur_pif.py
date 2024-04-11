@@ -75,10 +75,9 @@ class WebServer:
             data = request.json
             topic = data['topic']
             print(f"[INFO][UPDATE_TOPIC] topic: {topic} type: {topic_type_dict[topic]} Data {True if self.ros_client.topic_data.get(topic) else False}")
-            #    print(f"[ERROR][UPDATE_TOPIC] NO DATA FOUND ")
             if self.ros_client.topic_data.get(topic):
                 return jsonify(self.ros_client.topic_data.get(topic))
-            
+            print(f"[ERROR][UPDATE_TOPIC] NO DATA FOUND ")
             return jsonify("ERROR")
 
         @app.route('/current_image')

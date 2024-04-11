@@ -40,7 +40,6 @@ class WebSocketApp(Thread):
 
     def on_error(self, ws: websocket, error: str) -> None:
         print("[INFO][ON_ERROR] Erreur :", error)
-        self.run()
 
     def on_close(self,  ws:  websocket) -> None:
         print("[INFO][ON_CLOSE] Connexion fermée. Tentative de reconnexion...")

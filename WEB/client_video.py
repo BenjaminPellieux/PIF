@@ -5,6 +5,7 @@ from threading import Thread
 from socket import socket, AF_INET, SOCK_DGRAM
 from cv2 import imdecode, IMREAD_COLOR, imwrite
 from numpy import frombuffer, uint8
+from time import sleep
 
 class WebVideoApp(Thread):
     def __init__(self, server_ip: str = "0.0.0.0", server_port: int = 7070 ):
@@ -19,6 +20,7 @@ class WebVideoApp(Thread):
             image = imdecode(frombuffer(data, uint8), IMREAD_COLOR)
             self.image = image
             imwrite('tmp/PIF.jpg', self.image)
+            sleep(0.5)
 
 
 
