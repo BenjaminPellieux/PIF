@@ -1,0 +1,11 @@
+<launch>
+    <!-- Start the gps acquisition and transformation -->
+    <include file="$(find gps_transform)/launch/gps_transform_simu.launch" />
+    <node name="coord_gps" pkg="coord_gps" type="gps_node" />
+
+    <!-- Start the lidar -->
+    <node name="scan_detect_obstacle" pkg="scan_detect_obstacle" type="scan_detect_obstacle_node" args="/front/scan" />
+
+    <!-- Start path finding -->
+    <node name="path_finding_node" pkg="path_finding" type="path_finding_node" />
+</launch>
