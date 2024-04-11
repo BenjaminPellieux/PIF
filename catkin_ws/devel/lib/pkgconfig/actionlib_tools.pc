@@ -1,8 +1,0 @@
-prefix=/home/ros/PIF/catkin_ws/devel
-
-Name: actionlib_tools
-Description: Description of actionlib_tools
-Version: 1.13.2
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

@@ -1,8 +1,0 @@
-prefix=/home/ros/PIF/catkin_ws/devel
-
-Name: coord_gps
-Description: Description of coord_gps
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: geometry_msgs roscpp sensor_msgs std_msgs
