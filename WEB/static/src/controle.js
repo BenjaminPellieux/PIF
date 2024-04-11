@@ -46,8 +46,9 @@ setInterval(function() {
     // Recuperation des donnée du topic
     requestTopicValue('/odometry/filtered');
     requestTopicValue('/pif/gps');
-    setTimeout(500);
     fetchImage();
+    setTimeout(500);
+    
     updateData(pose, clock);
     console.log("INFO SLEEPING");
       
@@ -55,15 +56,13 @@ setInterval(function() {
     
     updateMarker(NewLat - DiffLat, NewLng - DiffLng);
     
-}, 200);
+}, 500);
 
-function fetchImage(){
-    const liveImage = document.getElementById('live-image');
+async function fetchImage(){
+    let liveImage = document.getElementById('live-image');
     liveImage.src = "/current_image?time=" + new Date().getTime();
     console.log("current_image time= " + new Date().getTime());
 }
-
-// setInterval(fetchImage,500);
 
 function command(e) {
     console.log("[DEBUG] Name command: "  +e.name);
@@ -110,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-function requestTopicValue(topic) {
+async function requestTopicValue(topic) {
     fetch('/post_topic_value', {
     method: 'POST',
     headers: {
