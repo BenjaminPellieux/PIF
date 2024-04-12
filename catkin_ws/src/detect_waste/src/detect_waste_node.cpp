@@ -3,9 +3,12 @@
 WasteDetection::WasteDetection(VideoSender &videoSender) : videoSender_(videoSender)
 {
     this->closest_rect.y = 0;
+    ros::NodeHandle nh;
+    image_transport::ImageTransport it(nh);
     this->detect_pub = nh.advertise<geometry_msgs::Point>("/pif/waste/pos", 1000);
     this->vector_waste = nh.advertise<geometry_msgs::QuaternionStamped>("/pif/waste/geometry", 10000);
-    this->pub_obstacle = nh.advertise<std_msgs::UInt16>("pif/obstacle", 10);
+    this->pub_obstacle = nh.advertise<std_msgs::UInt16>("/pif/obstacle", 10);
+    this->frame_pub = it.advertise("/pif/waste/frame",1);
     this->moving_status = nh.subscribe("/pif/moving", 10, &WasteDetection::movingCallback, this);
     std::cout << "DEBUG START Detect waste" << std::endl;
     // this->cap.open("/home/ros/PIF/VISION/DETECTION/Video/Default_Video_Test.mp4");
@@ -165,7 +168,13 @@ void WasteDetection::run()
         {
             detect_waste();
         }
-        videoSender_.send(this->frame);
+        //videoSender_.send(this->frame);
+        std_msgs::Header header;
+        header.seq = 0; // user defined counter
+        header.stamp = ros::Time::now(); // time
+        this->frame_bridge = cv_bridge::CvImage(header, sensor_msgs::image_encodings::RGB8, this->frame);
+        this->frame_bridge.toImageMsg(this->frame_msg); // from cv_bridge to sensor_msgs::Image
+        this->frame_pub.publish(this->frame_msg);
         ros::spinOnce();
     }
 }

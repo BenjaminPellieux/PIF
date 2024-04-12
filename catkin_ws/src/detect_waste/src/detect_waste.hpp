@@ -11,6 +11,10 @@
 #include "std_msgs/UInt16.h"
 #include "geometry_msgs/Point.h"
 #include "geometry_msgs/QuaternionStamped.h"
+#include <sensor_msgs/Image.h>
+#include <sensor_msgs/image_encodings.h>
+#include <cv_bridge/cv_bridge.h>
+#include <image_transport/image_transport.h>
 
 
 
@@ -34,11 +38,11 @@ class WasteDetection{
 
     private: 
         cv::VideoCapture cap;
-        ros::NodeHandle nh;
         ros::Publisher detect_pub;
         ros::Publisher vector_waste;
         ros::Publisher pub_obstacle;
         ros::Subscriber moving_status;
+        image_transport::Publisher frame_pub;
         
         
         HSVSettings hsvSettings;
@@ -50,6 +54,10 @@ class WasteDetection{
 
         cv::Rect closest_rect;
         cv::Mat frame;
+
+        
+        cv_bridge::CvImage frame_bridge;
+        sensor_msgs::Image frame_msg;
         VideoSender& videoSender_;
 
     public:

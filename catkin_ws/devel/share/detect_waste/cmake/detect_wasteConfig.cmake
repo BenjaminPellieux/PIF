@@ -154,11 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-<<<<<<< HEAD
     foreach(path /home/ros/PIF/catkin_ws/devel/lib;/opt/ros/noetic/lib)
-=======
-    foreach(path /home/ros/PIF/catkin_ws/devel/lib;/home/ros/catkin_ws/devel/lib;/opt/ros/noetic/lib)
->>>>>>> 7be8f56088df2f0fca0624a1547c5cb690fe57e6
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -189,7 +185,7 @@ foreach(t ${detect_waste_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "geometry_msgs;roscpp;std_msgs")
+set(depends "geometry_msgs;roscpp;std_msgs;sensor_msgs")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls

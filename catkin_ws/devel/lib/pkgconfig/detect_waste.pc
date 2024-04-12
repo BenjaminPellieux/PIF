@@ -5,4 +5,4 @@ Description: Description of detect_waste
 Version: 0.0.0
 Cflags: -I/usr/include
 Libs: -L${prefix}/lib /usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0
-Requires: geometry_msgs roscpp std_msgs
+Requires: geometry_msgs roscpp std_msgs sensor_msgs

@@ -11,6 +11,9 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   roscpp
   std_msgs
+  sensor_msgs
+  cv_bridge
+  image_transport
   )
 find_package(Boost REQUIRED COMPONENTS system)
 find_package(OpenCV REQUIRED)
@@ -26,7 +29,7 @@ find_package(OpenCV REQUIRED)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 	DEPENDS Boost
-	CATKIN_DEPENDS geometry_msgs roscpp std_msgs)
+	CATKIN_DEPENDS geometry_msgs roscpp std_msgs sensor_msgs)
 
 ###########
 ## Build ##
