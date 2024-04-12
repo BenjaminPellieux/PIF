@@ -154,7 +154,11 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
+<<<<<<< HEAD
     foreach(path /home/ros/PIF/catkin_ws/devel/lib;/opt/ros/noetic/lib)
+=======
+    foreach(path /home/ros/PIF/catkin_ws/devel/lib;/home/ros/catkin_ws/devel/lib;/opt/ros/noetic/lib)
+>>>>>>> 7be8f56088df2f0fca0624a1547c5cb690fe57e6
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

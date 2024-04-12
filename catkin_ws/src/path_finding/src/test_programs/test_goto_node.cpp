@@ -16,6 +16,6 @@ int main (int argc, char **argv)
 		pif_to_to.run();
 	
 	}
-	
+	printf("Test ended !\n");
 	return 0;
 }

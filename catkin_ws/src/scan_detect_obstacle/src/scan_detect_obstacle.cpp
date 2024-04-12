@@ -64,7 +64,7 @@ void laserCallback(const sensor_msgs::LaserScan::ConstPtr& scan)
 
     if (obstacle_count)
 {
-    double angle = (((scan->angle_increment * min_index) + ((ANGLE_MIN - 10) * 0.017453)) / 3) - 1;
+    double angle = ((scan->angle_increment * min_index) / 3.14159) - 1;
     std::cout << "obstacle found ! Angle : " << angle << " dist : " << scan->ranges[min_index] << "\n";
     marker.pose.orientation.z = angle;
 }

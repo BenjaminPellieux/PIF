@@ -17,7 +17,7 @@
 #include <sys/types.h>
 #include <stdio.h>
 
-#define RANGE_GOOD_ENOUGH	2
+#define RANGE_GOOD_ENOUGH	1
 
 #define SPEED_FWD	1.0
 
@@ -25,6 +25,7 @@
 #define TRY_RIGHT	1
 #define NO_OBS		0
 
+#define INNACCESSIBLE_COUNTER_MAX	10000
 
 class Go_To : public Odometry {
     public:
@@ -41,8 +42,7 @@ class Go_To : public Odometry {
                                      double *accel_z,
                                      double *obs_try,
                                      int *try_nb,
-                                     double *target_ang,
-                                     uint8_t dist_at_begin);
+                                     double *target_ang);
         int run();
         void set_target(double, double);
 

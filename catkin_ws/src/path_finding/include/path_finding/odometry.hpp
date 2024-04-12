@@ -1,10 +1,13 @@
 #include <ros/ros.h>
 //#include <sensor_msgs/Imu.h>
 #include <nav_msgs/Odometry.h>
+#include <std_msgs/Float32.h>
 #include <geometry_msgs/PointStamped.h>
 
 #ifndef undefined
 #define undefined
+
+#define SIMU
 
 typedef struct {
     double x;
@@ -25,7 +28,12 @@ class Odometry {
 
         Odometry(ros::NodeHandle);
         void callback_gps(const geometry_msgs::PointStamped::ConstPtr &nav);
+        
+#ifdef SIMU
         void callback_odom(const nav_msgs::Odometry::ConstPtr &odometry);
+#else
+        void callback_odom(const std_msgs::Float32::ConstPtr &odometry);
+#endif 
 };
 
 #endif

@@ -32,16 +32,18 @@ void DefineArea::create_grid(geometry_msgs::Polygon area) {
             max_y = area.points[i].y;
         }
     }
-    this->nbr_subGrid_x = (max_x - min_x) * sqrt(2) / DETECT_RANGE;
-    this->nbr_subGrid_y = (max_y - min_y) * sqrt(2) / DETECT_RANGE;
+    printf("min x:%lf y:%lf\nmax x:%lf y:%lf\n", min_x, min_y, max_x, max_y);
+    this->nbr_subGrid_x = (max_x - min_x) / (DETECT_RANGE * std::sqrt(2));
+    this->nbr_subGrid_y = (max_y - min_y) / (DETECT_RANGE * std::sqrt(2));
+    printf("Area size : %lf x %lf\n", (max_x - min_x), (max_y - min_y));
 
     for(int i=0; i<this->nbr_subGrid_y; i++) {
         path_finding::GridArray subGrid;
         for(int j=0; j<this->nbr_subGrid_x; j++) {
             path_finding::Grid tile;
 
-            first_points = min_x + j * (DETECT_RANGE / sqrt(2));
-            next_points = min_x + (j + 1) * (DETECT_RANGE / sqrt(2));
+            first_points = min_x + j * (DETECT_RANGE * std::sqrt(2));
+            next_points = min_x + (j + 1) * (DETECT_RANGE * std::sqrt(2));
             tile.top_left.x = first_points;
             if(next_points < max_x) {
                 tile.bottom_right.x = next_points;
@@ -49,8 +51,8 @@ void DefineArea::create_grid(geometry_msgs::Polygon area) {
                 tile.bottom_right.x = max_x;
             }
 
-            first_points = min_y + j * (DETECT_RANGE / sqrt(2));
-            next_points = min_y + (j + 1) * (DETECT_RANGE / sqrt(2));
+            first_points = min_y + j * (DETECT_RANGE * std::sqrt(2));
+            next_points = min_y + (j + 1) * (DETECT_RANGE * std::sqrt(2));
             tile.top_left.y = first_points;
             if(next_points < max_y) {
                 tile.bottom_right.y = next_points;
@@ -65,9 +67,10 @@ void DefineArea::create_grid(geometry_msgs::Polygon area) {
 
 void DefineArea::set_origin(geometry_msgs::Polygon area) {
     Local_Pose origin_grid;
+
     origin_grid.x = area.points[0].x;
     origin_grid.y = area.points[0].y;
-    for(int i=1; i<4; i++) {
+    for(int i=0; i<4; i++) {
         if(std::abs(area.points[i].x) < std::abs(origin_grid.x)) {
             origin_grid.x = area.points[i].x;
         }
@@ -75,27 +78,29 @@ void DefineArea::set_origin(geometry_msgs::Polygon area) {
             origin_grid.y = area.points[i].y;
         }
     }
-    origin_grid = this->pos_in_grid(origin_grid);
+    printf("grid origin : x:%lf y:%lf\n", origin_grid.x, origin_grid.y);
+    Local_Pose tile_in_grid = this->pos_in_grid(origin_grid);
 
-    this->first_tile.x = (this->grid.gridY[origin_grid.y].gridX[origin_grid.x].bottom_right.x - this->grid.gridY[origin_grid.y].gridX[origin_grid.x].top_left.x) / 2;
-    this->first_tile.y = (this->grid.gridY[origin_grid.y].gridX[origin_grid.x].bottom_right.y - this->grid.gridY[origin_grid.y].gridX[origin_grid.x].top_left.y) / 2;
+    this->first_tile.x = origin_grid.x + (this->grid.gridY[tile_in_grid.y].gridX[tile_in_grid.x].bottom_right.x - this->grid.gridY[tile_in_grid.y].gridX[tile_in_grid.x].top_left.x) / 2;
+    this->first_tile.y = origin_grid.y + (this->grid.gridY[tile_in_grid.y].gridX[tile_in_grid.x].bottom_right.y - this->grid.gridY[tile_in_grid.y].gridX[tile_in_grid.x].top_left.y) / 2;
 }
 
 Local_Pose DefineArea::pos_in_grid(Local_Pose pose) {
     Local_Pose pose_in_grid;
 
-    for(int y=0; y<this->nbr_subGrid_y; y++) {
-        if((this->grid.gridY[y].gridX[0].top_left.y < pose.y) && (pose.y < this->grid.gridY[y].gridX[0].bottom_right.y)) {
+    for(int y=0; y<this->grid.gridY.size(); y++) {
+        if((this->grid.gridY[y].gridX[0].top_left.y <= pose.y) && (pose.y <= this->grid.gridY[y].gridX[0].bottom_right.y)) {
             pose_in_grid.y = y;
             break;
         }
     }
-    for(int x=0; x<this->nbr_subGrid_x; x++) {
-        if((this->grid.gridY[0].gridX[x].top_left.x < pose.x) && (pose.x < this->grid.gridY[0].gridX[x].bottom_right.x)) {
+    for(int x=0; x<this->grid.gridY[0].gridX.size(); x++) {
+        if((this->grid.gridY[0].gridX[x].top_left.x <= pose.x) && (pose.x <= this->grid.gridY[0].gridX[x].bottom_right.x)) {
             pose_in_grid.x = x;
             break;
         }
     }
+    printf("array tile origin : x:%lf y:%lf\n", pose_in_grid.x, pose_in_grid.y);
     return pose_in_grid;
 }
 
@@ -149,14 +154,19 @@ bool DefineArea::choose_next_tile() {
 Local_Pose DefineArea::get_next_tile_pose() {
     Local_Pose next_tile_center;
 
-    next_tile_center.x = (this->grid.gridY[this->next_tile.y].gridX[this->next_tile.x].bottom_right.x - this->grid.gridY[this->next_tile.y].gridX[this->next_tile.x].top_left.x) / 2;
-    next_tile_center.y = (this->grid.gridY[this->next_tile.y].gridX[this->next_tile.x].bottom_right.y - this->grid.gridY[this->next_tile.y].gridX[this->next_tile.x].top_left.y) / 2;
+    next_tile_center.x = this->grid.gridY[this->next_tile.y].gridX[this->next_tile.x].bottom_right.x + (this->grid.gridY[this->next_tile.y].gridX[this->next_tile.x].bottom_right.x - this->grid.gridY[this->next_tile.y].gridX[this->next_tile.x].top_left.x) / 2;
+    next_tile_center.y = this->grid.gridY[this->next_tile.y].gridX[this->next_tile.x].bottom_right.y + (this->grid.gridY[this->next_tile.y].gridX[this->next_tile.x].bottom_right.y - this->grid.gridY[this->next_tile.y].gridX[this->next_tile.x].top_left.y) / 2;
 
     return next_tile_center;
 }
 
 
 void DefineArea::areaCallback(const geometry_msgs::PolygonStamped::ConstPtr &msg) {
+    printf("Polygon area :\n");
+    for(int i=0; i<4; i++) {
+        printf("    point%d : x:%lf y:%lf\n", i, msg->polygon.points[i].x, msg->polygon.points[i].y);
+    }
+
     this->create_grid(msg->polygon);
     this->set_origin(msg->polygon);
     this->area_recieved = true;
