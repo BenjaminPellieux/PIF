@@ -21,7 +21,8 @@ commande_move: dict = {"linear": {
 topic_type_dict: dict ={  "/odometry/filtered": "nav_msgs/Odometry",
                            "/pif/gps":  "sensor_msgs/NavSatFix",
                            "/pif/hard/label": "std_msgs/String",
-                           "/pif/hard/aspi": "std_msgs/Bool"}
+                           "/pif/hard/aspi": "std_msgs/Bool",
+                           "/pif/waste/frame" : "sensor_msgs/ImagePtr"}
 
 zone_topic: dict={"header": {
                             "seq": None,
