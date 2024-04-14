@@ -1,7 +1,0 @@
-arduino : 
-- adafruit_sensor (adafruit unified sensor)
-- adfruit_bno055
-
-scan_detec_obstacle :
-- ydlidar_ros
-- actionlib
