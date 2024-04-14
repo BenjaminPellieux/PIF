@@ -41,13 +41,10 @@ function updateMarker(lat, lng) {
     map.setView([lat, lng], map.getZoom());
 }			
 
-//Simulez la réception de nouvelles données GPS toutes les 2 secondes
 setInterval(function() {
-    // Recuperation des donnée du topic
     requestTopicValue('/odometry/filtered');
     requestTopicValue('/pif/gps');
-    requestTopicValue('/pif/waste/frame');
-    // fetchImage();
+    fetchImage();
     setTimeout(500);
     
     updateData(pose, clock);
@@ -57,10 +54,10 @@ setInterval(function() {
     
     updateMarker(NewLat - DiffLat, NewLng - DiffLng);
     
-}, 2000);
+}, 200);
 
 async function fetchImage(){
-    let liveImage = document.getElementById('live-image');
+    let liveImage = document.getElementById('rosimage');
     liveImage.src = "/current_image?time=" + new Date().getTime();
     console.log("current_image time= " + new Date().getTime());
 }
@@ -128,9 +125,6 @@ async function requestTopicValue(topic) {
         pose = data.pose.pose;
         clock = data.header.stamp;
         error = false;
-    }else if(topic == "/pif/waste/frame"){
-        var imageElement = document.getElementById('rosimage');
-        imageElement.src = "data:image/jpeg;base64," + arrayBufferToBase64(data.data);
     }else{
         NewLat = data.latitude;
         NewLng = data.longitude;
@@ -138,16 +132,6 @@ async function requestTopicValue(topic) {
     }
 })
 .catch(error => console.error('Erreur lors de la récupération des données:', error));
-}
-
-function arrayBufferToBase64(buffer) {
-    var binary = '';
-    var bytes = new Uint8Array(buffer);
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-        binary += String.fromCharCode(bytes[i]);
-    }
-    return window.btoa(binary);
 }
 
 function updateData() {

@@ -2,8 +2,9 @@ import json
 from lib_topic import *
 import websocket
 from threading import Thread
-from time import sleep
-
+from numpy import frombuffer, uint8
+from cv2 import cvtColor, COLOR_RGB2BGR, imwrite
+from base64 import b64decode
 
 
 class WebSocketApp(Thread):
@@ -34,9 +35,25 @@ class WebSocketApp(Thread):
         data = json.loads(message)
         topic = data.get('topic')
         if topic and topic in self.topic_to_subscribe:
-            self.topic_data[topic] = data['msg']
+            self.topic_data[topic] = data['msg']    
             if self.topic_data and topic == "/odometry/filtered":
                 self.orient = self.topic_data[topic]["pose"]["pose"]["orientation"]
+            elif self.topic_data and topic == "/pif/waste/frame":
+                self.image_callback(data['msg'])
+
+    
+    def image_callback(self, msg: dict):
+
+        np_arr = frombuffer(b64decode(msg['data']), dtype = uint8)        
+        if msg["encoding"] == 'rgb8':
+            image_np = np_arr.reshape((msg["height"], msg["width"], 3))
+        else:
+            print("[ERROR][IMAGE_CALLBACK]Encodage non pris en charge: {}".format(msg["encoding"]))
+            return
+        
+        imwrite('tmp/PIF.jpg', image_np)
+
+
 
     def on_error(self, ws: websocket, error: str) -> None:
         print("[INFO][ON_ERROR] Erreur :", error)

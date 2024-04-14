@@ -2,19 +2,16 @@ from flask import Flask, render_template, jsonify, request, send_file
 import json
 from sys import argv
 from handle_request import *
-from client_video import *
 
 class WebServer:
     def __init__(self, environment=None):
         self.app = Flask(__name__, static_folder='static')
         self.configure_routes()
         self.config = self.load_config(environment)
-        self.video_stream = WebVideoApp(self.config["host"])
         self.ros_client = WebSocketApp(self.config["ip_rasp"])
         self.ros_client.start()
-        self.video_stream.start()
 
-    def load_config(self, environment):
+    def load_config(self, environment = None):
         if environment == "ovh":
             config_path = "config/serv_config.json"  # Chemin vers le fichier de configuration pour OVH
         else:
