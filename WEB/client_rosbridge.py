@@ -3,7 +3,7 @@ from lib_topic import *
 import websocket
 from threading import Thread
 from numpy import frombuffer, uint8
-from cv2 import cvtColor, COLOR_RGB2BGR, imwrite
+from cv2 import imwrite
 from base64 import b64decode
 
 
@@ -51,7 +51,7 @@ class WebSocketApp(Thread):
             print("[ERROR][IMAGE_CALLBACK]Encodage non pris en charge: {}".format(msg["encoding"]))
             return
         
-        imwrite('tmp/PIF.jpg', image_np)
+        imwrite('static/tmp/PIF.jpg', image_np)
 
 
 

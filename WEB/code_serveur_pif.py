@@ -13,9 +13,9 @@ class WebServer:
 
     def load_config(self, environment = None):
         if environment == "ovh":
-            config_path = "config/serv_config.json"  # Chemin vers le fichier de configuration pour OVH
+            config_path = "static/config/serv_config.json"  # Chemin vers le fichier de configuration pour OVH
         else:
-            config_path = "config/config.json"  # Chemin par défaut
+            config_path = "static/config/config.json"  # Chemin par défaut
 
         try:
             with open(config_path, 'r') as file:
@@ -81,7 +81,7 @@ class WebServer:
         def current_image():
             print("[INFO][UPDATE_IMAGE] --------------------------")
             try:
-                return send_file('tmp/PIF.jpg', mimetype='image/jpeg')
+                return send_file('static/tmp/PIF.jpg', mimetype='image/jpeg')
             except:
                 return "ERROR"
 
@@ -102,7 +102,7 @@ class WebServer:
         try:
             self.app.run(host=self.config.get('host', 'localhost'),
                          port=self.config.get('port', 8080),
-                         ssl_context=('key/cert.pem', 'key/key.pem'),
+                         ssl_context=('static/key/cert.pem', 'static/key/key.pem'),
                          debug=False)
         except Exception as e:
             print(f"Erreur lors du lancement du serveur : {str(e)}")
