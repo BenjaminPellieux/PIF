@@ -1,7 +1,7 @@
 #!/bin/bash
 
 gource \
-    -s 1.5 \
+    -s 2.5 \
     -1080x920 \
     --auto-skip-seconds .01 \
     --multi-sampling \

@@ -1,0 +1,374 @@
+1695893076|INIT Vision LIB
+1695893755|Image test
+1695895136|Ajout fichier BOB.md
+1695895216| Remove BOB file
+1695977882|Lissage + Seuillage
+1695977917| Img test small
+1695979331|Imgres Grey & Threshold
+1695983330|Oprimisation function
+1695998181|Add ENVI folder & and tools for DETECTION
+1696067507| Usin HSV and cal median 1/2
+1698309839|Bonjour je suis tout gris
+1698657927|SPlit image
+1698657965| New Image
+1699262605|Add web page
+1699269297|Add image for controle
+1699275088|add command function from web to serv
+1699275445|Add GPS folde
+1699288922|delet useless text
+1699293373|ADD gps map and link for every page
+1699297763|DEBUG
+1699307289|update
+1699366928|Create catkin ws
+1699367549| ..|.. Pierre
+1699397471|Add Melanie code Vision.html
+1699432262|Try to add selection area on configuration page
+1699435162|select zone
+1699435419|Add link for configuration page
+1699446890|DEBUG selection area
+1699447403|Add config in controle.html
+1699454322|Create README.md
+1699462750|Detect dechet
+1699477987|debug
+1699478467|Delet README.md
+1699523737|Working on detection
+1699539416|Test on video
+1699548157|Dechet detections sur le bitume
+1699548229|Clean folder
+1699553706|Optimisaton Detection
+1699645011|NEwé
+1699645687|ADD README.md
+1699645829|Add line README.md
+1699645996|LOVE
+1699646186|PIERRE
+1699646988|un message de haine pour benjamin
+1699647013|commit de test
+1699647036|Sex (ça veut dire test en chinois)
+1699647155|add mon_chaton
+1699647193|UI
+1699647294|bonjour
+1699648335|Oui
+1699648757|Add base command
+1700125790|responsive css
+1700127928|ajustement des pages du serveur, changement de fond pour les pages de controle du vehicule
+1700129651|setup branche guillaume
+1700132089|changement de répertoire pour les images importées sur les pages html
+1700132643|Touches pour appeler une page html arrondies
+1700135967|modification mise en page boutons et réajustements
+1700140074|fleches de navigation modifiées
+1700140826|Agrandissement des titres
+1700146670|pré traitement image, reconnaissance du sol dans le sous dossier, à fusionner
+1700147330|bouton sauvegarde grossi
+1700147504|2 modif bouton sauvegarde
+1700149340|Add style update
+1700149481|Equation de droite zone de travail
+1700150062|modif
+1700150175|Add static/rosbridge.js
+1700150314|création python GPS
+1700150346|Add rosbridge.js
+1700214517| JS lib for link VPS -> Rossbridge
+1700275665|Update Serveur Getting topic via RosBridge
+1700275725|Add gitignore for git optimisation
+1700337503|change ip
+1700433550|ADD topic /odometry/filtered
+1700470549|Create CODE_OF_CONDUCT.md
+1700470744|Create CONTRIBUTING.md
+1700470853|Create LICENSE
+1700470916|Update issue templates
+1700471197|Update README.md
+1700471288|Delet init text
+1700512678|add scanning obstacle fonctionality trough lidar ros topic
+1700548747|continuing dev on 3d scan
+1700555387|rajout 2 programmes
+1700555785|ADD publish methode
+1700555933|DEL empty file
+1700565126|ajustement boutons
+1700583451|Controle a distance du vehicule
+1700603688|Selcted speed movement
+1700603709|new image
+1700604841|Delecting locayion.py from web
+1700649994|Remove useless import
+1700650555|ADD move upgrade
+1700686323|HANDLE error
+1700692420|HANDLE error
+1700692592|HANDLE Error no data
+1700703406|working obstacle detection and add base for 3d scanning add packages libraries
+1700732252|fusion code mélanie et guillaume
+1700733170|nettoyage
+1700738498|NEW ip jackal
+1700741509|ajustement bouton
+1700748568|début analyse image traitée
+1700748725|lib
+1700748836|lib
+1700749383|ADD location topic
+1700749482|ADD line img
+1700749517|ADD line img
+1700754270|fix segfault
+1700757931|NEW add location topic
+1700758488|can_go_forward() done
+1700774174|replace wrong scan_detect_obstacle
+1700822730|Config controle robot
+1700824933|DELET __pycache__ folder
+1701007509|page accueil et vision entierement revue
+1701111005|DELET useless file
+1701165436| suppression des pages qui ne servent à rien
+1701166718|fichier text.css remplacé par index.css et mis dans style
+1701167317|modif page index
+1701168783|rajout du logo de l'isty sur la page index
+1701181598|EDIT readme
+1701207681|amelioration de la page index
+1702032530|Add setup scritp for web app
+1702042835|create env python for web serveur
+1708445062|ignioring .env file
+1708447199|Create venv by bash
+1708620512|Cmpile with catkin_make
+1708620583|Create web env
+1708972355|Add Saturation filter
+1709115915|Remove CMake Folder
+1709116309|Remive MakeFile
+1709116780|test clean
+1709117744|Removing env folder
+1709123507|Re build
+1709648826|Add ros lib
+1709801983|travail mélanie dans detection_obstacle_noir_blanc
+1709802502|test detection_sol plus screen des resultats
+1701165436| suppression des pages qui ne servent à rien
+1701166718|fichier text.css remplacé par index.css et mis dans style
+1701167317|modif page index
+1701168783|rajout du logo de l'isty sur la page index
+1708445062|ignioring .env file
+1708447199|Create venv by bash
+1708620512|Cmpile with catkin_make
+1709807275|fichiers travail GPS
+1709816035|maj programme vision bouchon (Test_Opencv)
+1709819056|je fais ma presentation
+1709819619|je suprime tout
+1709819752|Je fais bobjour
+1709819937|mv git inigi
+1709821706|Igniore catkin_generated folder
+1709821748|Compiling with catkin
+1709821912|change setup file
+1709823073|Create CAPSULE_MIEGOT.ino
+1709825228|WEB update
+1709825386|Add integration folder
+1709825448|amélioration programme vision environnement
+1709827493|video test 1 avec seuillage
+1709829574|modif programme vision environnement
+1709831968|Add Flexbe app & Core&
+1709832383|add Wall-E_behaviors & tutorial_behaviors
+1709849521|Création des packages, définir ce que je vais mettre dans le nodes
+1709977000|Création du roslaunch, reste à définir le contenu du roslaunch et du node
+1709977387|Copie des codes réalisés jeudi, code incomplet
+1710163177|Remove Unused web page
+1710164670|Add secure for nb zone point
+1710165373|Add local certificate for webapp
+1710167849|Reorganize files
+1710175787|Remove txt
+1710232096|video1 traitement image environnement avec reglage de la luminosité de facon automatisé
+1710236529|Add cmd_vel program
+1710272517|Deleting unsused stuff
+1710422247|Suppression des fichiers inutiles
+1710423352|change name file zonne.hpp
+1710430552|code node GPS suscribe test
+1710750382|Cleanning older program
+1710750412|Add LABAL folder for labelisation script
+1710753134|Optimisation for detection waste
+1710754571|Inte detection
+1710763217|Noeud detection dechet
+1710771404|Remove test package
+1710779434| FUCH ROS
+1710785949|Working node detect_waste
+1710791884|Ester egs
+1710794315|Je test ma regle
+1710794362|delet ueslesse stuff
+1710794686|test
+1710839175|Delete useless files
+1710851678| Ros integraton for HUSKYLENS
+1710868460|video2 reglage intégrer dans les lignes de code
+1710871096|modif page config
+1710923928|Using PlatformIO plugin for waste_labeling arduno code
+1710924228|Delet ros.h lib from depot
+1710924855|Update requirements.txt file
+1710927142|Update gource script
+1710938979|DEBUG arduino soft
+1710944010|Delet debug
+1710949357|Deleting ros lib
+1711008281|file for node gps python
+1711009790|version finale détection obstacle
+1711010924|a l'ed
+1711011518|Zone en python
+1711012951|node GPS
+1711014160|sauvegarde
+1711017562|Vision bouchon clean
+1711022288|corriger erreur web pour GPS et code python GPS ok
+1711023345|Clean depot
+1711025230|modif en cpp de ros
+1711026344|Compilation packages catkin
+1711029394|re=ajout tableau affichage parametre/ valeur)
+1711042097|Add packadge GPS In ZONE git add .!
+1711097158|Rajout coordonnées zone du véhicule sur la page config/ création de fichier en javascript
+1711101888|Inte gps node and detect wase node
+1711104193|Cleaning compilation files
+1711106430|Add catkin pkg obstacle_detect
+1711108647|Integration detect obstacle node
+1711216185|Modif explication programme détection obstacle environnement
+1711373334|Programme arduino gestion d'aspiration
+1711377993|Geometry message for detected waste
+1711378487|correction for Quaternnion
+1711389996|W to 1 for quaternion
+1711390953|Compilation with geometry quaternion
+1711391343|JE FAIS ENCORE LE MENAGE DES FICHIER DE MERDE
+1711397988|Add aspi controle in arduino code
+1711399268|Add publish for aspi status and optimisation
+1711399712|Add cleaing script
+1711462209|New path_finding program in c++, isn't finish
+1711472650|Correction bug PathFinding
+1711537065|Add pif go to
+1711537948|Delet build
+1711538335|Add CMakeList
+1711541620|Correcting bug
+1711542448|Add Pierre pkg
+1711549317|Working definition area program. hpp part will come soon
+1711575312|Add dcumentation on gps coord stript
+1711617523|changement avec area/polygon
+1711631480|update retour affichage etat aspi sur le site
+1711636067|Add aspi with label
+1711644555|essaie raté mode déplacement auto ou manuel du robot
+1711647471| Debug labeling ans aspi script
+1711704349|Test optimisation
+1711737442|adding ydlidar (driver), updating go_to, adding gps_convert, only test/debug to do on go_to, everything is compiling and working together
+1711987908|gps transfot to object
+1711988025| Add requirement file for python module
+1711988304|Gps tranform on object
+1711988437|Add verbose in gps trasform script
+1711995272|Add Object Go_To
+1712019210|updating go_to
+1712061738|version colonne par colonne détection obstacle, extrêmement gourmande en ressources
+1712093395|Correct bugs for path_finding pkg
+1712093529|Empty integration/ folder
+1712139836|Update decision state file for path_finding
+1712155045|Clean depot
+1712161778|working on go to
+1712167401|Pierre branch integration, doesn't compile for now
+1712169715|Add compilation feature for path_finding
+1712212073|working on goto
+1712217527|Opti in WEB
+1712218977|Path_finding ros correction
+1712220357|update video3
+1712229852|working on goto
+1712230461|gps_convert mod and go to launch
+1712232173|modif vision pour augmenter précision du retour de 2 à 16
+1712238572|Ajout case à cocher manu ou auto page contrôle
+1712239465|ROS integration for obstacle_detection package
+1712239675|pb de réglègages
+1712241468|adjusts for real robot
+1712241537| obstacle detection node error msg clarifié
+1712241569|Séparation du css et du html
+1712242498|path_finding correction
+1712245071|Add video via UDP to serveur
+1712247112|Huge Update serveur
+1712247224|update style serveur web
+1712249872|Add library heritage for path_finding pkg
+1712251327|Store proprely launch files & try to adapt
+1712251868|Video on server
+1712306414|Add Video flux for project
+1712308613|Update android
+1712331840|Delet useless and opti cleanning
+1712332015|Edit gitigniore to igniore build
+1712399471|add connections between path_finding & coord_gps, correct define_area lib
+1712478962|Update serveur
+1712482418|Merge conflict & ListTopic.md
+1712483559|Update readme & add waste labeling topic
+1712484033|Clening depot
+1712484070|Removing my picture
+1712485586|Add config file for server
+1712487143|détection muret marche
+1712488121|Topic organization
+1712492960|adjusting go_to_simu.launch and dividing gps_transform into 2 nodes to be able to execute gps_transform_node.py as many time we want with the same origin generated by gps_reset_origin_node.py
+1712494199|gps_transform_node : pubish type -> point (old was odometry) and second argument to execute this node is topic that the node is publishing
+1712495418|Update for server
+1712495730|go_to publishing moving if not in range and modified type of position from gps_transform
+1712496884|debug on pif_gps_convert
+1712497276|updete topic used
+1712497432|mergin pierre branch
+1712498752|edith py scrit
+1712500675|adding topics i am using
+1712503459|Add coord_gps dependency to path_finding
+1712507165|Update ListTopic.md & add launch files for gps_transform
+1712507229|adding actionlib
+1712507663|modifing launch to publish transformed gps to /pif/gps_converted
+1712510043|Debut control from web
+1712510259|Up to date without merge confict
+1712514767|la vision environnement détecte les objets clairs
+1712563159|checkbox continue
+1712566762|Update listopic
+1712567391|in go_to : adjusting values for distances obstacles, adding more flexibility with the gps callback to be able to move even if the gps is slow. In gps transform : copy paste header from navsat_fix subscribed into point published
+1712568532|Update topic name in arduino
+1712568685|variable global déplacement continue
+1712568918|variable global déplacement continue
+1712579529|adding package.xml for pif_gps_convert and adding line set target in cmakelist.txt of scan_detect_obstacle
+1712579583|modif pour séparer la création de la zone du ckeck
+1712580410|Séparation création zone et vérification zone
+1712585521|Complete path_finding_node, needs to be tested
+1712603037|Add launch file for all project with the command 'roslaunch path_finding walle_start.launch'
+1712603678|Integration of obstacle detection DRAFT
+1712604485|Update detecte waste with detect obstacle COMPILING
+1712605663|Add Heritage in coord GPS
+1712605741|Add BNO for PIERRE git add .!
+1712609058|Resolve topic name conflicts & rewrite unsaved changes in ListTopic.md ????
+1712651200|header in of gps transform is header out of gps transform
+1712651530|debug gps_transform
+1712652719|Correcting test environnement, waiting for tests
+1712654173|odometry position point -> pointstamped
+1712659433|adding read magneto pkg
+1712659643|moddifying odometry in pathfinding to read magneto
+1712664638|Restore old pkg deleted but still usefull
+1712668470|add gps_rtk & magneto in global launch file
+1712673385|delet pifconvert
+1712673555|adding ydlidar and action lib (dependancy)
+1712674139|Add data in config page
+1712674434|conflicts
+1712675100|Update serveur
+1712675724|adding arduino code for magneto and requirement.txt
+1712676003|Add argument to walle_start.launch
+1712677194|Add documentation for serveur PIF
+1712679467|uploard config to serv ovh
+1712680936|Debug web site configuration page
+1712683885|Integration serveur web + vision + configuration
+1712688049|Web serveur to object and optimisation
+1712691710|Remove unused var and methode
+1712700815|Update video script
+1712751267|innaccessible tile implementation
+1712751405|adding args for scan detect in launch walle
+1712751840|removing magneto package launch and adding magneto arduino serial com in walle launch
+1712752155|Coreection error in launch
+1712752314|update go to launch test
+1712752554|modifing test goto to stress test
+1712756101|Debug Walle_lunch & change ip serv for video sender
+1712756154|Change  ip for ser handle video
+1712757014|taille carte page config
+1712757030|Update server
+1712759753|small changes on go to
+1712760505|page config centrer
+1712763038|Debug udp image
+1712766861|debug on go to
+1712770465|Renaming var for configuration page script
+1712770953|Modify HowTo.md for serveur usage
+1712782958|working on go to
+1712823951|debug
+1712823992|Create over all program simu
+1712824250|debug
+1712824556|Make catkin repo for the previous commit
+1712824725|adding devel
+1712834957|Path_finding debug & corrections
+1712843679|Update for server
+1712845726|Udate video flux
+1712846690|Debug path_finding_node, give up
+1712924190|Update  web
+1712932182|Add img to rosbridge=
+1713110579| Update Serveur video
+1713111610|Cleaning WEB folder
+1713112138| Cleaning depot
+1713112195|delet vision bin
+1713112235|Remove requirement.txt
+1713112301|Remove BNO folder
