@@ -1,4 +1,3 @@
-#include "Video_Sender.hpp"
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <boost/asio.hpp>
@@ -58,10 +57,9 @@ class WasteDetection{
         
         cv_bridge::CvImage frame_bridge;
         sensor_msgs::Image frame_msg;
-        VideoSender& videoSender_;
 
     public:
-        WasteDetection(VideoSender& videoSender);
+        WasteDetection();
         void change_origin();
         void detect_waste();
         void detect_obstacle();

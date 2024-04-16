@@ -1,6 +1,6 @@
 #include "detect_waste.hpp"
 
-WasteDetection::WasteDetection(VideoSender &videoSender) : videoSender_(videoSender)
+WasteDetection::WasteDetection()
 {
     this->closest_rect.y = 0;
     ros::NodeHandle nh;
@@ -204,8 +204,7 @@ int main(int argc, char **argv)
 {
     // Ouvrir le flux vidéo
     ros::init(argc, argv, "detect_waste");
-    VideoSender sender(IP_SERV, PORT_SERV);
-    WasteDetection detection = WasteDetection(sender);
+    WasteDetection detection = WasteDetection();
     // Libérer le flux vidéo et détruire toutes les fenêtres
 
     return 0;
