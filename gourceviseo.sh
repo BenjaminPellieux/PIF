@@ -2,7 +2,7 @@
 
 gource \
     -s 2.5 \
-    -1080x920 \
+    -1280x920 \
     --auto-skip-seconds .01 \
     --multi-sampling \
     --stop-at-end \
@@ -15,5 +15,7 @@ gource \
     --font-size 25 \
     --font-colour FFFFFF \
     --output-ppm-stream - \
-    --output-framerate 30 \
-    | ffmpeg -y -r 30 -f image2pipe -vcodec ppm -i - -b 65536K movie.mp4
+    --output-framerate 60 \
+    | ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset medium -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 movie.x264.avi
+
+#-b 65536K movie.mp4
